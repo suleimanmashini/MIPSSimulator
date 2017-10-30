@@ -4,5 +4,4 @@
 
 using namespace std;
 RAM::RAM() {
-	RAM newRAM;
 }
