@@ -120,6 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="data.hpp" />
+    <ClInclude Include="instructionDecode.hpp" />
     <ClInclude Include="main.hpp" />
     <ClInclude Include="ram.hpp" />
   </ItemGroup>
