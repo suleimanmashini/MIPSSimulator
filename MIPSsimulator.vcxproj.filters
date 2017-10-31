@@ -21,13 +21,13 @@
     <ClCompile Include="ram.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="instructiondecode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="instructiontable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="instructions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="instructionDecode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
