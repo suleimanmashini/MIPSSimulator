@@ -8,10 +8,13 @@ extern RAM mainMemory;
 extern uint32_t Register[32] = { 0 };
 
 //IMPORTANT ADDRESSES
-extern const int EXIT_ADR = 0;
-extern const int INSTRUCTION_START_ADR = 0x10000000;
-extern const int INPUT_IO_ADR = 0x30000000;
-extern const int OUTPUT_IO_ADR = 0x30000004;
+extern enum {
+	EXIT_ADR = 0, 
+	INSTRUCTION_START_ADR = 0x10000000, 
+	INPUT_IO_ADR = 0x30000000, 
+	OUTPUT_IO_ADR = 0x30000004
+};
+
 //RAM AND REGISTERS
 extern enum {
 	RZERO, //HARD WIRES TO 0
