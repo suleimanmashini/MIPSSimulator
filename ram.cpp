@@ -12,6 +12,24 @@ uint32_t RAM::getRAM(const int &addressIn) const {
 	return address[tempAddress];
 }
 
+uint8_t RAM::getByteRAM(const int &addressIn) const {
+	uint32_t temp = address[addressIn / 4];
+	int shift = addressIn / 4;
+	switch (shift) {
+	case 0:
+		return uint32_t(temp >> 24);
+	case 1:
+		return uint32_t((temp >> 16) | 0x000000FF);
+		break;
+	case 2:
+		return uint32_t((temp >> 8) | 0x000000FF);
+		break;
+	case 3:
+		return uint32_t(temp  | 0x000000FF);
+	default:
+	}
+}
+
 void RAM::writeRAM(const int &addressIn,const uint32_t &dataIn) {
 	//THERE IS NO ADDRESS ERROR CHECKING ERROR CHECKING
 	int tempAddress = addressIn / 4;
@@ -37,7 +55,6 @@ void RAM::writeRAM(const int &addressIn,const uint8_t &dataIn) {
 		break;
 	case 3:
 		address[addressIn / 4] = ((temp & 0xFFFF00FF) | (tempIn));
-		break;
 	default:
 	}
 }
