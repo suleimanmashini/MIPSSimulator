@@ -6,7 +6,7 @@ using namespace std;
 
 class RAM {
 private:
-	uint32_t address[805306376] = { 0 };
+	uint32_t address[0x30000008] = { 0 };
 public:
 	RAM();
 	uint32_t getRAM(const int &addressIn) const;
