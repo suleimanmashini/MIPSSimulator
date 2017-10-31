@@ -7,10 +7,21 @@ using namespace std;
 RAM::RAM() {
 	RAM newRAM;
 }
-
+//402653188
 uint32_t RAM::getRAM(const int &addressIn) const {
 	int tempAddress = addressIn / 4;
-	return address[tempAddress];
+	if (tempAddress < 268435456) {
+		return partition1[addressIn];
+	}
+	else if (tempAddress < 268435456 * 2) {
+		return partition2[addressIn - 268435456];
+	}
+	else if (tempAddress < 268435456 * 3) {
+		return partition3[addressIn - (268435456 * 2)];
+	}
+	else {
+		return partition4[addressIn - (268435456 * 3)];
+	}
 }
 
 uint8_t RAM::getByteRAM(const int &addressIn) const {

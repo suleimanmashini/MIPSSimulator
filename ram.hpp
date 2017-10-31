@@ -6,9 +6,14 @@ using namespace std;
 
 class RAM {
 private:
-	uint32_t address[0x30000008] = { 0 };
+	uint32_t partition1[268435456] = { 0 };
+	uint32_t partition2[268435456] = { 0 };
+	uint32_t partition3[268435456] = { 0 };
+	uint32_t partition4[268435456] = { 0 };
+	
 public:
 	RAM();
+	
 	uint32_t getRAM(const int &addressIn) const;
 	uint8_t getByteRAM(const int &addressIn) const;
 	void writeRAM(const int &addressIn, const uint32_t &dataIn);
