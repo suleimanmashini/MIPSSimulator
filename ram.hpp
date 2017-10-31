@@ -5,9 +5,9 @@
 using namespace std;
 
 class RAM {
-public:
-	uint32_t address[805306376] = { 0 };
 private:
+	uint32_t address[805306376] = { 0 };
+public:
 	RAM();
 	uint32_t getRAM(const int &addressIn) const;
 	uint8_t getByteRAM(const int &addressIn) const;
