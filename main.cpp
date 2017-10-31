@@ -22,9 +22,13 @@ int main() {
 	}
 	else {
 		int count = 0;
+		uint32_t* tempIn;
+		tempIn = new uint32_t;
 		// obtain file size:
 		while (!feof(pFile)) {
-			mainMemory.writeRAM();
+			fread(tempIn, 4, lSize, pFile);
+			mainMemory.writeRAM(INSTRUCTION_START_ADR + count, *tempIn);
+			count += 4;
 		}
 	}
 	return 0;
