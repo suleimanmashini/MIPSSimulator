@@ -4,3 +4,6 @@
 
 using namespace std;
 
+do {
+	
+} while (chekEnd == false);
