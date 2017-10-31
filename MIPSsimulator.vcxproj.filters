@@ -21,16 +21,16 @@
     <ClCompile Include="ram.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="instructiondecode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="instructiontable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="instructions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="data.cpp">
+    <ClCompile Include="instructionDecode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="instructionDecode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -39,9 +39,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ram.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="data.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
