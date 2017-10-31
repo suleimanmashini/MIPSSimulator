@@ -7,7 +7,7 @@ using namespace std;
 RAM::RAM() {
 	RAM newRAM;
 }
-//402653188
+
 uint32_t RAM::getRAM(const int &addressIn) const {
 	int tempAddress = addressIn / 4;
 	if (tempAddress < 268435456) {
@@ -25,7 +25,7 @@ uint32_t RAM::getRAM(const int &addressIn) const {
 }
 
 uint8_t RAM::getByteRAM(const int &addressIn) const {
-	uint32_t temp = address[addressIn / 4];
+	uint32_t temp = this->getRAM(addressIn);
 	int shift = addressIn / 4;
 	switch (shift) {
 	case 0:
@@ -45,13 +45,25 @@ uint8_t RAM::getByteRAM(const int &addressIn) const {
 void RAM::writeRAM(const int &addressIn, const uint32_t &dataIn) {
 	//THERE IS NO ADDRESS ERROR CHECKING ERROR CHECKING
 	int tempAddress = addressIn / 4;
-	address[tempAddress] = dataIn;
+	if (tempAddress < 268435456) {
+		partition1[addressIn] = dataIn;
+	}
+	else if (tempAddress < 268435456 * 2) {
+		partition2[addressIn - 268435456] = dataIn;
+	}
+	else if (tempAddress < 268435456 * 3) {
+		partition3[addressIn - (268435456 * 2)] = dataIn;
+	}
+	else {
+		partition4[addressIn - (268435456 * 3)] = dataIn;
+	}
+	
 }
 
 
 void RAM::writeRAM(const int &addressIn, const uint8_t &dataIn) {
 	//WRITE WITHIN A WORD ITSELF
-	uint32_t temp = address[addressIn / 4];
+	uint32_t temp = this->getRAM(addressIn);
 	uint32_t tempIn = dataIn;
 	int shift = addressIn % 4;
 	switch (shift) {
