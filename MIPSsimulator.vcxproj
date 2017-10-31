@@ -112,7 +112,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="data.cpp" />
-    <ClCompile Include="instructiondecode.cpp" />
+    <ClCompile Include="instructionDecode.cpp" />
     <ClCompile Include="instructions.cpp" />
     <ClCompile Include="instructiontable.cpp" />
     <ClCompile Include="main.cpp" />
