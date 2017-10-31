@@ -111,6 +111,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="data.cpp" />
     <ClCompile Include="instructionDecode.cpp" />
     <ClCompile Include="instructions.cpp" />
     <ClCompile Include="instructiontable.cpp" />
@@ -118,6 +119,7 @@
     <ClCompile Include="ram.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="data.hpp" />
     <ClInclude Include="main.hpp" />
     <ClInclude Include="ram.hpp" />
   </ItemGroup>
