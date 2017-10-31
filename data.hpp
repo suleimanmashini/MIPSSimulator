@@ -4,3 +4,5 @@
 
 #include "ram.hpp"
 
+extern RAM mainMemory;
+extern uint32_t Register[32] = { 0 };

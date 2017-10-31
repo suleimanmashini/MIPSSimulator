@@ -8,9 +8,6 @@ const int INPUT_IO_ADR = 0x30000000;
 const int OUTPUT_IO_ADR = 0x30000004;
 //RAM AND REGISTERS
 
-RAM mainMemory;
-uint32_t Register[32] = { 0 };
-
 //REGISTER ADDRESSES
 const int R_ZERO = 0; //HARD WIRES TO 0
 const int R_AT = 1; //RESERVED FOR PSEUDO-INSTRUCTIONS

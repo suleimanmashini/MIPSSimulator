@@ -24,8 +24,7 @@ int main() {
 		int count = 0;
 		// obtain file size:
 		while (!feof(pFile)) {
-			
-			
+			mainMemory.writeRAM();
 		}
 	}
 	return 0;
