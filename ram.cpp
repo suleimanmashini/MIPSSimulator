@@ -69,17 +69,16 @@ void RAM::writeRAM(const int &addressIn, const uint8_t &dataIn) {
 	switch (shift) {
 	case 0:
 		//shift and return
-		address[addressIn / 4] = ((temp & 0x00FFFFFF) | (tempIn << 24));
+		this->writeRAM(addressIn, ((temp & 0x00FFFFFF) | (tempIn << 24)));
 		break;
 	case 1:
-		address[addressIn / 4] = ((temp & 0xFF00FFFF) | (tempIn << 16));
+		this->writeRAM(addressIn, ((temp & 0xFF00FFFF) | (tempIn << 16)));
 		break;
 	case 2:
-		address[addressIn / 4] = ((temp & 0xFFFF00FF) | (tempIn << 8));
+		this->writeRAM(addressIn, ((temp & 0xFFFF00FF) | (tempIn << 8)));
 		break;
 	case 3:
-		address[addressIn / 4] = ((temp & 0xFFFF00FF) | (tempIn));
+		this->writeRAM(addressIn, ((temp & 0xFFFF00FF) | (tempIn)));
 	default:
 	}
-}
 }
