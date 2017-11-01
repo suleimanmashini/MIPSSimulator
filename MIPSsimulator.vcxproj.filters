@@ -38,9 +38,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="main.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ram.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
