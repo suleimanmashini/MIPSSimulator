@@ -7,12 +7,10 @@ using namespace std;
 
 void fetchIntstructions() {
 	uint32_t address = INSTRUCTION_START_ADR;
-	uint32_t instr;
+	uint32_t instr = mainMemory.getRAM(address);
 	uint8_t opcode;
 
-	// TODO: if the instruction is 0 terminates immediately
-
-	do {
+	while (instr != 0) {
 		instr = mainMemory.getRAM(address);
 		address += 4;
 
@@ -29,14 +27,30 @@ void fetchIntstructions() {
 		default:
 			decodeIType(instr);
 		}
-	} while (instr != 0);
+	}
+
+	// What should it call after it finishes the instructions?
 }
 
 // Decodes the funct of the R-Type instruction
 void decodeRType(uint32_t instr) {
+	// Extracts the fields
+	uint8_t rs = instr << 6;
+	rs >>= 27;
+
+	uint8_t rt = instr << 11;
+	rt >>= 27;
+
+	uint8_t rd = instr << 16;
+	rd >>= 27;
+
+	uint8_t shamt = instr << 21;
+	shamt >>= 27;
+
 	uint8_t funct = instr << 26;
 	funct >>= 26;
 
+	// Decodes the funct field
 	switch (funct) {
 	case 0b000000:
 		// sll
@@ -120,8 +134,19 @@ void decodeRType(uint32_t instr) {
 }
 
 void decodeIType(uint32_t instr) {
+	// Extracts the fields
 	uint8_t opcode = instr >> 26;
 
+	uint8_t rs = instr << 6;
+	rs >>= 27;
+
+	uint8_t rt = instr << 11;
+	rt >>= 27;
+
+	uint16_t const_addr = instr << 16;
+	const_addr >>= 16;
+
+	// Decodes the opcode field
 	switch (opcode) {
 	case 0b001000:
 		// addi
@@ -189,10 +214,12 @@ void decodeIType(uint32_t instr) {
 }
 
 void decodeJType(uint32_t instr) {
+	// Extracts the fields
 	uint8_t opcode = instr >> 26;
 	uint32_t target = instr << 6;
 	target >>= 6;
 
+	// Decodes the op field
 	if (opcode == 0b000010) {} // j
 	else {} // jal
 }
