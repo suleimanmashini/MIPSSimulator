@@ -4,18 +4,14 @@
 #include "data.hpp"
 
 using namespace std;
-//why do you have global variables? you should move them to the revelant functions
-//this will free space up in the heap... 
 
-uint32_t address = INSTRUCTION_START_ADR;
-uint32_t instr;
-int opcode;
 void fetchIntstrucions() {
-	
+	uint32_t address = INSTRUCTION_START_ADR;
+	uint32_t instr;
+	int opcode;
 
 	do {
 		instr = mainMemory.getRAM(address);
-		//changed to +4 not 32, youre incrementing by bytes not bits
 		address += 4;
 
 		opcode = instr;
@@ -23,7 +19,7 @@ void fetchIntstrucions() {
 
 		switch (opcode) {
 		case 0:
-			decodeRType();
+			decodeRType(instr);
 			break;
 
 		}
@@ -31,10 +27,7 @@ void fetchIntstrucions() {
 }
 
 // Decodes the funct of the R-Type instruction
-void decodeRType() {
-	//why are you left shifting then right shifting? isnt that redundant?
-	//why isnt instr just passed as an argument for function?
-	int funct = instr;
+void decodeRType(uint32_t funct) {
 	funct << 26;
 	funct >> 26;
 

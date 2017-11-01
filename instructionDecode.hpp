@@ -2,4 +2,4 @@
 
 void fetchIntstrucions();
 
-void decodeRType();
+void decodeRType(uint32_t funct);
