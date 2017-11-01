@@ -47,5 +47,8 @@
     <ClInclude Include="instructionDecode.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="instructions.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
