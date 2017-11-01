@@ -1,19 +1,22 @@
 #pragma once
 
 #include "instructionDecode.hpp"
-#include "ram.hpp"
 #include "data.hpp"
 
 using namespace std;
+//why do you have global variables? you should move them to the revelant functions
+//this will free space up in the heap... 
 
 uint32_t address = INSTRUCTION_START_ADR;
 uint32_t instr;
 int opcode;
-
 void fetchIntstrucions() {
+	
+
 	do {
 		instr = mainMemory.getRAM(address);
-		address += 32;
+		//changed to +4 not 32, youre incrementing by bytes not bits
+		address += 4;
 
 		opcode = instr;
 		opcode >> 26;
@@ -29,6 +32,8 @@ void fetchIntstrucions() {
 
 // Decodes the funct of the R-Type instruction
 void decodeRType() {
+	//why are you left shifting then right shifting? isnt that redundant?
+	//why isnt instr just passed as an argument for function?
 	int funct = instr;
 	funct << 26;
 	funct >> 26;
