@@ -1,3 +1,5 @@
 #pragma once
 
-#include <stdfint.h>
+void fetchIntstrucions();
+
+void decodeRType();
