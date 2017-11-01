@@ -5,31 +5,37 @@
 
 using namespace std;
 
-void fetchIntstrucions() {
+void fetchIntstructions() {
 	uint32_t address = INSTRUCTION_START_ADR;
 	uint32_t instr;
-	int opcode;
+	uint8_t opcode;
+
+	// TODO: if the instruction is 0 terminates immediately
 
 	do {
 		instr = mainMemory.getRAM(address);
 		address += 4;
 
-		opcode = instr;
-		opcode >> 26;
+		opcode = instr >> 26;
 
 		switch (opcode) {
 		case 0:
 			decodeRType(instr);
 			break;
-
+		case 0b000010:
+		case 0b000011:
+			decodeJType(instr);
+			break;
+		default:
+			decodeIType(instr);
 		}
 	} while (instr != 0);
 }
 
 // Decodes the funct of the R-Type instruction
-void decodeRType(uint32_t funct) {
-	funct << 26;
-	funct >> 26;
+void decodeRType(uint32_t instr) {
+	uint8_t funct = instr << 26;
+	funct >>= 26;
 
 	switch (funct) {
 	case 0b000000:
@@ -111,5 +117,82 @@ void decodeRType(uint32_t funct) {
 		// sltu
 		break;
 	}
+}
 
+void decodeIType(uint32_t instr) {
+	uint8_t opcode = instr >> 26;
+
+	switch (opcode) {
+	case 0b001000:
+		// addi
+		break;
+	case 0b001001:
+		// addiu
+		break;
+	case 0b001100:
+		// andi
+		break;
+	case 0b001111:
+		// lui
+		break;
+	case 0b001101:
+		// ori
+		break;
+	case 0b001010:
+		// slti
+		break;
+	case 0b001011:
+		// sltiu
+		break;
+	case 0b001110:
+		// xori
+	case 0b000100:
+		// beq
+		break;
+	case 0b000001:
+		// bgez, bgezal, bltz, bltzal
+		break;
+	case 0b000111:
+		// bgtz
+		break;
+	case 0b000110:
+		// blez
+		break;
+	case 0b000101:
+		// bne
+		break;
+	case 0b100000:
+		// lb
+		break;
+	case 0b100100:
+		// lbu
+		break;
+	case 0b100001:
+		// lh
+		break;
+	case 0b100101:
+		// lhu
+		break;
+	case 0b100011:
+		// lw
+		break;
+	case 0b101000:
+		// sb
+		break;
+	case 0b101001:
+		// sh
+		break;
+	case 0b101011:
+		// sw
+		break;
+	}
+}
+
+void decodeJType(uint32_t instr) {
+	uint8_t opcode = instr >> 26;
+	uint32_t target = instr << 6;
+	target >>= 6;
+
+	if (opcode == 0b000010) {} // j
+	else {} // jal
 }
