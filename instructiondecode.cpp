@@ -1,38 +1,56 @@
 #pragma once
 
 #include "instructionDecode.hpp"
-#include "ram.hpp"
 #include "data.hpp"
 
 using namespace std;
 
-uint32_t address = INSTRUCTION_START_ADR;
-uint32_t instr;
-int opcode;
+void fetchIntstructions() {
+	uint32_t address = INSTRUCTION_START_ADR;
+	uint32_t instr = mainMemory.getRAM(address);
+	uint8_t opcode;
 
-void fetchIntstrucions() {
-	do {
+	while (instr != 0 && address <= (INSTRUCTION_START_ADR + 0x1000000)) {
 		instr = mainMemory.getRAM(address);
-		address += 32;
+		address += 4;
 
-		opcode = instr;
-		opcode >> 26;
+		opcode = instr >> 26;
 
 		switch (opcode) {
 		case 0:
-			decodeRType();
+			decodeRType(instr);
 			break;
-
+		case 0b000010:
+		case 0b000011:
+			decodeJType(instr);
+			break;
+		default:
+			decodeIType(instr);
 		}
-	} while (instr != 0);
+	}
+
+	// What should it call after it finishes the instructions?
 }
 
 // Decodes the funct of the R-Type instruction
-void decodeRType() {
-	int funct = instr;
-	funct << 26;
-	funct >> 26;
+void decodeRType(uint32_t instr) {
+	// Extracts the fields
+	uint8_t rs = instr << 6;
+	rs >>= 27;
 
+	uint8_t rt = instr << 11;
+	rt >>= 27;
+
+	uint8_t rd = instr << 16;
+	rd >>= 27;
+
+	uint8_t shamt = instr << 21;
+	shamt >>= 27;
+
+	uint8_t funct = instr << 26;
+	funct >>= 26;
+
+	// Decodes the funct field
 	switch (funct) {
 	case 0b000000:
 		// sll
@@ -113,5 +131,95 @@ void decodeRType() {
 		// sltu
 		break;
 	}
+}
 
+void decodeIType(uint32_t instr) {
+	// Extracts the fields
+	uint8_t opcode = instr >> 26;
+
+	uint8_t rs = instr << 6;
+	rs >>= 27;
+
+	uint8_t rt = instr << 11;
+	rt >>= 27;
+
+	uint16_t const_addr = instr << 16;
+	const_addr >>= 16;
+
+	// Decodes the opcode field
+	switch (opcode) {
+	case 0b001000:
+		// addi
+		break;
+	case 0b001001:
+		// addiu
+		break;
+	case 0b001100:
+		// andi
+		break;
+	case 0b001111:
+		// lui
+		break;
+	case 0b001101:
+		// ori
+		break;
+	case 0b001010:
+		// slti
+		break;
+	case 0b001011:
+		// sltiu
+		break;
+	case 0b001110:
+		// xori
+	case 0b000100:
+		// beq
+		break;
+	case 0b000001:
+		// bgez, bgezal, bltz, bltzal
+		break;
+	case 0b000111:
+		// bgtz
+		break;
+	case 0b000110:
+		// blez
+		break;
+	case 0b000101:
+		// bne
+		break;
+	case 0b100000:
+		// lb
+		break;
+	case 0b100100:
+		// lbu
+		break;
+	case 0b100001:
+		// lh
+		break;
+	case 0b100101:
+		// lhu
+		break;
+	case 0b100011:
+		// lw
+		break;
+	case 0b101000:
+		// sb
+		break;
+	case 0b101001:
+		// sh
+		break;
+	case 0b101011:
+		// sw
+		break;
+	}
+}
+
+void decodeJType(uint32_t instr) {
+	// Extracts the fields
+	uint8_t opcode = instr >> 26;
+	uint32_t target = instr << 6;
+	target >>= 6;
+
+	// Decodes the op field
+	if (opcode == 0b000010) {} // j
+	else {} // jal
 }

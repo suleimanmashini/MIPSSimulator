@@ -2,33 +2,34 @@
 //SULEIMAN MASHINI, IONUT MOTOI, VICTOR SANCHEZS
 
 #include "data.hpp"
-#include <cstdio>
 #include <iostream>
 #include <string>
+#include <fstream>
 #include <cstring>
 
 using namespace std;
 
 int main() {
+	
+	ifstream inFile;
 	string inBinary;
-	long lSize;
 	cout << "Please input the binary file name" << endl;
 	cin >> inBinary;
-	FILE * pFile;
-	pFile= fopen(inBinary.c_str(), "r");
-	if (pFile == NULL) {
+	inFile.open(inBinary.c_str(), ios::binary);
+	if (!inFile.is_open()) {
 		cout << "Invalid File";
 		exit (12); //EXIT IF INVALID FILE
 	}
 	else {
-		int count = 0;
-		uint32_t* tempIn;
-		tempIn = new uint32_t;
+		char inValue[4];
+		uint32_t tempInValue = 0;
+		int tempAddressImport = 0;
 		// obtain file size:
-		while (!feof(pFile)) {
-			fread(tempIn, 4, lSize, pFile);
-			mainMemory.writeRAM(INSTRUCTION_START_ADR + count, *tempIn);
-			count += 4;
+		while (!inFile.eof()) {
+			inFile.read(inValue, 4);
+			tempAddressImport = 0;
+			tempInValue = ((((uint32_t)inValue[0]) << 24) | ((uint32_t)inValue[1]) << 16) | ((uint32_t)inValue[2]) << 8) | ((uint32_t)inValue[3]) );
+			mainMemory.writeRAM(INSTRUCTION_START_ADR + tempAddressImport, tempInValue);
 		}
 	}
 	return 0;

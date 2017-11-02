@@ -121,7 +121,7 @@
   <ItemGroup>
     <ClInclude Include="data.hpp" />
     <ClInclude Include="instructionDecode.hpp" />
-    <ClInclude Include="main.hpp" />
+    <ClInclude Include="instructions.hpp" />
     <ClInclude Include="ram.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
