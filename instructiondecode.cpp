@@ -10,7 +10,7 @@ void fetchIntstructions() {
 	uint32_t instr = mainMemory.getRAM(address);
 	uint8_t opcode;
 
-	while (instr != 0) {
+	while (instr != 0 && address <= (INSTRUCTION_START_ADR + 0x1000000)) {
 		instr = mainMemory.getRAM(address);
 		address += 4;
 
