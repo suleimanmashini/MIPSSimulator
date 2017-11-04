@@ -28,8 +28,6 @@ void fetchIntstructions() {
 			decodeIType(instr);
 		}
 	}
-
-	// What should it call after it finishes the instructions?
 }
 
 // Decodes the funct of the R-Type instruction
