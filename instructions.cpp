@@ -2,34 +2,34 @@
 
 //shift left logical
 void sll(uint32_t *Register, uint32_t rd, uint32_t rt, uint32_t sa){
-    Register[rd] = rt << sa;
+    Register[rd] = Registe[rt] << sa;
 }
 
 //shift right logical
 void srl(uint32_t *Register, uint32_t rd, uint32_t rt, uint32_t sa){
-    Register[rd] = rt >> sa;
+    Register[rd] = Registe[rt] >> sa;
     Rgister[rd] & (0xFFFFFFFF >> sa);
 }
 
 //shift right arithmetic, default right shift c++
 void sra(uint32_t *Register, uint32_t rd, uint32_t rt, uint32_t sa){
-    Register[rd] = rt >> sa;
+    Register[rd] = Registe[rt] >> sa;
 }
 
 //shift left logical variable
-void sllv(uint32_t *Register, uint32_t rd, uint32_t rt, uint32_t rs){
-    Register[rd] = rs << rt;
+void sllv(uint32_t *Register, uint32_t rd, uint32_t rs, uint32_t rt){
+    Register[rd] = Registe[rt] << Registe[rs];
 }
 
 //shift right logical variable
 void srlv(uint32_t *Register, uint32_t rd, uint32_t rt, uint32_t rs){
-    Register[rd] = rt >> rs;
-    Rgister[rd] & (0xFFFFFFFF >> rs);
+    Register[rd] = Registe[rt] >> Registe[rs];
+    Rgister[rd] & (0xFFFFFFFF >> Registe[rs]);
 }
 
 //shift right arithmetic variable (default c++)
 void srav(uint32_t *Register, uint32_t rd, uint32_t rt, uint32_t rs){
-    Register[rd] = rt >> sa;
+    Register[rd] = Registe[rt] >> sa;
 }
 
 
@@ -45,18 +45,18 @@ void div();
 void divu();
 
 //return 1 when overflow occurs
-bool add(uint32_t *Register, uint32_t rd, uint32_t rt, uint32_t rs){
-    Registe[rd] = rt + rs;
+bool add(uint32_t *Register, uint32_t rd, uint32_t rs, uint32_t rt){
+    Registe[rd] = Registe[rt] + Registe[rs];
     
     //different signs, no overflow possible
-    if(rd*rt =< 0){
+    if(Registe[rd]*Registe[rt] =< 0){
         return 0;
     }
     
     //same signs:
     else{
         //result has different sign from operands ==> overflow
-        if(rt*array[rd] < 0){
+        if(Registe[rd]*Registe[rt] < 0){
             return 1;
         }
         else{
@@ -66,21 +66,21 @@ bool add(uint32_t *Register, uint32_t rd, uint32_t rt, uint32_t rs){
 }
 
 //basic add, no concern for overflow
-void addu(uint32_t *Register, uint32_t rd, uint32_t rt, uint32_t rs){
-    Register[rd] = rt + rs;
+void addu(uint32_t *Register, uint32_t rd, uint32_t rs, uint32_t rt){
+    Register[rd] = Registe[rt] + Registe[rs];
 }
 
 bool sub(uint32_t *Register, uint32_t rd, uint32_t rt, uint32_t rs){
-    Register[rd] = rt - rs;
+    Register[rd] = Registe[rs] - Registe[rt];
     //same signs, no overflow possible
-    if(rd*rt >= 0){
+    if(Register[rd]*Registe[rt] >= 0){
         return 0;
     }
     
     //different signs:
     else{
         //result has different sign from subtrahend ==> overflow
-        if(rt*array[rd] < 0){
+        if(Register[rd]*Registe[rt] < 0){
             return 1;
         }
         else{
@@ -91,28 +91,36 @@ bool sub(uint32_t *Register, uint32_t rd, uint32_t rt, uint32_t rs){
 
 //basic subtraction, no concern for overflow
 void subu(uint32_t *Register, uint32_t rd, uint32_t rt, uint32_t rs){
-    Registe[rd] = rt - rs;
+    Registe[rd] = Registe[rs] - Registe[rt];
 }
 
 //bitwise and
-void and(uint32_t *Register, uint32_t rd, uint32_t rt, uint32_t rs){
-    Register[rd] = rt & rs;
+void and(uint32_t *Register, uint32_t rd, uint32_t rs, uint32_t rt){
+    Register[rd] = Registe[rt] & Registe[rs];
 }
 
 //bitwise or
-void or(uint32_t *Register, uint32_t rd, uint32_t rt, uint32_t rs){
-    Register[rd] = rt | rs;
+void or(uint32_t *Register, uint32_t rd, uint32_t rs, uint32_t rt){
+    Register[rd] = Registe[rt] | Registe[rs];
 }
 
 //bitwise xor
-void xor(uint32_t *Register, uint32_t rd, uint32_t rt, uint32_t rs){
-    Register[rd] = ((rt | rs)&(~rt | ~rs))
+void xor(uint32_t *Register, uint32_t rd, uint32_t rs, uint32_t rt){
+    Register[rd] = ((Registe[rt] | Registe[rs])&(~Registe[rt] | ~Registe[rs]))
 }
 
 //bitwise nor
-void nor(uint32_t *Register, uint32_t rd, uint32_t rt, uint32_t rs){
-    Register[rd] = ~(rt | rs);
+void nor(uint32_t *Register, uint32_t rd, uint32_t rs, uint32_t rt){
+    Register[rd] = ~(Registe[rt] | Registe[rs]);
 }
     
-void slt();
-void sltu();
+//set if less than equal
+void slt(uint32_t *Register, uint32_t rd, uint32_t rs, uint32_t rt){
+    Register[rd] = (Register[rs]<Register[rt])? 1 : 0;
+}
+
+//set if less than equal unsigned version
+void sltu(uint32_t *Register, uint32_t rd, uint32_t rs, uint32_t rt){
+    Register[rd] = (abs(Register[rs]) < abs(Register[rt]))? 1 : 0;
+}
+        
