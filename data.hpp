@@ -4,17 +4,21 @@
 
 #include "ram.hpp"
 
-extern RAM mainMemory;
-extern uint32_t Register[34] = { 0 };
-
-//IMPORTANT ADDRESSES
 extern enum {
-	EXIT_ADR = 0, 
-	INSTRUCTION_START_ADR = 0x10000000, 
-	INPUT_IO_ADR = 0x30000000, 
+	EXIT_ADR = 0,
+	INSTRUCTION_START_ADR = 0x10000000,
+	INPUT_IO_ADR = 0x30000000,
 	OUTPUT_IO_ADR = 0x30000004
 };
 
+extern RAM mainMemory;
+extern uint32_t Register[35] = { 
+	0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0, INSTRUCTION_START_ADR};
+
+//IMPORTANT ADDRESSES
 //RAM AND REGISTERS
 extern enum {
 	RZERO, //HARD WIRES TO 0
@@ -29,5 +33,6 @@ extern enum {
 	SP, //STACK POINTER
 	FP, //FRAME POINTER
 	RA, //RETURN ADDRESS
-	HI, LO
+	HI, LO,
+	PC
 };
