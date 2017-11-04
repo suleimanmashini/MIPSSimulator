@@ -14,8 +14,10 @@ void sllv(uint32_t *Register, uint32_t rd, uint32_t rs, uint32_t rt);
 void srlv(uint32_t *Register, uint32_t rd, uint32_t rt, uint32_t rs);
 void srav(uint32_t *Register, uint32_t rd, uint32_t rt, uint32_t rs);
 
-//to do (jtype)
-void jr(uint32_t *Register, uint32_t rs);
+
+void jr(uint32_t *Register, uint32_t rs){
+    
+}
 void jalr(uint32_t *Register, uint32_t rd, uint32_t rs);
 
 
