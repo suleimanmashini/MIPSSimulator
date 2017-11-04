@@ -44,16 +44,75 @@ void multu();
 void div();
 void divu();
 
-void add(uint32_t *Register, uint32_t rd, uint32_t rt, uint32_t rs){
+//return 1 when overflow occurs
+bool add(uint32_t *Register, uint32_t rd, uint32_t rt, uint32_t rs){
     Registe[rd] = rt + rs;
+    
+    //different signs, no overflow possible
+    if(rd*rt =< 0){
+        return 0;
+    }
+    
+    //same signs:
+    else{
+        //result has different sign from operands ==> overflow
+        if(rt*array[rd] < 0){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
 }
 
-void addu();
-void sub();
-void subu();
-void and();
-void or();
-void xor();
-void nor();
+//basic add, no concern for overflow
+void addu(uint32_t *Register, uint32_t rd, uint32_t rt, uint32_t rs){
+    Register[rd] = rt + rs;
+}
+
+bool sub(uint32_t *Register, uint32_t rd, uint32_t rt, uint32_t rs){
+    Register[rd] = rt - rs;
+    //same signs, no overflow possible
+    if(rd*rt >= 0){
+        return 0;
+    }
+    
+    //different signs:
+    else{
+        //result has different sign from subtrahend ==> overflow
+        if(rt*array[rd] < 0){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+}
+
+//basic subtraction, no concern for overflow
+void subu(uint32_t *Register, uint32_t rd, uint32_t rt, uint32_t rs){
+    Registe[rd] = rt - rs;
+}
+
+//bitwise and
+void and(uint32_t *Register, uint32_t rd, uint32_t rt, uint32_t rs){
+    Register[rd] = rt & rs;
+}
+
+//bitwise or
+void or(uint32_t *Register, uint32_t rd, uint32_t rt, uint32_t rs){
+    Register[rd] = rt | rs;
+}
+
+//bitwise xor
+void xor(uint32_t *Register, uint32_t rd, uint32_t rt, uint32_t rs){
+    Register[rd] = ((rt | rs)&(~rt | ~rs))
+}
+
+//bitwise nor
+void nor(uint32_t *Register, uint32_t rd, uint32_t rt, uint32_t rs){
+    Register[rd] = ~(rt | rs);
+}
+    
 void slt();
 void sltu();
