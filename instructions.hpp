@@ -5,13 +5,13 @@
 
 
 //R-type
-void sll(uint8_t rs, uint8_t rd, uint8_t rt);
-void srl(uint8_t rs, uint8_t rd, uint8_t rt);
-void sra(uint8_t rs, uint8_t rd, uint8_t rt);
-void sllv(uint8_t rs, uint8_t rd, uint8_t rt);
-void srlv(uint8_t rs, uint8_t rd, uint8_t rt);
-void srav(uint8_t rs, uint8_t rd, uint8_t rt);
-void jr(uint8_t rs, uint8_t rd, uint8_t rt);
+void sll();
+void srl();
+void sra();
+void sllv();
+void srlv();
+void srav();
+void jr();
 void jalr(uint8_t rs, uint8_t rd, uint8_t rt);
 void mfhi(uint8_t rs, uint8_t rd, uint8_t rt);
 void mthi(uint8_t rs, uint8_t rd, uint8_t rt);
@@ -21,7 +21,11 @@ void mult(uint8_t rs, uint8_t rd, uint8_t rt);
 void multu(uint8_t rs, uint8_t rd, uint8_t rt);
 void div(uint8_t rs, uint8_t rd, uint8_t rt);
 void divu(uint8_t rs, uint8_t rd, uint8_t rt);
-void add(uint8_t rs, uint8_t rd, uint8_t rt);
+
+void add(uint32_t Register[32], int rd, int rs, int rt)
+
+
+
 void addu(uint8_t rs, uint8_t rd, uint8_t rt);
 void sub(uint8_t rs, uint8_t rd, uint8_t rt);
 void subu(uint8_t rs, uint8_t rd, uint8_t rt);
