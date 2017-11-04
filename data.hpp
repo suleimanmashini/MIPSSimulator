@@ -5,7 +5,7 @@
 #include "ram.hpp"
 
 extern RAM mainMemory;
-extern uint32_t Register[34] = { 0 };
+extern uint32_t Register[35] = { 0 };
 
 //IMPORTANT ADDRESSES
 extern enum {
@@ -29,5 +29,6 @@ extern enum {
 	SP, //STACK POINTER
 	FP, //FRAME POINTER
 	RA, //RETURN ADDRESS
-	HI, LO
+	HI, LO,
+	PC
 };
