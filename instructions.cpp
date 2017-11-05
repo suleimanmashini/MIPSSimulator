@@ -1,51 +1,92 @@
 #include "instructions.hpp"
 
 //shift left logical
-void sll(uint32_t rd, uint32_t rt, uint32_t sa){
-    Register[rd] = Register[rt] << sa;
+void sll(uint8_t rd, uint8_t rt, uint8_t shamt){
+    Register[rd] = Register[rt] << shamt;
 }
 
 //shift right logical
-void srl(uint32_t rd, uint32_t rt, uint32_t sa){
-    Register[rd] = Register[rt] >> sa;
-    Rgister[rd] & (0xFFFFFFFF >> sa);
+void srl(uint8_t rd, uint8_t rt, uint8_t shamt){
+    Register[rd] = Register[rt] >> shamt;
+    Rgister[rd] & (0xFFFFFFFF >> shamt);
 }
 
 //shift right arithmetic, default right shift c++
-void sra(uint32_t rd, uint32_t rt, uint32_t sa){
-    Register[rd] = Register[rt] >> sa;
+void sra(uint8_t rd, uint8_t rt, uint8_t shamt){
+    Register[rd] = Register[rt] >> shamt;
 }
 
 //shift left logical variable
-void sllv(uint32_t rd, uint32_t rs, uint32_t rt){
+void sllv(uint8_t rd, uint8_t rs, uint8_t rt){
     Register[rd] = Register[rt] << Register[rs];
 }
 
 //shift right logical variable
-void srlv(uint32_t rd, uint32_t rt, uint32_t rs){
+void srlv(uint8_t rd, uint8_t rt, uint8_t rs){
     Register[rd] = Register[rt] >> Register[rs];
     Rgister[rd] & (0xFFFFFFFF >> Registe[rs]);
 }
 
 //shift right arithmetic variable (default c++)
-void srav(uint32_t rd, uint32_t rt, uint32_t rs){
-    Register[rd] = Register[rt] >> sa;
+void srav(uint8_t rd, uint8_t rt, uint8_t rs){
+    Register[rd] = Register[rt] >> Register[rs];
 }
 
+//jump register
+void jr(uint8_t rs){
+    uint8_t nPC = Register[rs];
+    PC = nPC;
+}
 
-void jr();
+//not sure what this does
 void jalr();
-void mfhi();
-void mthi();
-void mflo();
-void mtlo();
-void mult();
-void multu();
-void div();
-void divu();
+
+//move from hi
+void mfhi(uint8_t rd){
+    Register[rd] = HI;
+}
+
+//move to hi
+void mthi(uint8_t rs){
+    HI = Register[rs];
+}
+
+//move from low
+void mflo(uint8_t rd){
+    Register[rd] = LO;
+}
+
+//move to low
+void mtlo(uint8_t rs){
+    LO = Register[rs];
+}
+
+//overflow condition ?
+bool mult(uint8_t rs, uint8_t rt){
+    LO = (Register[rs]*Register[rt]) << 0xFFFFFFFF;
+    HI = (Register[rs]*Register[rt]) >> 0xFFFFFFFF;
+}
+
+//unsigned mult
+void multu(uint8_t rs, uint8_t rt){
+    LO = (Register[rs]*Register[rt]) << 0xFFFFFFFF;
+    HI = (Register[rs]*Register[rt]) >> 0xFFFFFFFF;
+}
+
+//overflow ?
+void div(uint8_t rs, uint8_t rt){
+    LO = Register[rs] / Register[rt];
+    HI = Register[rs] % Register[rt];
+}
+
+//unsigned division
+void divu(uint8_t rs, uint8_t rt){
+    LO = Register[rs] / Register[rt];
+    HI = Register[rs] % Register[rt];
+}
 
 //return 1 when overflow occurs
-bool add(uint32_t rd, uint32_t rs, uint32_t rt){
+bool add(uint8_t rd, uint8_t rs, uint8_t rt){
     Register[rd] = Register[rt] + Register[rs];
     
     //different signs, no overflow possible
@@ -66,11 +107,11 @@ bool add(uint32_t rd, uint32_t rs, uint32_t rt){
 }
 
 //basic add, no concern for overflow
-void addu(uint32_t rd, uint32_t rs, uint32_t rt){
+void addu(uint8_t rd, uint8_t rs, uint8_t rt){
     Register[rd] = Register[rt] + Register[rs];
 }
 
-bool sub(uint32_t rd, uint32_t rt, uint32_t rs){
+bool sub(uint8_t rd, uint8_t rt, uint8_t rs){
     Register[rd] = Register[rs] - Register[rt];
     //same signs, no overflow possible
     if(Register[rd]*Register[rt] >= 0){
@@ -90,37 +131,37 @@ bool sub(uint32_t rd, uint32_t rt, uint32_t rs){
 }
 
 //basic subtraction, no concern for overflow
-void subu(uint32_t rd, uint32_t rt, uint32_t rs){
+void subu(uint8_t rd, uint8_t rt, uint8_t rs){
     Register[rd] = Register[rs] - Register[rt];
 }
 
 //bitwise and
-void and(uint32_t rd, uint32_t rs, uint32_t rt){
+void and(uint8_t rd, uint8_t rs, uint8_t rt){
     Register[rd] = Register[rt] & Register[rs];
 }
 
 //bitwise or
-void or(uint32_t rd, uint32_t rs, uint32_t rt){
+void or(uint8_t rd, uint8_t rs, uint8_t rt){
     Register[rd] = Register[rt] | Register[rs];
 }
 
 //bitwise xor
-void xor(uint32_t rd, uint32_t rs, uint32_t rt){
+void xor(uint8_t rd, uint8_t rs, uint8_t rt){
     Register[rd] = ((Register[rt] | Register[rs])&(~Register[rt] | ~Register[rs]))
 }
 
 //bitwise nor
-void nor(uint32_t rd, uint32_t rs, uint32_t rt){
+void nor(uint8_t rd, uint8_t rs, uint8_t rt){
     Register[rd] = ~(Register[rt] | Register[rs]);
 }
     
 //set if less than equal
-void slt(uint32_t rd, uint32_t rs, uint32_t rt){
+void slt(uint8_t rd, uint8_t rs, uint8_t rt){
     Register[rd] = (Register[rs]<Register[rt])? 1 : 0;
 }
 
 //set if less than equal unsigned version
-void sltu(uint32_t rd, uint32_t rs, uint32_t rt){
+void sltu(uint8_t rd, uint8_t rs, uint8_t rt){
     Register[rd] = (abs(Register[rs]) < abs(Register[rt]))? 1 : 0;
 }
         
