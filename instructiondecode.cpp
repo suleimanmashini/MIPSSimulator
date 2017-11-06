@@ -2,6 +2,7 @@
 
 #include "instructionDecode.hpp"
 #include "data.hpp"
+#include "instructions.hpp"
 
 using namespace std;
 
@@ -51,82 +52,82 @@ void decodeRType(uint32_t instr) {
 	// Decodes the funct field
 	switch (funct) {
 	case 0b000000:
-		// sll
+		sll(rd, rt, shamt);
 		break;
 	case 0b000010:
-		// srl
+		srl(rd, rt, shamt);
 		break;
 	case 0b000011:
-		// sra
+		sra(rd, rt, shamt);
 		break;
 	case 0b000100:
-		// sllv
+		sllv(rd, rs, rt);
 		break;
 	case 0b000110:
-		// srlv
+		srlv(rd, rt, rs);
 		break;
 	case 0b000111:
-		// srav
+		srav(rd, rt, rs);
 		break;
 	case 0b001000:
-		// jr
+		jr(rs);
 		break;
 	case 0b001001:
-		// jalr
+		jalr(rd, rs);
 		break;
 	case 0b010000:
-		// mfhi
+		mfhi(rd);
 		break;
 	case 0b010001:
-		// mthi
+		mthi(rs);
 		break;
 	case 0b010010:
-		// mflo
+		mflo(rd);
 		break;
 	case 0b010011:
-		// mtlo
+		mtlo(rs);
 		break;
 	case 0b011000:
-		// mult
+		mult(rs, rt);
 		break;
 	case 0b011001:
-		// multu
+		multu(rs, rt);
 		break;
 	case 0b011010:
-		// div
+		div(rs, rt);
 		break;
 	case 0b011011:
-		// divu
+		divu(rs, rt);
 		break;
 	case 0b100000:
-		// add
+		add(rd, rs, rt);
 		break;
 	case 0b100001:
-		// addu
+		addu(rd, rs, rt);
 		break;
 	case 0b100010:
-		// sub
+		sub(rd, rt, rs);
 		break;
 	case 0b100011:
-		// subu
+		subu(rd, rt, rs);
 		break;
 	case 0b100100:
-		// and
+		and(rd, rt, rs);
 		break;
 	case 0b100101:
-		// or
+		or(rd, rs, rt);
 		break;
 	case 0b100110:
-		// xor
+		xor(rd, rs, rt);
 		break;
 	case 0b100111:
-		// nor
+		nor(rd, rs, rt);
 		break;
 	case 0b101010:
-		// slt
+		slt(rd, rs, rt);
 		break;
 	case 0b101011:
-		// sltu
+		sltu(rd, rs, rt);
 		break;
 	}
 }
