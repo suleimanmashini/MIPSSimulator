@@ -28,7 +28,7 @@ int main() {
 		while (!inFile.eof()) {
 			inFile.read(inValue, 4);
 			tempAddressImport = 0;
-			tempInValue = ((((uint32_t)inValue[0]) << 24) | ((uint32_t)inValue[1]) << 16) | ((uint32_t)inValue[2]) << 8) | ((uint32_t)inValue[3]) );
+			tempInValue = (((((uint32_t)inValue[0]) << 24) | ((uint32_t)inValue[1]) << 16) | (((uint32_t)inValue[2]) << 8) | ((uint32_t)inValue[3]) );
 			mainMemory.writeRAM(INSTRUCTION_START_ADR + tempAddressImport, tempInValue);
 		}
 	}
