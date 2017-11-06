@@ -112,7 +112,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="data.cpp" />
     <ClCompile Include="instructionDecode.cpp" />
     <ClCompile Include="instructions.cpp" />
     <ClCompile Include="main.cpp" />
