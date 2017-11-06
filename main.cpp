@@ -21,6 +21,7 @@ int main() {
 		exit (12); //EXIT IF INVALID FILE
 	}
 	else {
+		
 		char inValue[4];
 		uint32_t tempInValue = 0;
 		int tempAddressImport = 0;
