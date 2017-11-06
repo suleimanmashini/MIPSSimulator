@@ -21,9 +21,6 @@
     <ClCompile Include="ram.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="instructiontable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="instructions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

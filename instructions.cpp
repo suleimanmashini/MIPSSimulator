@@ -8,7 +8,7 @@ void sll(uint8_t rd, uint8_t rt, uint8_t shamt){
 //shift right logical
 void srl(uint8_t rd, uint8_t rt, uint8_t shamt){
     Register[rd] = Register[rt] >> shamt;
-    Rgister[rd] & (0xFFFFFFFF >> shamt);
+    Register[rd] & (0xFFFFFFFF >> shamt);
 }
 
 //shift right arithmetic, default right shift c++
@@ -24,7 +24,7 @@ void sllv(uint8_t rd, uint8_t rs, uint8_t rt){
 //shift right logical variable
 void srlv(uint8_t rd, uint8_t rt, uint8_t rs){
     Register[rd] = Register[rt] >> Register[rs];
-    Rgister[rd] & (0xFFFFFFFF >> Registe[rs]);
+    Register[rd] & (0xFFFFFFFF >> Register[rs]);
 }
 
 //shift right arithmetic variable (default c++)
@@ -35,7 +35,7 @@ void srav(uint8_t rd, uint8_t rt, uint8_t rs){
 //jump register
 void jr(uint8_t rs){
     uint8_t nPC = Register[rs];
-    PC = nPC;
+    Register[PC] = nPC;
 }
 
 //not sure what this does
@@ -48,7 +48,7 @@ void mfhi(uint8_t rd){
 
 //move to hi
 void mthi(uint8_t rs){
-    HI = Register[rs];
+    Register[HI] = Register[rs];
 }
 
 //move from low
@@ -58,31 +58,31 @@ void mflo(uint8_t rd){
 
 //move to low
 void mtlo(uint8_t rs){
-    LO = Register[rs];
+    Register[LO] = Register[rs];
 }
 
 //overflow condition ?
 bool mult(uint8_t rs, uint8_t rt){
-    LO = (Register[rs]*Register[rt]) << 0xFFFFFFFF;
-    HI = (Register[rs]*Register[rt]) >> 0xFFFFFFFF;
+   Register[LO] = (Register[rs]*Register[rt]) << 0xFFFFFFFF;
+    Register[HI] = (Register[rs]*Register[rt]) >> 0xFFFFFFFF;
 }
 
 //unsigned mult
 void multu(uint8_t rs, uint8_t rt){
-    LO = (Register[rs]*Register[rt]) << 0xFFFFFFFF;
-    HI = (Register[rs]*Register[rt]) >> 0xFFFFFFFF;
+    Register[LO] = (Register[rs]*Register[rt]) << 0xFFFFFFFF;
+    Register[HI] = (Register[rs]*Register[rt]) >> 0xFFFFFFFF;
 }
 
 //overflow ?
 void div(uint8_t rs, uint8_t rt){
-    LO = Register[rs] / Register[rt];
-    HI = Register[rs] % Register[rt];
+    Register[LO] = Register[rs] / Register[rt];
+    Register[HI] = Register[rs] % Register[rt];
 }
 
 //unsigned division
 void divu(uint8_t rs, uint8_t rt){
-    LO = Register[rs] / Register[rt];
-    HI = Register[rs] % Register[rt];
+    Register[LO] = Register[rs] / Register[rt];
+    Register[HI] = Register[rs] % Register[rt];
 }
 
 //return 1 when overflow occurs
@@ -90,7 +90,7 @@ bool add(uint8_t rd, uint8_t rs, uint8_t rt){
     Register[rd] = Register[rt] + Register[rs];
     
     //different signs, no overflow possible
-    if(Register[rd]*Register[rt] =< 0){
+    if(Register[rd]*Register[rt] =< 0){ //***CHECK THAT UR STATEMENTS WORK!!
         return 0;
     }
     
@@ -162,6 +162,6 @@ void slt(uint8_t rd, uint8_t rs, uint8_t rt){
 
 //set if less than equal unsigned version
 void sltu(uint8_t rd, uint8_t rs, uint8_t rt){
-    Register[rd] = (abs(Register[rs]) < abs(Register[rt]))? 1 : 0;
+    Register[rd] = (abs(Register[rs]) < abs(Register[rt]))? 1 : 0; //**** YOU DIDNT INCLUDE MATHS TO PERFORM ABSOLUTE (WHY ARE YOU USING ABSOLUTE ITS AN UNSIGNED INTEGER??)
 }
         
