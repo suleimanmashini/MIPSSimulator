@@ -4,6 +4,8 @@
 #include "data.hpp"
 #include <cmath>
 
+//default pc incrementer
+uint32_t default_advance = 4;
 
 //R-type
 //done
@@ -37,3 +39,6 @@ void xor(uint8_t rd, uint8_t rs, uint8_t rt);
 void nor(uint8_t rd, uint8_t rs, uint8_t rt);
 void slt(uint8_t rd, uint8_t rs, uint8_t rt);
 void sltu(uint8_t rd, uint8_t rs, uint8_t rt);
+
+//general purpose functions
+void PC_advance(uint32_t advance);
