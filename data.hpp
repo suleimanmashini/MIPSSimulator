@@ -8,13 +8,21 @@ extern RAM mainMemory;
 extern uint32_t Register[32] = { 0 };
 
 //IMPORTANT ADDRESSES
-enum {
-	EXIT_ADR = 0, 
-	INSTRUCTION_START_ADR = 0x10000000, 
-	INPUT_IO_ADR = 0x30000000, 
+ enum {
+	EXIT_ADR = 0,
+	INSTRUCTION_START_ADR = 0x10000000,
+	INPUT_IO_ADR = 0x30000000,
 	OUTPUT_IO_ADR = 0x30000004
 };
 
+extern RAM mainMemory;
+extern uint32_t Register[35] = { 
+	0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0, INSTRUCTION_START_ADR};
+
+//IMPORTANT ADDRESSES
 //RAM AND REGISTERS
 enum {
 	RZERO, //HARD WIRES TO 0
@@ -28,5 +36,7 @@ enum {
 	GP, //GLOBAL AREA POINTED
 	SP, //STACK POINTER
 	FP, //FRAME POINTER
-	RA //RETURN ADDRESS
+	RA, //RETURN ADDRESS
+	HI, LO,
+	PC
 };
