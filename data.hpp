@@ -8,7 +8,7 @@ extern RAM mainMemory;
 extern uint32_t Register[32] = { 0 };
 
 //IMPORTANT ADDRESSES
-extern enum {
+enum {
 	EXIT_ADR = 0, 
 	INSTRUCTION_START_ADR = 0x10000000, 
 	INPUT_IO_ADR = 0x30000000, 
@@ -16,7 +16,7 @@ extern enum {
 };
 
 //RAM AND REGISTERS
-extern enum {
+enum {
 	RZERO, //HARD WIRES TO 0
 	AT,  //RESERVED FOR PSEUDO-INSTRUCTIONS
 	V0, V1, //RETURN VALUES FROM FUNCTIONS
