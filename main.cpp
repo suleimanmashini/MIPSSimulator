@@ -21,8 +21,7 @@ int main() {
 		uint32_t tempInValue = INSTRUCTION_START_ADR;
 		int tempAddressImport = 0;
 		// obtain file size:
-		while (!inFile.eof()) {
-			inFile.read(inValue, 4);
+		while (inFile.read(inValue, 4)) {
 			//writing four chars into a single uint32 value
 			tempInValue = (((((uint32_t)inValue[0]) << 24) | ((uint32_t)inValue[1]) << 16) | (((uint32_t)inValue[2]) << 8) | ((uint32_t)inValue[3]));
 			mainMemory.writeRAM(tempAddressImport, tempInValue);

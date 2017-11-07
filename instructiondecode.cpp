@@ -110,16 +110,16 @@ void decodeRType(uint32_t instr) {
 		subu(rd, rt, rs);
 		break;
 	case 0b100100:
-		and(rd, rt, rs);
+		M_and(rd, rt, rs);
 		break;
 	case 0b100101:
-		or(rd, rs, rt);
+		M_or(rd, rs, rt);
 		break;
 	case 0b100110:
-		xor(rd, rs, rt);
+		M_xor(rd, rs, rt);
 		break;
 	case 0b100111:
-		nor(rd, rs, rt);
+		M_nor(rd, rs, rt);
 		break;
 	case 0b101010:
 		slt(rd, rs, rt);
