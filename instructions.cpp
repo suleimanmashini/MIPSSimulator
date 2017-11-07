@@ -40,7 +40,7 @@ void srav(uint8_t rd, uint8_t rt, uint8_t rs){
 
 //jump register
 void jr(uint8_t rs){
-    PC_advance(Register[rs];
+    PC_advance(Register[rs]);
 }
 
 //jump and link (rtype)
@@ -76,6 +76,9 @@ void mtlo(uint8_t rs){
 
 //overflow condition ?
 bool mult(uint8_t rs, uint8_t rt){
+	//************************
+	//SHIFTS ARE WRONG
+	//************************
     Register[LO] = (Register[rs]*Register[rt]) << 0xFFFFFFFF;
     Register[HI] = (Register[rs]*Register[rt]) >> 0xFFFFFFFF;
     PC_advance(default_advance);
@@ -83,6 +86,9 @@ bool mult(uint8_t rs, uint8_t rt){
 
 //unsigned mult
 void multu(uint8_t rs, uint8_t rt){
+	//************************
+	//SHIFTS ARE WRONG
+	//************************
     Register[LO] = (Register[rs]*Register[rt]) << 0xFFFFFFFF;
     Register[HI] = (Register[rs]*Register[rt]) >> 0xFFFFFFFF;
     PC_advance(default_advance);
@@ -134,13 +140,19 @@ bool sub(uint8_t rd, uint8_t rt, uint8_t rs){
     PC_advance(default_advance);
     //same signs, no overflow possible
     if(Register[rd]*Register[rt] >= 0){
+		//**************************************
+		//THIS WILL NOT WORK YOU ARE WORKING WITH UNSIGNED NUMBERS MAKE SURE YOU TYPECAST FIRST
+		//*************************************
         return 0;
     }
     
     //different signs:
     else{
         //result has different sign from subtrahend ==> overflow
-        if(Register[rd]*Register[rt] < 0){
+        if(Register[rd]*Register[rt] < 0){ 
+			//**************************************
+			//THIS WILL NOT WORK YOU ARE WORKING WITH UNSIGNED NUMBERS MAKE SURE YOU TYPECAST FIRST
+			//*************************************
             return 1;
         }
         else{
@@ -156,25 +168,25 @@ void subu(uint8_t rd, uint8_t rt, uint8_t rs){
 }
 
 //bitwise and
-void and(uint8_t rd, uint8_t rs, uint8_t rt){
+void M_and(uint8_t rd, uint8_t rs, uint8_t rt){
     Register[rd] = Register[rt] & Register[rs];
     PC_advance(default_advance);
 }
 
 //bitwise or
-void or(uint8_t rd, uint8_t rs, uint8_t rt){
+void M_or(uint8_t rd, uint8_t rs, uint8_t rt){
     Register[rd] = Register[rt] | Register[rs];
     PC_advance(default_advance);
 }
 
 //bitwise xor
-void xor(uint8_t rd, uint8_t rs, uint8_t rt){
-    Register[rd] = ((Register[rt] | Register[rs])&(~Register[rt] | ~Register[rs]))
+void M_xor(uint8_t rd, uint8_t rs, uint8_t rt){
+	Register[rd] = ((Register[rt] | Register[rs])&(~Register[rt] | ~Register[rs]));
     PC_advance(default_advance);
 }
 
 //bitwise nor
-void nor(uint8_t rd, uint8_t rs, uint8_t rt){
+void M_nor(uint8_t rd, uint8_t rs, uint8_t rt){
     Register[rd] = ~(Register[rt] | Register[rs]);
     PC_advance(default_advance);
 }

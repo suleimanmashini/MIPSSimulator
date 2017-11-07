@@ -33,10 +33,10 @@ bool add(uint8_t rd, uint8_t rs, uint8_t rt);
 void addu(uint8_t rd, uint8_t rs, uint8_t rt);
 void sub(uint8_t rd, uint8_t rt, uint8_t rs);
 void subu(uint8_t rd, uint8_t rt, uint8_t rs);
-void and(uint8_t rd, uint8_t rs, uint8_t rt);
-void or(uint8_t rd, uint8_t rs, uint8_t rt);
-void xor(uint8_t rd, uint8_t rs, uint8_t rt);
-void nor(uint8_t rd, uint8_t rs, uint8_t rt);
+void M_and(uint8_t rd, uint8_t rs, uint8_t rt);
+void M_or(uint8_t rd, uint8_t rs, uint8_t rt);
+void M_xor(uint8_t rd, uint8_t rs, uint8_t rt);
+void M_nor(uint8_t rd, uint8_t rs, uint8_t rt);
 void slt(uint8_t rd, uint8_t rs, uint8_t rt);
 void sltu(uint8_t rd, uint8_t rs, uint8_t rt);
 
