@@ -1,4 +1,3 @@
-#pragma once
 
 #include "ram.hpp"
 #include <iostream>
@@ -28,17 +27,17 @@ uint8_t RAM::getByteRAM(const int &addressIn) const {
 	uint32_t temp = this->getRAM(addressIn);
 	int shift = addressIn / 4;
 	switch (shift) {
-	case 0:
+	case (0):
 		return uint32_t(temp >> 24);
-	case 1:
+	case (1):
 		return uint32_t((temp >> 16) | 0x000000FF);
 		break;
-	case 2:
+	case (2):
 		return uint32_t((temp >> 8) | 0x000000FF);
 		break;
-	case 3:
-		return uint32_t(temp | 0x000000FF);
 	default:
+		return uint32_t(temp | 0x000000FF);
+	
 	}
 }
 
@@ -67,18 +66,18 @@ void RAM::writeRAM(const int &addressIn, const uint8_t &dataIn) {
 	uint32_t tempIn = dataIn;
 	int shift = addressIn % 4;
 	switch (shift) {
-	case 0:
+	case (0):
 		//shift and return
 		this->writeRAM(addressIn, ((temp & 0x00FFFFFF) | (tempIn << 24)));
 		break;
-	case 1:
+	case (1):
 		this->writeRAM(addressIn, ((temp & 0xFF00FFFF) | (tempIn << 16)));
 		break;
-	case 2:
+	case (2):
 		this->writeRAM(addressIn, ((temp & 0xFFFF00FF) | (tempIn << 8)));
 		break;
-	case 3:
-		this->writeRAM(addressIn, ((temp & 0xFFFF00FF) | (tempIn)));
 	default:
+		this->writeRAM(addressIn, ((temp & 0xFFFF00FF) | (tempIn)));
+	
 	}
 }
