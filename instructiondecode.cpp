@@ -1,6 +1,4 @@
-#pragma once
-
-#include "instructionDecode.hpp"
+#include "instructiondecode.hpp"
 
 using namespace std;
 

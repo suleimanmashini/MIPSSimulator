@@ -27,7 +27,7 @@
     <ClCompile Include="instructionDecode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="instructionDecode.cpp">
+    <ClCompile Include="instructiondecode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
