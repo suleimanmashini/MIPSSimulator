@@ -1,6 +1,6 @@
 #include "instructions.hpp"
 
-//shift left logical
+//shift left logicals
 void sll(uint8_t rd, uint8_t rt, uint8_t shamt){
     Register[rd] = Register[rt] << shamt;
     PC_advance(default_advance);
