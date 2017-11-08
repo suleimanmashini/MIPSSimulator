@@ -40,7 +40,7 @@ void srav(uint8_t rd, uint8_t rt, uint8_t rs){
 
 //jump register
 void jr(uint8_t rs){
-    PC_advance(Register[rs];
+    PC_advance(Register[rs]);
 }
 
 //jump and link (rtype)
@@ -76,15 +76,15 @@ void mtlo(uint8_t rs){
 
 //overflow condition ?
 void mult(uint8_t rs, uint8_t rt){
-    Register[LO] = (uint32_t)((Register[rs]*Register[rt]) & 0xFFFFFFFF);
-    Register[HI] = (uint32_t)(((Register[rs]*Register[rt]) >> 32) & 0xFFFFFFFF);
+	Register[LO] = (uint32_t)(((((uint64_t)Register[rs])*((uint64_t)Register[rt]))) & 0xFFFFFFFF);
+	Register[HI] = (uint32_t)(((((uint64_t)Register[rs])*((uint64_t)Register[rt])) >> 32) & 0xFFFFFFFF);
     PC_advance(default_advance);
 }
 
 //unsigned mult
 void multu(uint8_t rs, uint8_t rt){
-    Register[LO] = (uint32_t)((Register[rs]*Register[rt]) & 0xFFFFFFFF);
-    Register[HI] = (uint32_t)(((Register[rs]*Register[rt]) >> 32) & 0xFFFFFFFF);
+    Register[LO] = (uint32_t)(((((uint64_t)Register[rs])*((uint64_t)Register[rt]))) & 0xFFFFFFFF);
+    Register[HI] = (uint32_t)(((((uint64_t)Register[rs])*((uint64_t)Register[rt])) >> 32) & 0xFFFFFFFF);
     PC_advance(default_advance);
 }
 
@@ -163,25 +163,25 @@ void subu(uint8_t rd, uint8_t rt, uint8_t rs){
 }
 
 //bitwise and
-void mips_and(uint8_t rd, uint8_t rs, uint8_t rt){
+void M_and(uint8_t rd, uint8_t rs, uint8_t rt){
     Register[rd] = Register[rt] & Register[rs];
     PC_advance(default_advance);
 }
 
 //bitwise or
-void mips_or(uint8_t rd, uint8_t rs, uint8_t rt){
+void M_or(uint8_t rd, uint8_t rs, uint8_t rt){
     Register[rd] = Register[rt] | Register[rs];
     PC_advance(default_advance);
 }
 
 //bitwise xor
-void mips_xor(uint8_t rd, uint8_t rs, uint8_t rt){
-    Register[rd] = ((Register[rt] | Register[rs])&(~Register[rt] | ~Register[rs]))
+void M_xor(uint8_t rd, uint8_t rs, uint8_t rt){
+	Register[rd] = ((Register[rt] | Register[rs])&(~Register[rt] | ~Register[rs]));
     PC_advance(default_advance);
 }
 
 //bitwise nor
-void nor(uint8_t rd, uint8_t rs, uint8_t rt){
+void M_nor(uint8_t rd, uint8_t rs, uint8_t rt){
     Register[rd] = ~(Register[rt] | Register[rs]);
     PC_advance(default_advance);
 }

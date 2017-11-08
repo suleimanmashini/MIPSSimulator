@@ -38,11 +38,11 @@
     <ClInclude Include="data.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="instructionDecode.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="instructions.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="instructiondecode.hpp">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
