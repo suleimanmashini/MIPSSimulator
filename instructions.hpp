@@ -1,6 +1,6 @@
 //THIS FILE DESCRIBES EVERY INSTURCTION
 //THAT MIPS SHOULD SUPPORT
-#pragma once
+
 #include "data.hpp"
 #include <cmath>
 
@@ -25,18 +25,18 @@ void mfhi(uint8_t rd);
 void mthi(uint8_t rs);
 void mflo(uint8_t rd);
 void mtlo(uint8_t rs);
-bool mult(uint8_t rs, uint8_t rt);
+void mult(uint8_t rs, uint8_t rt);
 void multu(uint8_t rs, uint8_t rt);
 void div(uint8_t rs, uint8_t rt);
 void divu(uint8_t rs, uint8_t rt);
-bool add(uint8_t rd, uint8_t rs, uint8_t rt);
+void add(uint8_t rd, uint8_t rs, uint8_t rt);
 void addu(uint8_t rd, uint8_t rs, uint8_t rt);
 void sub(uint8_t rd, uint8_t rt, uint8_t rs);
 void subu(uint8_t rd, uint8_t rt, uint8_t rs);
-void M_and(uint8_t rd, uint8_t rs, uint8_t rt);
-void M_or(uint8_t rd, uint8_t rs, uint8_t rt);
-void M_xor(uint8_t rd, uint8_t rs, uint8_t rt);
-void M_nor(uint8_t rd, uint8_t rs, uint8_t rt);
+void mips_and(uint8_t rd, uint8_t rs, uint8_t rt);
+void mips_or(uint8_t rd, uint8_t rs, uint8_t rt);
+void mips_xor(uint8_t rd, uint8_t rs, uint8_t rt);
+void nor(uint8_t rd, uint8_t rs, uint8_t rt);
 void slt(uint8_t rd, uint8_t rs, uint8_t rt);
 void sltu(uint8_t rd, uint8_t rs, uint8_t rt);
 
