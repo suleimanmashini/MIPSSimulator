@@ -1,6 +1,6 @@
 //THIS FILE DESCRIBES EVERY INSTURCTION
 //THAT MIPS SHOULD SUPPORT
-
+#pragma once
 #include "data.hpp"
 #include <cmath>
 
