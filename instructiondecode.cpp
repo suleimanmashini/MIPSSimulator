@@ -3,7 +3,6 @@
 using namespace std;
 
 void fetchIntstructions() {
-            case 0:
 	uint32_t address = INSTRUCTION_START_ADR;
 	uint32_t instr = mainMemory.getRAM(address);
 	uint8_t opcode;
