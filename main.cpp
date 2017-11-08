@@ -10,11 +10,9 @@
 
 using namespace std;
 
-int main() {
+int main(int argc, char *argv[]) {
 	ifstream inFile;
-	string inBinary;
-	cout << "Please input the binary file name" << endl;
-	cin >> inBinary;
+	string inBinary(*argv);
 	inFile.open(inBinary.c_str(), ios::binary);
 	if (inFile.is_open()) {
 		char inValue[4];
@@ -32,7 +30,6 @@ int main() {
 		fetchIntstructions();
 	}
 	else {
-		cout << "Invalid File";
 		exit(12); //EXIT IF INVALID FILE
 	}
 	return 0;
