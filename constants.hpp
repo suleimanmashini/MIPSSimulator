@@ -1,6 +1,6 @@
 #pragma once
 
-//IMPORTANT ADDRESS
+//IMPORTANT ADDRESS and VALUES
 enum {
 	EXIT_ADR = 0,
 	INSTRUCTION_START_ADR = 0x10000000,
@@ -9,12 +9,6 @@ enum {
 	default_advance = 4
 };
 
- RAM mainMemory;
- uint32_t Register[35] = {
-	0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0, INSTRUCTION_START_ADR };
 
 //IMPORTANT ADDRESSES
 //RAM AND REGISTERS

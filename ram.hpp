@@ -6,10 +6,9 @@ using namespace std;
 
 class RAM {
 private:
-	uint32_t partition1[268435456] = { 0 };
-	uint32_t partition2[268435456] = { 0 };
-	uint32_t partition3[268435456] = { 0 };
-	uint32_t partition4[268435456] = { 0 };
+	uint32_t INSTRUCTION_ADR[4194304] = { 0 };
+	uint32_t READWRITE_ADR[16777216] = { 0 };
+	uint32_t IO_ADR[2] = { 0 };
 
 public:
 	RAM();

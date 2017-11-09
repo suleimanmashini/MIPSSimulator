@@ -1,4 +1,4 @@
-
+#include "constants.hpp"
 #include "ram.hpp"
 #include <iostream>
 
@@ -6,20 +6,25 @@ using namespace std;
 RAM::RAM() {
 	RAM newRAM;
 }
-
+// I NEED TO SIT DOWN AND FIX ALL THE RAM
 uint32_t RAM::getRAM(const int &addressIn) const {
 	int tempAddress = addressIn / 4;
-	if (tempAddress < 268435456) {
-		return partition1[addressIn];
+	if (tempAddress == 0) {
+		exit(0);
 	}
-	else if (tempAddress < 268435456 * 2) {
-		return partition2[addressIn - 268435456];
+	else if (tempAddress <= 0x4000000 && tempAddress >= 0x4400000) {
+		return INSTRUCTION_ADR[addressIn - 0x4000000];
 	}
-	else if (tempAddress < 268435456 * 3) {
-		return partition3[addressIn - (268435456 * 2)];
+	else if (tempAddress == 0xC000000) {
+		exit(-6);
+		//ENABLE IO
+	}
+	else if (tempAddress == 0xC000001){
+		exit(-6);
+		//ENABLE IO
 	}
 	else {
-		return partition4[addressIn - (268435456 * 3)];
+		exit(-11);
 	}
 }
 
@@ -44,21 +49,14 @@ uint8_t RAM::getByteRAM(const int &addressIn) const {
 void RAM::writeRAM(const int &addressIn, const uint32_t &dataIn) {
 	//THERE IS NO ADDRESS ERROR CHECKING ERROR CHECKING
 	int tempAddress = addressIn / 4;
-	if (tempAddress < 268435456) {
-		partition1[addressIn] = dataIn;
-	}
-	else if (tempAddress < 268435456 * 2) {
-		partition2[addressIn - 268435456] = dataIn;
-	}
-	else if (tempAddress < 268435456 * 3) {
-		partition3[addressIn - (268435456 * 2)] = dataIn;
+	if (tempAddress >= 0x8000000 && tempAddress <= 0x9000000) {
+		READWRITE_ADR[addressIn - 0x8000000] = dataIn;
 	}
 	else {
-		partition4[addressIn - (268435456 * 3)] = dataIn;
+		exit(-11);
 	}
 	
 }
-
 
 void RAM::writeRAM(const int &addressIn, const uint8_t &dataIn) {
 	//WRITE WITHIN A WORD ITSELF
@@ -81,3 +79,10 @@ void RAM::writeRAM(const int &addressIn, const uint8_t &dataIn) {
 	
 	}
 }
+
+RAM mainMemory;
+uint32_t Register[35] = {
+	0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0, INSTRUCTION_START_ADR };

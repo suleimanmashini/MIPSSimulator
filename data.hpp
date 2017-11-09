@@ -4,3 +4,6 @@
 #pragma once
 #include "ram.hpp"
 #include "constants.hpp"
+
+extern RAM mainMemory;
+extern uint32_t Register[35];
