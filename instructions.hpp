@@ -4,8 +4,6 @@
 #include "data.hpp"
 #include <cmath>
 
-//default pc incrementer
-uint32_t default_advance = 4;
 
 //R-type
 //done

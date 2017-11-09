@@ -1,7 +1,5 @@
 //MIPS SIMULATOR
 //SULEIMAN MASHINI, IONUT MOTOI, VICTOR SANCHEZS
-
-#include "data.hpp"
 #include "instructionDecode.hpp"
 #include <iostream>
 #include <string>
@@ -16,13 +14,13 @@ int main(int argc, char *argv[]) {
 	inFile.open(inBinary.c_str(), ios::binary);
 	if (inFile.is_open()) {
 		char inValue[4];
-		uint32_t tempInValue = INSTRUCTION_START_ADR;
+		uint32_t tempInValue;
 		int tempAddressImport = 0;
 		// obtain file size:
 		while (inFile.read(inValue, 4)) {
 			//writing four chars into a single uint32 value
-			tempInValue = (((((uint32_t)inValue[0]) << 24) | ((uint32_t)inValue[1]) << 16) | (((uint32_t)inValue[2]) << 8) | ((uint32_t)inValue[3]));
-			mainMemory.writeRAM(tempAddressImport, tempInValue);
+			tempInValue = ((((uint32_t)inValue[0]) << 24) | (((uint32_t)inValue[1]) << 16) | (((uint32_t)inValue[2]) << 8) | ((uint32_t)inValue[3]));
+			mainMemory.writeRAM(INSTRUCTION_START_ADR + tempAddressImport, tempInValue);
 			tempAddressImport = tempAddressImport + 4;
 		}
 		inFile.close();
@@ -32,5 +30,6 @@ int main(int argc, char *argv[]) {
 	else {
 		exit(12); //EXIT IF INVALID FILE
 	}
+	
 	return 0;
 }

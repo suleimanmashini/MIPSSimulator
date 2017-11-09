@@ -118,6 +118,7 @@
     <ClCompile Include="ram.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="constants.hpp" />
     <ClInclude Include="data.hpp" />
     <ClInclude Include="instructiondecode.hpp" />
     <ClInclude Include="instructions.hpp" />

@@ -1,5 +1,5 @@
 #include "instructions.hpp"
-
+using namespace std;
 //shift left logicals
 void sll(uint8_t rd, uint8_t rt, uint8_t shamt){
     Register[rd] = Register[rt] << shamt;

@@ -10,7 +10,7 @@ private:
 	uint32_t partition2[268435456] = { 0 };
 	uint32_t partition3[268435456] = { 0 };
 	uint32_t partition4[268435456] = { 0 };
-	
+
 public:
 	RAM();
 	
