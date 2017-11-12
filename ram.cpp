@@ -15,7 +15,7 @@ uint32_t RAM::getRAM(const int &addressIn) const {
 	else if (tempAddress <= 0x4000000 && tempAddress >= 0x4400000) {
 		return INSTRUCTION_ADR[addressIn - 0x4000000];
 	}
-	else if (tempAddress == 0xC000000) {
+	else if (tempAddress == INPUT_IO_ADR / 4) {
 		//INPUT MAP
 		exit(-6);
 	}
@@ -48,7 +48,7 @@ void RAM::writeRAM(const int &addressIn, const uint32_t &dataIn) {
 	if (tempAddress >= 0x8000000 && tempAddress <= 0x9000000) {
 		READWRITE_ADR[addressIn - 0x8000000] = dataIn;
 	}
-	else if (tempAddress == 0xC000001) {
+	else if (tempAddress == OUTPUT_IO_ADR / 4) {
 		//OUTPUT MAP
 		exit(-6);
 	}
