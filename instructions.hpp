@@ -45,29 +45,29 @@ void jal(uint32_t target);
 
 //I-type
 
-void addi();
-void addiu();
-void andi();
-void lui();
-void ori();
-void slti();
-void sltiu();
-void xori();
-void beq();
-void bgez();
-void bgezal();
-void bltz();
-void bltzal();
-void bgtz();
-void blez();
-void bne();
-void lb();
-void lbu();
-void lh();
-void lhu();
-void lw();
-void sb();
-void sh();
-void sw();
+void addi(); //victor
+void addiu(); //victor
+void andi(); //victor
+void lui(); //sam
+void ori(); //victor
+void slti(); //victor
+void sltiu(); //victor
+void xori(); //victor
+void beq(); //john
+void bgez(); //john
+void bgezal(); //john
+void bltz(); //john
+void bltzal(); //john
+void bgtz(); //john
+void blez(); //john
+void bne(); //john
+void lb(); //sam
+void lbu(); //sam
+void lh(); //sam
+void lhu(); //sam
+void lw(); //sam
+void sb(); //sam
+void sh(); //sam
+void sw(); //sam
 
 
