@@ -215,3 +215,22 @@ void lui(uint32_t rt, uint32_t imm) {
 	Register[rt] = (imm << 16);
 	PC_advance(default_advance);
 }
+
+//lw
+void lw(uint32_t rt, uint32_t rs, uint32_t offset) {
+	Register[rt] = mainMemory.getRAM(rs + offset);
+	PC_advance(default_advance);
+}
+
+//lbu
+void lbu(uint32_t rt, uint32_t rs, uint32_t offset) {
+	Register[rt] = mainMemory.getByteRAM(rs + offset);
+	PC_advance(default_advance);
+}
+
+//lb
+void lb(uint32_t rt, uint32_t rs, uint32_t offset) {
+	Register[rt] = mainMemory.getByteRAM(rs + offset);
+	if ((Register[rt] & 0x80) != 0) Register[rt] = Register[rt] | 0xFFFFFF00;
+	PC_advance(default_advance);
+}

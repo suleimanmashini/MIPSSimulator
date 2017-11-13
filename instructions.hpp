@@ -61,11 +61,11 @@ void bltzal(); //john
 void bgtz(); //john
 void blez(); //john
 void bne(); //john
-void lb(); //sam
-void lbu(); //sam
+void lbu(uint32_t rt, uint32_t rs, uint32_t offset);
+void lb(uint32_t rt, uint32_t rs, uint32_t offset);
 void lh(); //sam
 void lhu(); //sam
-void lw(); //sam
+void lw(uint32_t rt, uint32_t rs, uint32_t offset); //sam
 void sb(); //sam
 void sh(); //sam
 void sw(); //sam

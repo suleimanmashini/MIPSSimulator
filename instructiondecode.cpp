@@ -206,9 +206,11 @@ void decodeIType(uint32_t instr) {
 		break;
 	case 0b100000:
 		// lb
+		lb(rt, rs, imm);
 		break;
 	case 0b100100:
 		// lbu
+		lbu(rt, rs, imm);
 		break;
 	case 0b100001:
 		// lh
@@ -218,7 +220,7 @@ void decodeIType(uint32_t instr) {
 		break;
 	case 0b100011:
 		// lw
-		
+		lw(rs, rt, imm);
 		break;
 	case 0b101000:
 		// sb
