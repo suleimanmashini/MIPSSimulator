@@ -2,6 +2,7 @@
 //THAT MIPS SHOULD SUPPORT
 #pragma once
 #include "data.hpp"
+#include <cstdlib>
 #include <cmath>
 
 
