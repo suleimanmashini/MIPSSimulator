@@ -1,4 +1,6 @@
 #include "instructions.hpp"
+#include "instructiondecode.hpp"
+
 using namespace std;
 //shift left logicals
 void sll(uint8_t rd, uint8_t rt, uint8_t shamt){
@@ -199,7 +201,19 @@ void sltu(uint8_t rd, uint8_t rs, uint8_t rt){
     Register[rd] = (Register[rs] < Register[rt]) ? 1 : 0;
     PC_advance(default_advance);
 }
-    
+
+// jump
+void j(uint32_t target) {
+	Register[PC] = (Register[PC] & 0xF0000000) + target;
+}
+
+// jump and link
+void jal(uint32_t target) {
+	Register[PC] += 4;
+	fetchInstructions(1);
+	Register[RA] = Register[PC] + 4;
+	Register[PC] = (Register[PC] & 0xF0000000) + target;
+}
     
 void PC_advance(uint32_t advance){
     Register[PC] = Register[PC] + advance;

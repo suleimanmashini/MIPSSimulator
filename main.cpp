@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
 		}
 		inFile.close();
 		//THE SIMULATOR WILL NOW RUN
-		fetchIntstructions();
+		fetchInstructions();
 	}
 	else {
 		exit(12); //EXIT IF INVALID FILE

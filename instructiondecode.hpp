@@ -3,7 +3,8 @@
 
 
 
-void fetchIntstructions();
+void fetchInstructions();
+void fetchInstructions(int flag);
 
 void decodeRType(uint32_t instr);
 

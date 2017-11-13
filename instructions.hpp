@@ -40,3 +40,8 @@ void sltu(uint8_t rd, uint8_t rs, uint8_t rt);
 
 //general purpose functions
 void PC_advance(uint32_t advance);
+
+
+// J-Type
+void j(uint32_t target);
+void jal(uint32_t target);

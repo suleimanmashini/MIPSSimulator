@@ -2,14 +2,13 @@
 
 using namespace std;
 
-void fetchIntstructions() {
-	uint32_t address = INSTRUCTION_START_ADR;
-	uint32_t instr = mainMemory.getRAM(address);
+void fetchInstructions() {
+	
+	uint32_t instr = mainMemory.getRAM(Register[PC]);
 	uint8_t opcode;
 
-	while (instr != 0 && address <= (INSTRUCTION_START_ADR + 0x1000000)) {
-		instr = mainMemory.getRAM(address);
-		address += 4;
+	while (instr != 0 && Register[PC] <= (INSTRUCTION_START_ADR + 0x1000000)) {
+		instr = mainMemory.getRAM(Register[PC]);
 
 		opcode = instr >> 26;
 
@@ -25,6 +24,32 @@ void fetchIntstructions() {
 			decodeIType(instr);
 		}
 	}
+	exit(-11);
+}
+
+void fetchInstructions(int flag){
+
+	uint32_t instr = mainMemory.getRAM(Register[PC]);
+	uint8_t opcode;
+
+	if (instr != 0 && Register[PC] <= (INSTRUCTION_START_ADR + 0x1000000)) {
+		instr = mainMemory.getRAM(Register[PC]);
+
+		opcode = instr >> 26;
+
+		switch (opcode) {
+		case 0:
+			decodeRType(instr);
+			break;
+		case 0b000010:
+		case 0b000011:
+			decodeJType(instr);
+			break;
+		default:
+			decodeIType(instr);
+		}
+	}
+	else exit(-11);
 }
 
 // Decodes the funct of the R-Type instruction
@@ -212,7 +237,8 @@ void decodeJType(uint32_t instr) {
 	// Extracts the fields
 	uint8_t opcode = instr >> 26;
 	uint32_t target = instr << 6;
-	target >>= 6;
+	target >>= 4; // right shift only by 4 (and not 6) because the 
+				  // j instruction multiplies the target by 4
 
 	// Decodes the op field
 	if (opcode == 0b000010) {} // j
