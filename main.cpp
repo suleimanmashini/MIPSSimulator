@@ -9,9 +9,11 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
+	//PROBLEMS WITH THE FILE IMPORT INTERFACE!
+	if (argc < 2) exit(-12);
 	ifstream inFile;
-	string inBinary(*argv);
-	inFile.open(inBinary.c_str(), ios::binary);
+	string inBinary;
+	inFile.open(argv[1], ios::binary);
 	if (inFile.is_open()) {
 		char inValue[4];
 		uint32_t tempInValue;

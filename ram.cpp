@@ -4,7 +4,6 @@
 
 using namespace std;
 RAM::RAM() {
-	RAM newRAM;
 }
 // I NEED TO SIT DOWN AND FIX ALL THE RAM
 uint32_t RAM::getRAM(const int &addressIn) const {
