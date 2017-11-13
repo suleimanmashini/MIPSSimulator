@@ -42,3 +42,32 @@ void PC_advance(uint32_t advance);
 // J-Type
 void j(uint32_t target);
 void jal(uint32_t target);
+
+//I-type
+
+void addi();
+void addiu();
+void andi();
+void lui();
+void ori();
+void slti();
+void sltiu();
+void xori();
+void beq();
+void bgez();
+void bgezal();
+void bltz();
+void bltzal();
+void bgtz();
+void blez();
+void bne();
+void lb();
+void lbu();
+void lh();
+void lhu();
+void lw();
+void sb();
+void sh();
+void sw();
+
+
