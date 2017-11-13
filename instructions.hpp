@@ -48,7 +48,7 @@ void jal(uint32_t target);
 void addi(); //victor
 void addiu(); //victor
 void andi(); //victor
-void lui(); //sam
+void lui(uint32_t rt, uint32_t imm); //sam
 void ori(); //victor
 void slti(); //victor
 void sltiu(); //victor

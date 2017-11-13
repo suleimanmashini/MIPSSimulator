@@ -209,3 +209,9 @@ void jal(uint32_t target) {
 void PC_advance(uint32_t advance){
     Register[PC] = Register[PC] + advance;
 }
+
+//lui
+void lui(uint32_t rt, uint32_t imm) {
+	Register[rt] = (imm << 16);
+	PC_advance(default_advance);
+}
