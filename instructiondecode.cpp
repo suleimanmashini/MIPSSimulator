@@ -220,6 +220,7 @@ void decodeIType(uint32_t instr) {
 		break;
 	case 0b100011:
 		// lw
+		
 		break;
 	case 0b101000:
 		// sb
