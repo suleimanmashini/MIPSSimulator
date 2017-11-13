@@ -161,7 +161,7 @@ void decodeIType(uint32_t instr) {
 
 	uint8_t rt = (instr >> 16) & 0x0000001F;
 
-	uint16_t const_addr = instr & 0x0000FFFF;
+	uint16_t imm = instr & 0x0000FFFF;
 
 	// Decodes the opcode field
 	switch (opcode) {
@@ -176,6 +176,7 @@ void decodeIType(uint32_t instr) {
 		break;
 	case 0b001111:
 		// lui
+		lui(rt, imm);
 		break;
 	case 0b001101:
 		// ori
