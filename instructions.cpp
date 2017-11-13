@@ -88,42 +88,50 @@ void multu(uint8_t rs, uint8_t rt){
     PC_advance(default_advance);
 }
 
-//overflow ?
+//signed division
 void div(uint8_t rs, uint8_t rt){
-    Register[LO] = Register[rs] / Register[rt];
-    Register[HI] = Register[rs] % Register[rt];
+    if (Register[rt] == 0){
+        exit(-10);
+    }
+    Register[LO] = (int32_t)Register[rs] / (int32_t)Register[rt];
+    Register[HI] = (int32_t)Register[rs] % (int32_t)Register[rt];
     PC_advance(default_advance);
 }
 
 //unsigned division
 void divu(uint8_t rs, uint8_t rt){
+    if (Register[rt] == 0){
+        exit(-10);
+    }
     Register[LO] = Register[rs] / Register[rt];
     Register[HI] = Register[rs] % Register[rt];
     PC_advance(default_advance);
 }
 
-//return 1 when overflow occurs
+//signed addition, exit if overflow
 void add(uint8_t rd, uint8_t rs, uint8_t rt){
     Register[rd] = Register[rt] + Register[rs];
     PC_advance(default_advance);
     
-    /*
+    
     //different signs, no overflow possible
-    if(Register[rd]*Register[rt] <= 0){ //***CHECK THAT UR STATEMENTS WORK!!
-        return 0;
+     
+    if((Register[rt] & 0x80000000) xor (Register[rs] & 0x80000000) != 0){
+        return;
     }
     
     //same signs:
     else{
-        //result has different sign from operands ==> overflow
-        if(Register[rd]*Register[rt] < 0){
-            return 1;
+        //result has same sign as operands ==>  no overflow
+        if((Register[rt] & 0x80000000) xor (Register[rd] & 0x80000000) == 0){
+            return;
         }
+        //result has different sign from operands ==>  overflow
         else{
-            return 0;
+            exit(-10);
         }
      }
-     */
+    
     
 }
 
@@ -135,25 +143,8 @@ void addu(uint8_t rd, uint8_t rs, uint8_t rt){
 }
 
 void sub(uint8_t rd, uint8_t rt, uint8_t rs){
-    Register[rd] = Register[rs] - Register[rt];
-    PC_advance(default_advance);
-    //same signs, no overflow possible
-    /*
-    if(Register[rd]*Register[rt] >= 0){
-        return 0;
-    }
+    add(rd, rs, ((Register[rt] xor 0xFFFFFFFF) + 1));
     
-    //different signs:
-    else{
-        //result has different sign from subtrahend ==> overflow
-        if(Register[rd]*Register[rt] < 0){
-            return 1;
-        }
-        else{
-            return 0;
-        }
-    }
-     */
 }
 
 //basic subtraction, no concern for overflow
