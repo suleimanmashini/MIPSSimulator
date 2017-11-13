@@ -225,9 +225,11 @@ void decodeIType(uint32_t instr) {
 		break;
 	case 0b101000:
 		// sb
+		sb(rt, rs, imm);
 		break;
 	case 0b101001:
 		// sh
+		sh(rt, rs, imm);
 		break;
 	case 0b101011:
 		// sw

@@ -252,3 +252,15 @@ void sw(uint32_t rt, uint32_t rs, uint32_t offset) {
 	mainMemory.writeRAM(rs + offset, rt);
 	PC_advance(default_advance);
 }
+
+void sh(uint32_t rt, uint32_t rs, uint32_t offset) {
+	if ((offset + rs) % 2 != 0) exit(-12);
+	mainMemory.writeByteRAM(rs + offset, rt);
+	mainMemory.writeByteRAM(rs + offset + 1, rt);
+	PC_advance(default_advance);
+}
+
+void sb(uint32_t rt, uint32_t rs, uint32_t offset) {
+	mainMemory.writeByteRAM(rs + offset, rt);
+	PC_advance(default_advance);
+}

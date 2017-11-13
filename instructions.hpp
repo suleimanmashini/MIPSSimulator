@@ -66,8 +66,8 @@ void lb(uint32_t rt, uint32_t rs, uint32_t offset);
 void lh(uint32_t rt, uint32_t rs, uint32_t offset);
 void lhu(uint32_t rt, uint32_t rs, uint32_t offset);
 void lw(uint32_t rt, uint32_t rs, uint32_t offset); //sam
-void sb(); //sam
-void sh(); //sam
+void sb(uint32_t rt, uint32_t rs, uint32_t offset); //sam
+void sh(uint32_t rt, uint32_t rs, uint32_t offset); //sam
 void sw(uint32_t rt, uint32_t rs, uint32_t offset); //sam
 
 

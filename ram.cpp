@@ -57,7 +57,7 @@ void RAM::writeRAM(const int &addressIn, const uint32_t &dataIn) {
 	
 }
 
-void RAM::writeRAM(const int &addressIn, const uint8_t &dataIn) {
+void RAM::writeByteRAM(const int &addressIn, const uint8_t &dataIn) {
 	//WRITE WITHIN A WORD ITSELF
 	uint32_t temp = this->getRAM(addressIn);
 	uint32_t tempIn = dataIn;
