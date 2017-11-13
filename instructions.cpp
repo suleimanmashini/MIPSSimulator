@@ -42,14 +42,14 @@ void srav(uint8_t rd, uint8_t rt, uint8_t rs){
 
 //jump register
 void jr(uint8_t rs){
-    PC_advance(Register[rs]);
+	Register[PC] = Register[rs];
 }
 
 //jump and link (rtype)
 void jalr(uint8_t rd, uint8_t rs){
     //save return address in $31
     Register[RA] = Register[PC] + default_advance;
-    PC_advance(Register[rs]);
+	Register[PC] = Register[rs];
 }
 
 //move from hi
