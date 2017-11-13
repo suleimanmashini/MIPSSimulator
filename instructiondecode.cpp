@@ -241,6 +241,6 @@ void decodeJType(uint32_t instr) {
 				  // j instruction multiplies the target by 4
 
 	// Decodes the op field
-	if (opcode == 0b000010) {} // j
-	else {} // jal
+	if (opcode == 0b000010) j(target);
+	else jal(target);
 }
