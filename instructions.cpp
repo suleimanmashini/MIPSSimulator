@@ -118,14 +118,14 @@ void add(uint8_t rd, uint8_t rs, uint8_t rt){
     
     //different signs, no overflow possible
      
-    if((Register[rt] & 0x80000000) xor (Register[rs] & 0x80000000) != 0){
+    if((Register[rt] & 0x80000000) ^ (Register[rs] & 0x80000000) != 0){
         return;
     }
     
     //same signs:
     else{
         //result has same sign as operands ==>  no overflow
-        if((Register[rt] & 0x80000000) xor (Register[rd] & 0x80000000) == 0){
+        if((Register[rt] & 0x80000000) ^ (Register[rd] & 0x80000000) == 0){
             return;
         }
         //result has different sign from operands ==>  overflow
@@ -145,7 +145,7 @@ void addu(uint8_t rd, uint8_t rs, uint8_t rt){
 }
 
 void sub(uint8_t rd, uint8_t rt, uint8_t rs){
-    add(rd, rs, ((Register[rt] xor 0xFFFFFFFF) + 1));
+    add(rd, rs, ((Register[rt] ^ 0xFFFFFFFF) + 1));
     
 }
 

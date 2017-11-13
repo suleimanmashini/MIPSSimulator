@@ -35,10 +35,6 @@ void slt(uint8_t rd, uint8_t rs, uint8_t rt);
 void sltu(uint8_t rd, uint8_t rs, uint8_t rt);
 
 
-//J-type
-
-void 
-
 //general purpose functions
 void PC_advance(uint32_t advance);
 
