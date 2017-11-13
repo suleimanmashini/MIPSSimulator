@@ -231,6 +231,7 @@ void decodeIType(uint32_t instr) {
 		break;
 	case 0b101011:
 		// sw
+		sw(rt, rs, imm);
 		break;
 	}
 }

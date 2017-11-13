@@ -247,3 +247,8 @@ void lh(uint32_t rt, uint32_t rs, uint32_t offset) {
 	if ((Register[rt] & 0x8000) != 0) Register[rt] = Register[rt] | 0xFFFF0000;
 	PC_advance(default_advance);
 }
+
+void sw(uint32_t rt, uint32_t rs, uint32_t offset) {
+	mainMemory.writeRAM(rs + offset, rt);
+	PC_advance(default_advance);
+}
