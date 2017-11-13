@@ -63,8 +63,8 @@ void blez(); //john
 void bne(); //john
 void lbu(uint32_t rt, uint32_t rs, uint32_t offset);
 void lb(uint32_t rt, uint32_t rs, uint32_t offset);
-void lh(); //sam
-void lhu(); //sam
+void lh(uint32_t rt, uint32_t rs, uint32_t offset);
+void lhu(uint32_t rt, uint32_t rs, uint32_t offset);
 void lw(uint32_t rt, uint32_t rs, uint32_t offset); //sam
 void sb(); //sam
 void sh(); //sam

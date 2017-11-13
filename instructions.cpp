@@ -234,3 +234,16 @@ void lb(uint32_t rt, uint32_t rs, uint32_t offset) {
 	if ((Register[rt] & 0x80) != 0) Register[rt] = Register[rt] | 0xFFFFFF00;
 	PC_advance(default_advance);
 }
+
+void lhu(uint32_t rt, uint32_t rs, uint32_t offset) {
+	if ((rs + offset) % 2 != 0) exit(-12);
+	Register[rt] = (mainMemory.getByteRAM(rs + offset) << 16) + mainMemory.getByteRAM(rs + offset + 1);
+	PC_advance(default_advance);
+}
+
+void lh(uint32_t rt, uint32_t rs, uint32_t offset) {
+	if ((rs + offset) % 2 != 0) exit(-12);
+	Register[rt] = (mainMemory.getByteRAM(rs + offset) << 16) + mainMemory.getByteRAM(rs + offset + 1);
+	if ((Register[rt] & 0x8000) != 0) Register[rt] = Register[rt] | 0xFFFF0000;
+	PC_advance(default_advance);
+}

@@ -213,10 +213,11 @@ void decodeIType(uint32_t instr) {
 		lbu(rt, rs, imm);
 		break;
 	case 0b100001:
-		// lh
+		lh(rt, rs, imm);
 		break;
 	case 0b100101:
 		// lhu
+		lhu(rt, rs, imm);
 		break;
 	case 0b100011:
 		// lw
