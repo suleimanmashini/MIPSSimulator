@@ -193,18 +193,36 @@ void decodeIType(uint32_t instr) {
 		// xori
 	case 0b000100:
 		// beq
+		beq(rs, rt, imm);
 		break;
 	case 0b000001:
 		// bgez, bgezal, bltz, bltzal
+		switch (rt) {
+		case 0b00001:
+			bgez(rs, imm);
+			break;
+		case 0b10001:
+			bgezal(rs, imm);
+			break;
+		case 0b00000:
+			bltz(rs, imm);
+			break;
+		case 0b10000 :
+			bltzal(rs, imm);
+			break;
+		}
 		break;
 	case 0b000111:
 		// bgtz
+		bgtz(rs, imm);
 		break;
 	case 0b000110:
 		// blez
+		blez(rs, imm);
 		break;
 	case 0b000101:
 		// bne
+		bne(rs, rt, imm);
 		break;
 	case 0b100000:
 		// lb
