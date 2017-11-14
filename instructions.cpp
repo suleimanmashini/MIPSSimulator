@@ -218,7 +218,65 @@ void beq(uint8_t rs, uint8_t rt, uint16_t imm) {
 		PC_advance(default_advance);
 }
 
+// bgez
+void bgez(uint8_t rs, uint16_t imm) {
+	if (Register[rs] >= 0)
+		PC_advance(imm << 2);
+	else
+		PC_advance(default_advance);
+}
 
+// bgezal
+void bgezal(uint8_t rs, uint16_t imm) {
+	if (Register[rs] >= 0) {
+		Register[RA] = Register[PC] + 8;
+		PC_advance(imm << 2);
+	}
+	else
+		PC_advance(default_advance);
+}
+
+// bgtz
+void bgtz(uint8_t rs, uint16_t imm) {
+	if (Register[rs] > 0)
+		PC_advance(imm << 2);
+	else
+		PC_advance(default_advance);
+}
+
+// blez
+void blez(uint8_t rs, uint16_t imm) {
+	if (Register[rs] <= 0)
+		PC_advance(imm << 2);
+	else
+		PC_advance(default_advance);
+}
+
+// bltz
+void bltz(uint8_t rs, uint16_t imm) {
+	if (Register[rs] < 0)
+		PC_advance(imm << 2);
+	else
+		PC_advance(default_advance);
+}
+
+// bltzal
+void bltzal(uint8_t rs, uint16_t imm) {
+	if (Register[rs] < 0) {
+		Register[RA] = Register[PC] + 8;
+		PC_advance(imm << 2);
+	}
+	else
+		PC_advance(default_advance);
+}
+
+// bne
+void bne(uint8_t rs, uint8_t rt, uint16_t imm) {
+	if (Register[rs] != Register[rt])
+		PC_advance(imm << 2);
+	else
+		PC_advance(default_advance);
+}
 
 //lui
 void lui(uint32_t rt, uint32_t imm) {

@@ -55,13 +55,13 @@ void slti(); //victor
 void sltiu(); //victor
 void xori(); //victor
 void beq(uint8_t rs, uint8_t rt, uint16_t imm);
-void bgez(); //john
-void bgezal(); //john
-void bltz(); //john
-void bltzal(); //john
-void bgtz(); //john
-void blez(); //john
-void bne(); //john
+void bgez(uint8_t rs, uint16_t imm);
+void bgezal(uint8_t rs, uint16_t imm);
+void bltz(uint8_t rs, uint16_t imm);
+void bltzal(uint8_t rs, uint16_t imm);
+void bgtz(uint8_t rs, uint16_t imm);
+void blez(uint8_t rs, uint16_t imm);
+void bne(uint8_t rs, uint8_t rt, uint16_t imm);
 void lbu(uint32_t rt, uint32_t rs, uint32_t offset);
 void lb(uint32_t rt, uint32_t rs, uint32_t offset);
 void lh(uint32_t rt, uint32_t rs, uint32_t offset);
