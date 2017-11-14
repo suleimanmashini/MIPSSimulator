@@ -2,6 +2,7 @@
 //THAT MIPS SHOULD SUPPORT
 #pragma once
 #include "data.hpp"
+#include <cstdlib>
 #include <cmath>
 
 
@@ -42,3 +43,32 @@ void PC_advance(uint32_t advance);
 // J-Type
 void j(uint32_t target);
 void jal(uint32_t target);
+
+//I-type
+
+void addi(); //victor
+void addiu(); //victor
+void andi(); //victor
+void lui(uint32_t rt, uint32_t imm); //sam
+void ori(); //victor
+void slti(); //victor
+void sltiu(); //victor
+void xori(); //victor
+void beq(); //john
+void bgez(); //john
+void bgezal(); //john
+void bltz(); //john
+void bltzal(); //john
+void bgtz(); //john
+void blez(); //john
+void bne(); //john
+void lbu(uint32_t rt, uint32_t rs, uint32_t offset);
+void lb(uint32_t rt, uint32_t rs, uint32_t offset);
+void lh(uint32_t rt, uint32_t rs, uint32_t offset);
+void lhu(uint32_t rt, uint32_t rs, uint32_t offset);
+void lw(uint32_t rt, uint32_t rs, uint32_t offset); //sam
+void sb(uint32_t rt, uint32_t rs, uint32_t offset); //sam
+void sh(uint32_t rt, uint32_t rs, uint32_t offset); //sam
+void sw(uint32_t rt, uint32_t rs, uint32_t offset); //sam
+
+

@@ -209,3 +209,58 @@ void jal(uint32_t target) {
 void PC_advance(uint32_t advance){
     Register[PC] = Register[PC] + advance;
 }
+
+//lui
+void lui(uint32_t rt, uint32_t imm) {
+	Register[rt] = (imm << 16);
+	PC_advance(default_advance);
+}
+
+//lw
+void lw(uint32_t rt, uint32_t rs, uint32_t offset) {
+	Register[rt] = mainMemory.getRAM(rs + offset);
+	PC_advance(default_advance);
+}
+
+//lbu
+void lbu(uint32_t rt, uint32_t rs, uint32_t offset) {
+	Register[rt] = mainMemory.getByteRAM(rs + offset);
+	PC_advance(default_advance);
+}
+
+//lb
+void lb(uint32_t rt, uint32_t rs, uint32_t offset) {
+	Register[rt] = mainMemory.getByteRAM(rs + offset);
+	if ((Register[rt] & 0x80) != 0) Register[rt] = Register[rt] | 0xFFFFFF00;
+	PC_advance(default_advance);
+}
+
+void lhu(uint32_t rt, uint32_t rs, uint32_t offset) {
+	if ((rs + offset) % 2 != 0) exit(-12);
+	Register[rt] = (mainMemory.getByteRAM(rs + offset) << 16) + mainMemory.getByteRAM(rs + offset + 1);
+	PC_advance(default_advance);
+}
+
+void lh(uint32_t rt, uint32_t rs, uint32_t offset) {
+	if ((rs + offset) % 2 != 0) exit(-12);
+	Register[rt] = (mainMemory.getByteRAM(rs + offset) << 16) + mainMemory.getByteRAM(rs + offset + 1);
+	if ((Register[rt] & 0x8000) != 0) Register[rt] = Register[rt] | 0xFFFF0000;
+	PC_advance(default_advance);
+}
+
+void sw(uint32_t rt, uint32_t rs, uint32_t offset) {
+	mainMemory.writeRAM(rs + offset, rt);
+	PC_advance(default_advance);
+}
+
+void sh(uint32_t rt, uint32_t rs, uint32_t offset) {
+	if ((offset + rs) % 2 != 0) exit(-12);
+	mainMemory.writeByteRAM(rs + offset, rt);
+	mainMemory.writeByteRAM(rs + offset + 1, rt);
+	PC_advance(default_advance);
+}
+
+void sb(uint32_t rt, uint32_t rs, uint32_t offset) {
+	mainMemory.writeByteRAM(rs + offset, rt);
+	PC_advance(default_advance);
+}

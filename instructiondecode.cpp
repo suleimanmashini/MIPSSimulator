@@ -159,14 +159,11 @@ void decodeIType(uint32_t instr) {
 	// Extracts the fields
 	uint8_t opcode = instr >> 26;
 
-	uint8_t rs = instr << 6;
-	rs >>= 27;
+	uint8_t rs = (instr >> 21) & 0x0000001F;
 
-	uint8_t rt = instr << 11;
-	rt >>= 27;
+	uint8_t rt = (instr >> 16) & 0x0000001F;
 
-	uint16_t const_addr = instr << 16;
-	const_addr >>= 16;
+	uint16_t imm = instr & 0x0000FFFF;
 
 	// Decodes the opcode field
 	switch (opcode) {
@@ -181,6 +178,7 @@ void decodeIType(uint32_t instr) {
 		break;
 	case 0b001111:
 		// lui
+		lui(rt, imm);
 		break;
 	case 0b001101:
 		// ori
@@ -210,27 +208,34 @@ void decodeIType(uint32_t instr) {
 		break;
 	case 0b100000:
 		// lb
+		lb(rt, rs, imm);
 		break;
 	case 0b100100:
 		// lbu
+		lbu(rt, rs, imm);
 		break;
 	case 0b100001:
-		// lh
+		lh(rt, rs, imm);
 		break;
 	case 0b100101:
 		// lhu
+		lhu(rt, rs, imm);
 		break;
 	case 0b100011:
 		// lw
+		lw(rs, rt, imm);
 		break;
 	case 0b101000:
 		// sb
+		sb(rt, rs, imm);
 		break;
 	case 0b101001:
 		// sh
+		sh(rt, rs, imm);
 		break;
 	case 0b101011:
 		// sw
+		sw(rt, rs, imm);
 		break;
 	default:
 		exit(-12);
