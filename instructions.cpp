@@ -210,6 +210,16 @@ void PC_advance(uint32_t advance){
     Register[PC] = Register[PC] + advance;
 }
 
+// beq
+void beq(uint8_t rs, uint8_t rt, uint16_t imm) {
+	if (Register[rs] == Register[rt])
+		PC_advance(imm << 2);
+	else
+		PC_advance(default_advance);
+}
+
+
+
 //lui
 void lui(uint32_t rt, uint32_t imm) {
 	Register[rt] = (imm << 16);

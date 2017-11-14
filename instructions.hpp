@@ -54,7 +54,7 @@ void ori(); //victor
 void slti(); //victor
 void sltiu(); //victor
 void xori(); //victor
-void beq(); //john
+void beq(uint8_t rs, uint8_t rt, uint16_t imm);
 void bgez(); //john
 void bgezal(); //john
 void bltz(); //john
