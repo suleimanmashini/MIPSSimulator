@@ -150,6 +150,8 @@ void decodeRType(uint32_t instr) {
 	case 0b101011:
 		sltu(rd, rs, rt);
 		break;
+	default:
+		exit(-12);
 	}
 }
 
@@ -230,6 +232,8 @@ void decodeIType(uint32_t instr) {
 	case 0b101011:
 		// sw
 		break;
+	default:
+		exit(-12);
 	}
 }
 
