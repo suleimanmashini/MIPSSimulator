@@ -48,7 +48,7 @@ void jal(uint32_t target);
 //I-type
 
 void addi(uint8_t rd, uint8_t rs, uint16_t imm);
-void addiu(); //victor
+void addiu(uint8_t rd, uint8_t rs, uint16_t imm);
 void andi(uint8_t rd, uint8_rs, uint16_t imm);
 void lui(uint32_t rt, uint32_t imm); //sam
 void ori(uint8_t rd, uint8_rs, uint16_t imm);

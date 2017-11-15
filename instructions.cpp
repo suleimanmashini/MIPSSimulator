@@ -242,6 +242,12 @@ addi(uint8_t rt, uint8_t rs, uint16_t imm){
     
 }
 
+addiu(uint8_t rt, uint8_t rs, uint16_t imm){
+    (uint32_t)imm;
+    
+    Register[rt] = Register[rs] + imm;
+    PC_advance(default_advance);
+
 
 void andi(uint8_t rt, uint8_rs, uint16_t imm){
     (uint32_t)imm;
