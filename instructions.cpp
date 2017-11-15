@@ -352,13 +352,18 @@ void lb(uint32_t rt, uint32_t rs, uint32_t offset) {
 
 void lhu(uint32_t rt, uint32_t rs, uint32_t offset) {
 	if ((rs + offset) % 2 != 0) exit(-12);
-	Register[rt] = (mainMemory.getByteRAM(rs + offset) << 16) + mainMemory.getByteRAM(rs + offset + 1);
+	if (offset + rs == INPUT_IO_ADR) {
+		Register[rt] = ((uint32_t)mainMemory.getByteRAM(INPUT_IO_ADR) << 16) + (uint32_t)mainMemory.getByteRAM(INPUT_IO_ADR);
+	}
+	else Register[rt] = (mainMemory.getByteRAM(rs + offset) << 16) + mainMemory.getByteRAM(rs + offset + 1);
 	PC_advance(default_advance);
 }
 
 void lh(uint32_t rt, uint32_t rs, uint32_t offset) {
 	if ((rs + offset) % 2 != 0) exit(-12);
-	Register[rt] = (mainMemory.getByteRAM(rs + offset) << 16) + mainMemory.getByteRAM(rs + offset + 1);
+	if (offset + rs == INPUT_IO_ADR) {
+	Register[rt] = ((uint32_t) mainMemory.getByteRAM(INPUT_IO_ADR) << 16) + (uint32_t )mainMemory.getByteRAM(INPUT_IO_ADR);
+	} else Register[rt] = ((uint32_t) mainMemory.getByteRAM(rs + offset) << 16) + (uint32_t) mainMemory.getByteRAM(rs + offset + 1);
 	if ((Register[rt] & 0x8000) != 0) Register[rt] = Register[rt] | 0xFFFF0000;
 	PC_advance(default_advance);
 }
@@ -398,8 +403,14 @@ void sw(uint32_t rt, uint32_t rs, uint32_t offset) {
 
 void sh(uint32_t rt, uint32_t rs, uint32_t offset) {
 	if ((offset + rs) % 2 != 0) exit(-12);
-	mainMemory.writeByteRAM(rs + offset, rt);
-	mainMemory.writeByteRAM(rs + offset + 1, rt);
+	if (offset + rs == OUTPUT_IO_ADR) {
+		mainMemory.writeByteRAM(OUTPUT_IO_ADR, ((rt >> 8) & 0xFF));
+		mainMemory.writeByteRAM(OUTPUT_IO_ADR, (rt & 0xFF));
+	}
+	else {
+		mainMemory.writeByteRAM(rs + offset, ((rt >> 8) & 0xFF));
+		mainMemory.writeByteRAM(rs + offset + 1, (rt & 0xFF));
+	}
 	PC_advance(default_advance);
 }
 
