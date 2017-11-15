@@ -50,7 +50,7 @@ void jal(uint32_t target);
 void addi(uint8_t rd, uint8_t rs, uint16_t imm);
 void addiu(uint8_t rd, uint8_t rs, uint16_t imm);
 void andi(uint8_t rd, uint8_t rs, uint16_t imm);
-void lui(uint32_t rt, uint32_t imm); //sam
+void lui(uint32_t rt, uint32_t imm); 
 void ori(uint8_t rd, uint8_t rs, uint16_t imm);
 void slti(uint8_t rt, uint8_t rs, uint16_t imm);
 void sltiu(uint8_t rt, uint8_t rs, uint16_t imm);
@@ -67,9 +67,9 @@ void lbu(uint32_t rt, uint32_t rs, uint32_t offset);
 void lb(uint32_t rt, uint32_t rs, uint32_t offset);
 void lh(uint32_t rt, uint32_t rs, uint32_t offset);
 void lhu(uint32_t rt, uint32_t rs, uint32_t offset);
-void lw(uint32_t rt, uint32_t rs, uint32_t offset); //sam
-void sb(uint32_t rt, uint32_t rs, uint32_t offset); //sam
-void sh(uint32_t rt, uint32_t rs, uint32_t offset); //sam
-void sw(uint32_t rt, uint32_t rs, uint32_t offset); //sam
+void lw(uint32_t rt, uint32_t rs, uint32_t offset); 
+void sb(uint32_t rt, uint32_t rs, uint32_t offset);
+void sh(uint32_t rt, uint32_t rs, uint32_t offset);
+void sw(uint32_t rt, uint32_t rs, uint32_t offset); 
 
 
