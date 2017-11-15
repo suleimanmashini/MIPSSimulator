@@ -38,6 +38,7 @@ void sltu(uint8_t rd, uint8_t rs, uint8_t rt);
 
 //general purpose functions
 void PC_advance(uint32_t advance);
+uint32_t sign_extention(uint16_t imm);
 
 
 // J-Type
@@ -46,14 +47,14 @@ void jal(uint32_t target);
 
 //I-type
 
-void addi(); //victor
+void addi(uint8_t rd, uint8_t rs, uint16_t imm);
 void addiu(); //victor
-void andi(); //victor
+void andi(uint8_t rd, uint8_rs, uint16_t imm);
 void lui(uint32_t rt, uint32_t imm); //sam
-void ori(); //victor
-void slti(); //victor
-void sltiu(); //victor
-void xori(); //victor
+void ori(uint8_t rd, uint8_rs, uint16_t imm);
+void slti(uint8_t rt, uint8_rs, uint16_t imm);
+void sltiu(uint8_t rt, uint8_rs, uint16_t imm);
+void xori(uint8_t rd, uint8_rs, uint16_t imm);
 void beq(uint8_t rs, uint8_t rt, uint16_t imm);
 void bgez(uint8_t rs, uint16_t imm);
 void bgezal(uint8_t rs, uint16_t imm);

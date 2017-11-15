@@ -210,6 +210,47 @@ void PC_advance(uint32_t advance){
     Register[PC] = Register[PC] + advance;
 }
 
+//addi /
+addi(uint8_t rt, uint8_t rs, uint16_t imm){
+    uint32_t temp = sign_extention(imm);
+    
+    Register[rt] = Register[rs] + temp;
+    PC_advance(default_advance);
+    
+    
+    //different signs, no overflow possible
+    
+    if((Register[rs] & 0x80000000) ^ (imm & 0x80000000) != 0){
+        return;
+    }
+    
+    //same signs:
+    else{
+        //result has same sign as operands ==>  no overflow
+        if((Register[rs] & 0x80000000) ^ (Register[rt] & 0x80000000) == 0){
+            return;
+        }
+        //result has different sign from operands ==>  overflow
+        else{
+            exit(-10);
+        }
+    }
+    
+    
+    //different signs, no overflow possible
+    
+    
+}
+
+
+void andi(uint8_t rt, uint8_rs, uint16_t imm){
+    (uint32_t)imm;
+    Register[rt] = Register[rs] & imm;
+    PC_advance(default_advance);
+}
+
+
+
 // beq
 void beq(uint8_t rs, uint8_t rt, uint16_t imm) {
 	if (Register[rs] == Register[rt])
@@ -316,6 +357,34 @@ void lh(uint32_t rt, uint32_t rs, uint32_t offset) {
 	PC_advance(default_advance);
 }
 
+void ori(uint8_t rt, uint8_rs, uint16_t imm){
+    (uint32_t)imm;
+    Register[rt] = Register[rs] | imm;
+    PC_advance(default_advance);
+}
+
+void slti(uint8_t rt, uint8_rs, uint16_t imm){
+    int32_t temp = sign_extention(imm);
+    PC_advance(default_advance);
+    if(Register[rs] < temp){
+        Register[rt] = 1;
+    }
+    else{
+        Register[rt] = 0;
+    }
+}
+
+void sltiu(uint8_t rt, uint8_rs, uint16_t imm){
+    (uint32_t)imm;
+    PC_advance(default_advance);
+    if(Register[rs] < imm){
+        Register[rt] = 1;
+    }
+    else{
+        Register[rt] = 0;
+    }
+}
+
 void sw(uint32_t rt, uint32_t rs, uint32_t offset) {
 	mainMemory.writeRAM(rs + offset, rt);
 	PC_advance(default_advance);
@@ -331,4 +400,20 @@ void sh(uint32_t rt, uint32_t rs, uint32_t offset) {
 void sb(uint32_t rt, uint32_t rs, uint32_t offset) {
 	mainMemory.writeByteRAM(rs + offset, rt);
 	PC_advance(default_advance);
+}
+
+void xori(uint8_t rt, uint8_t rs, uint16_t imm){
+    (uint32_t)imm;
+    Register[rt] = ((imm | Register[rs])&(~imm | ~Register[rs]));
+    PC_advance(default_advance);
+}
+
+
+uint32_t sign_extention(uint16_t imm){
+    if(imm & 0x8000){
+        return (0xFFFF0000 + imm);
+    }
+    else{
+        return (0x00000000 + imm);
+    }
 }
