@@ -211,7 +211,7 @@ void PC_advance(uint32_t advance){
 }
 
 //addi /
-addi(uint8_t rt, uint8_t rs, uint16_t imm){
+void addi(uint8_t rt, uint8_t rs, uint16_t imm){
     uint32_t temp = sign_extention(imm);
     
     Register[rt] = Register[rs] + temp;
@@ -242,14 +242,14 @@ addi(uint8_t rt, uint8_t rs, uint16_t imm){
     
 }
 
-addiu(uint8_t rt, uint8_t rs, uint16_t imm){
-    (uint32_t)imm;
-    
-    Register[rt] = Register[rs] + imm;
-    PC_advance(default_advance);
+void addiu(uint8_t rt, uint8_t rs, uint16_t imm) {
+	(uint32_t)imm;
 
+	Register[rt] = Register[rs] + imm;
+	PC_advance(default_advance);
+}
 
-void andi(uint8_t rt, uint8_rs, uint16_t imm){
+void andi(uint8_t rt, uint8_t rs, uint16_t imm) {
     (uint32_t)imm;
     Register[rt] = Register[rs] & imm;
     PC_advance(default_advance);
@@ -363,13 +363,13 @@ void lh(uint32_t rt, uint32_t rs, uint32_t offset) {
 	PC_advance(default_advance);
 }
 
-void ori(uint8_t rt, uint8_rs, uint16_t imm){
+void ori(uint8_t rt, uint8_t rs, uint16_t imm){
     (uint32_t)imm;
     Register[rt] = Register[rs] | imm;
     PC_advance(default_advance);
 }
 
-void slti(uint8_t rt, uint8_rs, uint16_t imm){
+void slti(uint8_t rt, uint8_t rs, uint16_t imm){
     int32_t temp = sign_extention(imm);
     PC_advance(default_advance);
     if(Register[rs] < temp){
@@ -380,7 +380,7 @@ void slti(uint8_t rt, uint8_rs, uint16_t imm){
     }
 }
 
-void sltiu(uint8_t rt, uint8_rs, uint16_t imm){
+void sltiu(uint8_t rt, uint8_t rs, uint16_t imm){
     (uint32_t)imm;
     PC_advance(default_advance);
     if(Register[rs] < imm){

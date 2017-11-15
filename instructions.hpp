@@ -49,12 +49,12 @@ void jal(uint32_t target);
 
 void addi(uint8_t rd, uint8_t rs, uint16_t imm);
 void addiu(uint8_t rd, uint8_t rs, uint16_t imm);
-void andi(uint8_t rd, uint8_rs, uint16_t imm);
+void andi(uint8_t rd, uint8_t rs, uint16_t imm);
 void lui(uint32_t rt, uint32_t imm); //sam
-void ori(uint8_t rd, uint8_rs, uint16_t imm);
-void slti(uint8_t rt, uint8_rs, uint16_t imm);
-void sltiu(uint8_t rt, uint8_rs, uint16_t imm);
-void xori(uint8_t rd, uint8_rs, uint16_t imm);
+void ori(uint8_t rd, uint8_t rs, uint16_t imm);
+void slti(uint8_t rt, uint8_t rs, uint16_t imm);
+void sltiu(uint8_t rt, uint8_t rs, uint16_t imm);
+void xori(uint8_t rd, uint8_t rs, uint16_t imm);
 void beq(uint8_t rs, uint8_t rt, uint16_t imm);
 void bgez(uint8_t rs, uint16_t imm);
 void bgezal(uint8_t rs, uint16_t imm);
