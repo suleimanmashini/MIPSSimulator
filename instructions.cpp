@@ -243,15 +243,15 @@ void addi(uint8_t rt, uint8_t rs, uint16_t imm){
 }
 
 void addiu(uint8_t rt, uint8_t rs, uint16_t imm) {
-	(uint32_t)imm;
+	
 
-	Register[rt] = Register[rs] + imm;
+	Register[rt] = Register[rs] + (uint32_t)imm;
 	PC_advance(default_advance);
 }
 
 void andi(uint8_t rt, uint8_t rs, uint16_t imm) {
-    (uint32_t)imm;
-    Register[rt] = Register[rs] & imm;
+    
+    Register[rt] = Register[rs] & (uint32_t)imm;
     PC_advance(default_advance);
 }
 
@@ -369,15 +369,23 @@ void lh(uint32_t rt, uint32_t rs, uint32_t offset) {
 }
 
 void ori(uint8_t rt, uint8_t rs, uint16_t imm){
-    (uint32_t)imm;
-    Register[rt] = Register[rs] | imm;
+    
+    Register[rt] = Register[rs] | (uint32_t)imm;
     PC_advance(default_advance);
 }
 
 void slti(uint8_t rt, uint8_t rs, uint16_t imm){
-    int32_t temp = sign_extention(imm);
+    int32_t temp1 = sign_extention(imm);
+    int32_t temp2;
+    if((Register[rs] & 0x80) == 0){
+        temp2 = Register[rs];
+    }
+    else{
+        temp2 = Register[rs] | 0xFFFFFF00;
+    }
+    
     PC_advance(default_advance);
-    if(Register[rs] < temp){
+    if(temp2 < temp){
         Register[rt] = 1;
     }
     else{
@@ -386,9 +394,9 @@ void slti(uint8_t rt, uint8_t rs, uint16_t imm){
 }
 
 void sltiu(uint8_t rt, uint8_t rs, uint16_t imm){
-    (uint32_t)imm;
+    
     PC_advance(default_advance);
-    if(Register[rs] < imm){
+    if(Register[rs] < (uint32_t)imm){
         Register[rt] = 1;
     }
     else{
@@ -420,8 +428,8 @@ void sb(uint32_t rt, uint32_t rs, uint32_t offset) {
 }
 
 void xori(uint8_t rt, uint8_t rs, uint16_t imm){
-    (uint32_t)imm;
-    Register[rt] = ((imm | Register[rs])&(~imm | ~Register[rs]));
+
+    Register[rt] = ((uint32_t)imm) ^ Register[rs];
     PC_advance(default_advance);
 }
 
