@@ -385,7 +385,7 @@ void slti(uint8_t rt, uint8_t rs, uint16_t imm){
     }
     
     PC_advance(default_advance);
-    if(temp2 < temp){
+    if(temp2 < temp1){
         Register[rt] = 1;
     }
     else{
