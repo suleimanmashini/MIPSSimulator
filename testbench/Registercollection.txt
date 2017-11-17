@@ -1,0 +1,11 @@
+//set address in t8
+sltiu $t8, $zero, 1
+add t8, t8, 0x3
+sll t8, t8, 0x1F
+add t8, t8, 0x4
+// output all registers
+sw $v0, 0(t8)
+sw $v1, 0(t8)
+sw $A0, 0(t8)
+sw $a1,  0(t8)
+REGISTER COLLECT.BIN SETS REGISTER T8 TO IO OUTPUT ADDRESS
