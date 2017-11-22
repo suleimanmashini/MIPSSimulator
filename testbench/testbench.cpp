@@ -1,17 +1,14 @@
-#define PIPE_READ 0
-#define PIPE_WRITE 1
 
-#include <iostream>
-#include <uninstd.h>
-#include <sys/types.h>
-
+#include "testbench.hpp"
 using namespace std;
-
 void printTitle();
 //references for Piping taken from 
 //stackoverflow.com/questions/9405985/linux-3-0-executing-child-process-with-piped-stdin-stdout
-int runSimulator(const char* szCommand, char* const Arguments[], char* const Environment[], const char* szMessage);
-int main() {
+int runSimulator(char* const Arguments[], char* const Environment[], const char* szMessage);
+
+
+
+int main(int argc, char *argv[], char *envp[]) {
 	char startIn;
 	printTitle();
 	cin >> startIn;
@@ -23,7 +20,7 @@ int main() {
 
 
 
-int runSimulator(const char* szCommand, char* const Arguments[], char* const Environment[], const char* szMessage) {
+int runSimulator(char* const Arguments[], char* const envp[], const char* szMessage) {
 	int StdinPipe[2];
 	int StdoutPipe[2];
 	int ChildCheck;
@@ -36,11 +33,12 @@ int runSimulator(const char* szCommand, char* const Arguments[], char* const Env
 	}
 	if (pipe(StdoutPipe) < 0) {
 		cerr << "OUT PIPE FAILED TO INITIALIZE" << endl;
-		close(aStdinPipe[PIPE_READ]);
-		close(aStdinPipe[PIPE_WRITE]);
+		close(StdinPipe[PIPE_READ]);
+		close(StdinPipe[PIPE_WRITE]);
 		return -1;
 	}
 	ChildCheck = fork();
+	/*
 	if (ChildCheck == 0) {
 		//child continues
 		//redirect stdin
@@ -55,18 +53,19 @@ int runSimulator(const char* szCommand, char* const Arguments[], char* const Env
 		close(StdinPipe[PIPE_READ]);
 		close(StdinPipe[PIPE_WRITE]);
 		close(StdoutPipe[PIPE_READ]);
-		close(aStdoutPipe[PIPE_WRITE]);
-		nResult = execve(szCommand, Arguments, Environment);
+		close(StdoutPipe[PIPE_WRITE]);
+		nResult = execve(fileName, Arguments, envp);
 		exit(nResult);
-	}
-	else if (ChildCheck > 0) {
+	} else */
+	if (ChildCheck > 0) {
 		// close unused file descriptors, these are for child only
 		close(StdinPipe[PIPE_READ]);
 		close(StdoutPipe[PIPE_WRITE]);
+		/*
 		// Include error check here
 		if (NULL != szMessage) {
 			write(StdinPipe[PIPE_WRITE], szMessage, strlen(szMessage));
-		}
+		} */
 		//**********************************************
 		// HERE IS WHERE THE INTERACTION HAPPENS
 		//**********************************************
