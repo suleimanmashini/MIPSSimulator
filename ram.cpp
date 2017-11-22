@@ -14,7 +14,7 @@ uint32_t Register[35] = {
 
 RAM::RAM() {
 }
-// I NEED TO SIT DOWN AND FIX ALL THE RAM
+
 uint32_t RAM::getRAM(const int &addressIn) const {
 	int tempAddress = addressIn / 4;
 	if (tempAddress == 0) {
@@ -22,6 +22,9 @@ uint32_t RAM::getRAM(const int &addressIn) const {
 	}
 	else if (tempAddress <= 0x4000000 && tempAddress >= 0x4400000) {
 		return INSTRUCTION_ADR[addressIn - 0x4000000];
+	}
+	else if (tempAddress <= 0x8000000 && tempAddress >= 0x9000000) {
+		return READWRITE_ADR[addressIn - 0x8000000];
 	}
 	else if (tempAddress == INPUT_IO_ADR / 4) {
 		//INPUT MAP
@@ -40,13 +43,13 @@ uint32_t RAM::getRAM(const int &addressIn) const {
 }
 
 uint8_t RAM::getByteRAM(const int &addressIn) const {
-	uint32_t temp = this->getRAM(addressIn);
 	int shift = addressIn / 4;
 	if (addressIn == INPUT_IO_ADR) {
 		if (!cin) exit(-21);
 		char temp = getchar();
 		return temp;
 	}
+	uint32_t temp = this->getRAM(addressIn -shift);
 	switch (shift) {
 	case (0):
 		return uint32_t(temp >> 24);
@@ -87,9 +90,10 @@ void RAM::writeRAM(const int &addressIn, const uint32_t &dataIn) {
 
 void RAM::writeByteRAM(const int &addressIn, const uint8_t &dataIn) {
 	//WRITE WITHIN A WORD ITSELF
-	uint32_t temp = this->getRAM(addressIn);
-	uint32_t tempIn = dataIn;
 	int shift = addressIn % 4;
+	uint32_t temp = this->getRAM(addressIn - shift);
+	uint32_t tempIn = dataIn;
+	
 	//CHECKS IF ADDRESS IS I/O ELSE WRITES TO DATA
 	if (addressIn == OUTPUT_IO_ADR / 4) {
 		char outchar = dataIn;
@@ -120,11 +124,8 @@ void RAM::writeByteRAM(const int &addressIn, const uint8_t &dataIn) {
 void RAM::loadInstructions(const int &addressIn, const uint32_t &dataIn) {
 	//THERE IS NO ADDRESS ERROR CHECKING ERROR CHECKING
 	int tempAddress = addressIn / 4;
-	cout << "test A" << endl;
 	if (tempAddress >= 0x4000000 && tempAddress <= 0x4400000) {
-		cout << "test B" << endl;
 		INSTRUCTION_ADR[tempAddress - 0x4000000] = dataIn;
-		cout << "test C" << endl;
 	}
 	else {
 		exit(-11);
