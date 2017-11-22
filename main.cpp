@@ -22,7 +22,8 @@ int main(int argc, char *argv[]) {
 		while (inFile.read(inValue, 4)) {
 			//writing four chars into a single uint32 value
 			tempInValue = ((((uint32_t)inValue[0]) << 24) | (((uint32_t)inValue[1]) << 16) | (((uint32_t)inValue[2]) << 8) | ((uint32_t)inValue[3]));
-			mainMemory.writeRAM(INSTRUCTION_START_ADR + tempAddressImport, tempInValue);
+			mainMemory.loadInstructions(INSTRUCTION_START_ADR + tempAddressImport, tempInValue);
+			cout << "instruction fetched" << endl;
 			tempAddressImport = tempAddressImport + 4;
 		}
 		inFile.close();

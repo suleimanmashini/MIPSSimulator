@@ -64,7 +64,7 @@ void RAM::writeRAM(const int &addressIn, const uint32_t &dataIn) {
 	//THERE IS NO ADDRESS ERROR CHECKING ERROR CHECKING
 	int tempAddress = addressIn / 4;
 	if (tempAddress >= 0x8000000 && tempAddress <= 0x9000000) {
-		READWRITE_ADR[addressIn - 0x8000000] = dataIn;
+		READWRITE_ADR[tempAddress - 0x8000000] = dataIn;
 	}
 	else if (tempAddress == OUTPUT_IO_ADR / 4) {
 		//OUTPUT MAP AND CHECK IO WORKS
@@ -115,3 +115,19 @@ void RAM::writeByteRAM(const int &addressIn, const uint8_t &dataIn) {
 	}
 }
 
+
+
+void RAM::loadInstructions(const int &addressIn, const uint32_t &dataIn) {
+	//THERE IS NO ADDRESS ERROR CHECKING ERROR CHECKING
+	int tempAddress = addressIn / 4;
+	cout << "test A" << endl;
+	if (tempAddress >= 0x4000000 && tempAddress <= 0x4400000) {
+		cout << "test B" << endl;
+		INSTRUCTION_ADR[tempAddress - 0x4000000] = dataIn;
+		cout << "test C" << endl;
+	}
+	else {
+		exit(-11);
+	}
+
+}
