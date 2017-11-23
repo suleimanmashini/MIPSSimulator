@@ -39,6 +39,7 @@ void sltu(uint8_t rd, uint8_t rs, uint8_t rt);
 //general purpose functions
 void PC_advance(uint32_t advance);
 uint32_t sign_extention(uint16_t imm);
+void nop();
 
 
 // J-Type

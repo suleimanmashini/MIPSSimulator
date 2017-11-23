@@ -3,37 +3,20 @@
 using namespace std;
 
 void fetchInstructions() {
-	
-	uint32_t instr = mainMemory.getRAM(Register[PC]);
-	uint8_t opcode;
-
-	while (instr != 0 && Register[PC] <= (INSTRUCTION_START_ADR + 0x1000000)) {
-		instr = mainMemory.getRAM(Register[PC]);
-
-		opcode = instr >> 26;
-
-		switch (opcode) {
-		case 0:
-			decodeRType(instr);
-			break;
-		case 0b000010:
-		case 0b000011:
-			decodeJType(instr);
-			break;
-		default:
-			decodeIType(instr);
-		}
+	while (1) {
+		decodeInstructions();
 	}
-	exit(-11);
 }
 
-void fetchInstructions(int flag){
+void decodeInstructions(){
 
 	uint32_t instr = mainMemory.getRAM(Register[PC]);
 	uint8_t opcode;
 
-	if (instr != 0 && Register[PC] <= (INSTRUCTION_START_ADR + 0x1000000)) {
+	if (Register[PC] <= (INSTRUCTION_START_ADR + 0x1000000)) {
 		instr = mainMemory.getRAM(Register[PC]);
+
+		if (instr == 0) nop();
 
 		opcode = instr >> 26;
 

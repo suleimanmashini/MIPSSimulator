@@ -201,7 +201,7 @@ void j(uint32_t target) {
 // jump and link
 void jal(uint32_t target) {
 	Register[PC] += 4;
-	fetchInstructions(1);
+	fetchInstructions();
 	Register[RA] = Register[PC] + 4;
 	Register[PC] = (Register[PC] & 0xF0000000) + target;
 }
@@ -423,6 +423,10 @@ void xori(uint8_t rt, uint8_t rs, uint16_t imm){
     (uint32_t)imm;
     Register[rt] = ((imm | Register[rs])&(~imm | ~Register[rs]));
     PC_advance(default_advance);
+}
+
+void nop() {
+	PC_advance(default_advance);
 }
 
 
