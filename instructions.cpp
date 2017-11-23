@@ -352,7 +352,7 @@ void lb(uint32_t rt, uint32_t rs, uint32_t offset) {
 
 void lhu(uint32_t rt, uint32_t rs, uint32_t offset) {
 	if ((rs + offset) % 2 != 0) exit(-12);
-	if (offset + rs == INPUT_IO_ADR) {
+	if (offset + rs == INPUT_IO_ADR | offset + rs == INPUT_IO_ADR + 2) {
 		Register[rt] = ((uint32_t)mainMemory.getByteRAM(INPUT_IO_ADR) << 16) + (uint32_t)mainMemory.getByteRAM(INPUT_IO_ADR);
 	}
 	else Register[rt] = (mainMemory.getByteRAM(rs + offset) << 16) + mainMemory.getByteRAM(rs + offset + 1);
@@ -361,7 +361,7 @@ void lhu(uint32_t rt, uint32_t rs, uint32_t offset) {
 
 void lh(uint32_t rt, uint32_t rs, uint32_t offset) {
 	if ((rs + offset) % 2 != 0) exit(-12);
-	if (offset + rs == INPUT_IO_ADR) {
+	if (offset + rs == INPUT_IO_ADR | offset + rs == INPUT_IO_ADR + 2) {
 	Register[rt] = ((uint32_t) mainMemory.getByteRAM(INPUT_IO_ADR) << 16) + (uint32_t )mainMemory.getByteRAM(INPUT_IO_ADR);
 	} else Register[rt] = ((uint32_t) mainMemory.getByteRAM(rs + offset) << 16) + (uint32_t) mainMemory.getByteRAM(rs + offset + 1);
 	if ((Register[rt] & 0x8000) != 0) Register[rt] = Register[rt] | 0xFFFF0000;

@@ -17,10 +17,7 @@ RAM::RAM() {
 
 uint32_t RAM::getRAM(const int &addressIn) const {
 	int tempAddress = addressIn / 4;
-	if (tempAddress == 0) {
-		exit(0);
-	}
-	else if (tempAddress <= 0x4000000 && tempAddress >= 0x4400000) {
+	if (tempAddress <= 0x4000000 && tempAddress >= 0x4400000) {
 		return INSTRUCTION_ADR[addressIn - 0x4000000];
 	}
 	else if (tempAddress <= 0x8000000 && tempAddress >= 0x9000000) {
@@ -44,7 +41,7 @@ uint32_t RAM::getRAM(const int &addressIn) const {
 
 uint8_t RAM::getByteRAM(const int &addressIn) const {
 	int shift = addressIn / 4;
-	if (addressIn == INPUT_IO_ADR) {
+	if (addressIn >= INPUT_IO_ADR | addressIn <= INPUT_IO_ADR) {
 		if (!cin) exit(-21);
 		char temp = getchar();
 		return temp;
@@ -66,10 +63,15 @@ uint8_t RAM::getByteRAM(const int &addressIn) const {
 void RAM::writeRAM(const int &addressIn, const uint32_t &dataIn) {
 	//THERE IS NO ADDRESS ERROR CHECKING ERROR CHECKING
 	int tempAddress = addressIn / 4;
+
+	if (addressIn == 0) {
+		//EXIT WITH REGISTER $2
+		exit((uint8_t)(Register[V0] & 0xFF));
+	}
 	if (tempAddress >= 0x8000000 && tempAddress <= 0x9000000) {
 		READWRITE_ADR[tempAddress - 0x8000000] = dataIn;
 	}
-	else if (tempAddress == OUTPUT_IO_ADR / 4) {
+	else if (addressIn == OUTPUT_IO_ADR) {
 		//OUTPUT MAP AND CHECK IO WORKS
 		uint32_t temp = dataIn;
 		char outchar[4];
@@ -93,9 +95,12 @@ void RAM::writeByteRAM(const int &addressIn, const uint8_t &dataIn) {
 	int shift = addressIn % 4;
 	uint32_t temp = this->getRAM(addressIn - shift);
 	uint32_t tempIn = dataIn;
-	
+	if (addressIn >= 0 && addressIn <= 4) {
+		//EXIT WITH REGISTER $2
+		exit((uint8_t) (Register[V0] & 0xFF));
+	}
 	//CHECKS IF ADDRESS IS I/O ELSE WRITES TO DATA
-	if (addressIn == OUTPUT_IO_ADR / 4) {
+	if (addressIn >= OUTPUT_IO_ADR | addressIn <= OUTPUT_IO_ADR) {
 		char outchar = dataIn;
 		//if IO not working then exit
 		if (!cout) exit(-21);

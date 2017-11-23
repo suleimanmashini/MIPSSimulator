@@ -1,0 +1,1 @@
+simulator: g++ ram.cpp instructions.cpp instructiondecode.cpp main.cpp -o mips_simulator
