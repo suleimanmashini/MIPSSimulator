@@ -4,7 +4,7 @@
 
 
 void fetchInstructions();
-void fetchInstructions(int flag);
+void decodeInstructions();
 
 void decodeRType(uint32_t instr);
 

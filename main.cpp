@@ -1,6 +1,6 @@
 //MIPS SIMULATOR
 //SULEIMAN MASHINI, IONUT MOTOI, VICTOR SANCHEZS
-#include "instructionDecode.hpp"
+#include "instructiondecode.hpp"
 #include <iostream>
 #include <string>
 #include <fstream>
