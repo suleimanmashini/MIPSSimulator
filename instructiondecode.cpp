@@ -4,7 +4,7 @@ using namespace std;
 
 void fetchInstructions() {
 	while (1) {
-		decodeInstructions();
+		decodeInstructions;
 	}
 }
 
