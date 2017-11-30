@@ -18,13 +18,12 @@ void decodeInstructions(){
 	if (Register[PC] <= (INSTRUCTION_START_ADR + 0x1000000) && Register[PC] >= (INSTRUCTION_START_ADR)) {
 		instr = mainMemory.getRAM(Register[PC]);
 
-		if (instr == 0) nop();
-
+		if (instr == uint32_t(0)) nop();
+		else {
 		opcode = instr >> 26;
 
 		switch (opcode) {
 		case 0:
-		
 			decodeRType(instr);
 			break;
 		case 0b000010:
@@ -33,6 +32,7 @@ void decodeInstructions(){
 			break;
 		default:
 			decodeIType(instr);
+		}
 		}
 	}
 	else 

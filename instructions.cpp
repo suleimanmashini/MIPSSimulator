@@ -481,6 +481,7 @@ void xori(uint8_t rt, uint8_t rs, uint16_t imm){
 }
 
 void nop() {
+	if (DEBUG) cout << "nop" << endl;
 	PC_advance(default_advance);
 }
 
