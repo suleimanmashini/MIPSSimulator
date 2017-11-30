@@ -17,11 +17,12 @@ RAM::RAM() {
 
 uint32_t RAM::getRAM(const int &addressIn) const {
 	int tempAddress = addressIn / 4;
-	if (tempAddress <= 0x4000000 && tempAddress >= 0x4400000) {
-		return INSTRUCTION_ADR[addressIn - 0x4000000];
+	if (tempAddress >= 0x4000000 && tempAddress <= 0x4400000) {
+		return INSTRUCTION_ADR[tempAddress - 0x4000000];
+		
 	}
-	else if (tempAddress <= 0x8000000 && tempAddress >= 0x9000000) {
-		return READWRITE_ADR[addressIn - 0x8000000];
+	else if (tempAddress >= 0x8000000 && tempAddress <= 0x9000000) {
+		return READWRITE_ADR[tempAddress - 0x8000000];
 	}
 	else if (tempAddress == INPUT_IO_ADR / 4) {
 		//INPUT MAP
@@ -123,8 +124,6 @@ void RAM::writeByteRAM(const int &addressIn, const uint8_t &dataIn) {
 
 	}
 }
-
-
 
 void RAM::loadInstructions(const int &addressIn, const uint32_t &dataIn) {
 	//THERE IS NO ADDRESS ERROR CHECKING ERROR CHECKING

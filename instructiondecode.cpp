@@ -4,16 +4,18 @@ using namespace std;
 
 void fetchInstructions() {
 	while (1) {
-		decodeInstructions;
+
+		decodeInstructions();
 	}
 }
 
 void decodeInstructions(){
 
 	uint32_t instr = mainMemory.getRAM(Register[PC]);
+	
 	uint8_t opcode;
 
-	if (Register[PC] <= (INSTRUCTION_START_ADR + 0x1000000)) {
+	if (Register[PC] <= (INSTRUCTION_START_ADR + 0x1000000) && Register[PC] >= (INSTRUCTION_START_ADR)) {
 		instr = mainMemory.getRAM(Register[PC]);
 
 		if (instr == 0) nop();
@@ -22,6 +24,7 @@ void decodeInstructions(){
 
 		switch (opcode) {
 		case 0:
+		
 			decodeRType(instr);
 			break;
 		case 0b000010:
@@ -32,7 +35,9 @@ void decodeInstructions(){
 			decodeIType(instr);
 		}
 	}
-	else exit(-11);
+	else 
+	{ if (DEBUG) cout << "PC OUT OF BOUND" << endl;
+	exit(-11); }
 }
 
 // Decodes the funct of the R-Type instruction
@@ -134,6 +139,7 @@ void decodeRType(uint32_t instr) {
 		sltu(rd, rs, rt);
 		break;
 	default:
+		if (DEBUG) cout <<	"COULDNT DECODE R INSTRUCTION" << endl;
 		exit(-12);
 	}
 }
@@ -239,6 +245,7 @@ void decodeIType(uint32_t instr) {
 		sw(rt, rs, imm);
 		break;
 	default:
+		if (DEBUG) cout <<	"COULDNT DECODE I INSTRUCTION" << endl;
 		exit(-12);
 	}
 }
