@@ -41,7 +41,7 @@ uint32_t RAM::getRAM(const int &addressIn) const {
 
 uint8_t RAM::getByteRAM(const int &addressIn) const {
 	int shift = addressIn / 4;
-	if (addressIn >= INPUT_IO_ADR | addressIn <= INPUT_IO_ADR) {
+	if (addressIn == INPUT_IO_ADR) {
 		if (!cin) exit(-21);
 		char temp = getchar();
 		return temp;
@@ -100,7 +100,7 @@ void RAM::writeByteRAM(const int &addressIn, const uint8_t &dataIn) {
 		exit((uint8_t) (Register[V0] & 0xFF));
 	}
 	//CHECKS IF ADDRESS IS I/O ELSE WRITES TO DATA
-	if (addressIn >= OUTPUT_IO_ADR | addressIn <= OUTPUT_IO_ADR) {
+	if (addressIn == OUTPUT_IO_ADR) {
 		char outchar = dataIn;
 		//if IO not working then exit
 		if (!cout) exit(-21);
