@@ -27,6 +27,7 @@ int main(int argc, char *argv[]) {
 			tempAddressImport = tempAddressImport + 4;
 		}
 		inFile.close();
+		if (DEBUG) cout << "FILE IN" << endl;
 		//THE SIMULATOR WILL NOW RUN
 		fetchInstructions();
 	}

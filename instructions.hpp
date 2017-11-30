@@ -6,6 +6,7 @@
 #include <cmath>
 
 
+
 //R-type instructions
 
 void sll(uint8_t rd, uint8_t rt, uint8_t shamt);

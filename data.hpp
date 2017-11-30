@@ -3,6 +3,8 @@
 //REGISTERS AND RAM CAN BE ACCESSED USING THIS
 #pragma once
 #include "ram.hpp"
+#include <iostream>
+#define DEBUG 1
 
 extern RAM mainMemory;
 extern uint32_t Register[35];
