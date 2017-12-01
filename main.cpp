@@ -15,13 +15,14 @@ int main(int argc, char *argv[]) {
 	string inBinary;
 	inFile.open(argv[1], ios::binary | ios::in);
 	if (inFile.is_open()) {
-		char inValue[4];
+		unsigned char inValue[4];
 		uint32_t tempInValue;
 		int tempAddressImport = 0;
 		// obtain file size:
-		while (inFile.read(inValue, 4)) {
+		while (inFile.read(reinterpret_cast <char*> (&inValue), sizeof(uint32_t))) {
 			//writing four chars into a single uint32 value
-			tempInValue = ((((uint32_t)inValue[0]) << 24) | (((uint32_t)inValue[1]) << 16) | (((uint32_t)inValue[2]) << 8) | ((uint32_t)inValue[3]));
+			tempInValue = (inValue[0] << 24) + (inValue[1] << 16) + (inValue[2] << 8) + (inValue[3]);
+			
 			mainMemory.loadInstructions(INSTRUCTION_START_ADR + tempAddressImport, tempInValue);
 			tempAddressImport = tempAddressImport + 4;
 		}

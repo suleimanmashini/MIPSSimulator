@@ -1,27 +1,23 @@
 #include "instructiondecode.hpp"
-
 using namespace std;
 
 void fetchInstructions() {
 	while (1) {
-
+		if (DEBUG) char g = getchar();
 		decodeInstructions();
 	}
 }
 
 void decodeInstructions(){
 
-	uint32_t instr = mainMemory.getRAM(Register[PC]);
-	
+	uint32_t instr;
 	uint8_t opcode;
 
 	if (Register[PC] <= (INSTRUCTION_START_ADR + 0x1000000) && Register[PC] >= (INSTRUCTION_START_ADR)) {
 		instr = mainMemory.getRAM(Register[PC]);
-
+		opcode = (instr >> 26);
 		if (instr == uint32_t(0)) nop();
 		else {
-		opcode = instr >> 26;
-
 		switch (opcode) {
 		case 0:
 			decodeRType(instr);
@@ -43,21 +39,19 @@ void decodeInstructions(){
 // Decodes the funct of the R-Type instruction
 void decodeRType(uint32_t instr) {
 	// Extracts the fields
-	uint8_t rs = instr << 6;
+	uint8_t rs = (instr << 6);
 	rs >>= 27;
 
-	uint8_t rt = instr << 11;
+	uint8_t rt = (instr << 11);
 	rt >>= 27;
 
-	uint8_t rd = instr << 16;
+	uint8_t rd = (instr << 16);
 	rd >>= 27;
 
 	uint8_t shamt = instr << 21;
 	shamt >>= 27;
 
-	uint8_t funct = instr << 26;
-	funct >>= 26;
-
+	uint8_t funct = instr & 0x3F;
 	// Decodes the funct field
 	switch (funct) {
 	case 0b000000:
@@ -152,18 +146,21 @@ void decodeIType(uint32_t instr) {
 
 	uint8_t rt = (instr >> 16) & 0x0000001F;
 
-	uint16_t imm = instr & 0x0000FFFF;
+	uint32_t imm = sign_extention(((uint16_t)instr & 0x0000FFFF));
 
 	// Decodes the opcode field
 	switch (opcode) {
 	case 0b001000:
 		// addi
+		addi(rt, rs, imm);
 		break;
 	case 0b001001:
 		// addiu
+		addiu(rt, rs, imm);
 		break;
 	case 0b001100:
 		// andi
+		andi(rt, rs, imm);
 		break;
 	case 0b001111:
 		// lui
@@ -171,15 +168,19 @@ void decodeIType(uint32_t instr) {
 		break;
 	case 0b001101:
 		// ori
+		ori(rt, rs, imm);
 		break;
 	case 0b001010:
 		// slti
+		slti(rt, rs, imm);
 		break;
 	case 0b001011:
 		// sltiu
+		sltiu(rt, rs, imm);
 		break;
 	case 0b001110:
 		// xori
+		xori(rt, rs, imm);
 	case 0b000100:
 		// beq
 		beq(rs, rt, imm);
@@ -260,4 +261,13 @@ void decodeJType(uint32_t instr) {
 	// Decodes the op field
 	if (opcode == 0b000010) j(target);
 	else jal(target);
+}
+
+uint32_t sign_extention(uint16_t imm){
+    if(imm & 0x8000){
+        return (0xFFFF0000 + imm);
+    }
+    else{
+        return (0x00000000 + imm);
+    }
 }

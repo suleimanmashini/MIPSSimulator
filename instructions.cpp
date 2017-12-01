@@ -235,11 +235,9 @@ void jal(uint32_t target) {
 }
 
 //addi /
-void addi(uint8_t rt, uint8_t rs, uint16_t imm){
+void addi(uint8_t rt, uint8_t rs, uint32_t imm){
 	if (DEBUG) cout << "addi" << endl;
-    uint32_t temp = sign_extention(imm);
-    
-    Register[rt] = Register[rs] + temp;
+    Register[rt] = Register[rs] + imm;
     PC_advance(default_advance);
     
     
@@ -268,14 +266,14 @@ void addi(uint8_t rt, uint8_t rs, uint16_t imm){
     
 }
 
-void addiu(uint8_t rt, uint8_t rs, uint16_t imm) {
+void addiu(uint8_t rt, uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "addiu" << endl;
 
 	Register[rt] = Register[rs] + (uint32_t)imm;
 	PC_advance(default_advance);
 }
 
-void andi(uint8_t rt, uint8_t rs, uint16_t imm) {
+void andi(uint8_t rt, uint8_t rs, uint32_t imm) {
     
     Register[rt] = Register[rs] & (uint32_t)imm;
     PC_advance(default_advance);
@@ -284,7 +282,7 @@ void andi(uint8_t rt, uint8_t rs, uint16_t imm) {
 
 
 // beq
-void beq(uint8_t rs, uint8_t rt, uint16_t imm) {
+void beq(uint8_t rs, uint8_t rt, uint32_t imm) {
 	if (DEBUG) cout << "beq" << endl;
 	if (Register[rs] == Register[rt])
 		PC_advance(imm << 2);
@@ -293,7 +291,7 @@ void beq(uint8_t rs, uint8_t rt, uint16_t imm) {
 }
 
 // bgez
-void bgez(uint8_t rs, uint16_t imm) {
+void bgez(uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "bgez" << endl;
 	if (Register[rs] >= 0)
 		PC_advance(imm << 2);
@@ -302,7 +300,7 @@ void bgez(uint8_t rs, uint16_t imm) {
 }
 
 // bgezal
-void bgezal(uint8_t rs, uint16_t imm) {
+void bgezal(uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "bgezal" << endl;
 	if (Register[rs] >= 0) {
 		Register[RA] = Register[PC] + 8;
@@ -313,7 +311,7 @@ void bgezal(uint8_t rs, uint16_t imm) {
 }
 
 // bgtz
-void bgtz(uint8_t rs, uint16_t imm) {
+void bgtz(uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "bgtz" << endl;
 	if (Register[rs] > 0)
 		PC_advance(imm << 2);
@@ -322,7 +320,7 @@ void bgtz(uint8_t rs, uint16_t imm) {
 }
 
 // blez
-void blez(uint8_t rs, uint16_t imm) {
+void blez(uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "blez" << endl;
 	if (Register[rs] <= 0)
 		PC_advance(imm << 2);
@@ -331,7 +329,7 @@ void blez(uint8_t rs, uint16_t imm) {
 }
 
 // bltz
-void bltz(uint8_t rs, uint16_t imm) {
+void bltz(uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "bltz" << endl;
 	if (Register[rs] < 0)
 		PC_advance(imm << 2);
@@ -340,7 +338,7 @@ void bltz(uint8_t rs, uint16_t imm) {
 }
 
 // bltzal
-void bltzal(uint8_t rs, uint16_t imm) {
+void bltzal(uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "bltzal" << endl;
 	if (Register[rs] < 0) {
 		Register[RA] = Register[PC] + 8;
@@ -351,10 +349,11 @@ void bltzal(uint8_t rs, uint16_t imm) {
 }
 
 // bne
-void bne(uint8_t rs, uint8_t rt, uint16_t imm) {
+void bne(uint8_t rs, uint8_t rt, uint32_t imm) {
 	if (DEBUG) cout << "bne" << endl;
-	if (Register[rs] != Register[rt])
-		PC_advance(imm << 2);
+	if (Register[rs] != Register[rt]) {
+		PC_advance(imm << 2); 
+		 }
 	else
 		PC_advance(default_advance);
 }
@@ -408,16 +407,16 @@ void lh(uint32_t rt, uint32_t rs, uint32_t offset) {
 	PC_advance(default_advance);
 }
 
-void ori(uint8_t rt, uint8_t rs, uint16_t imm){
+void ori(uint8_t rt, uint8_t rs, uint32_t imm){
 	if (DEBUG) cout << "ori" << endl;
     
     Register[rt] = Register[rs] | (uint32_t)imm;
     PC_advance(default_advance);
 }
 
-void slti(uint8_t rt, uint8_t rs, uint16_t imm){
+void slti(uint8_t rt, uint8_t rs, uint32_t imm){
 	if (DEBUG) cout << "slti" << endl;
-    int32_t temp1 = sign_extention(imm);
+    int32_t temp1 = imm;
     int32_t temp2;
     if((Register[rs] & 0x80) == 0){
         temp2 = Register[rs];
@@ -435,7 +434,7 @@ void slti(uint8_t rt, uint8_t rs, uint16_t imm){
     }
 }
 
-void sltiu(uint8_t rt, uint8_t rs, uint16_t imm){
+void sltiu(uint8_t rt, uint8_t rs, uint32_t imm){
 	if (DEBUG) cout << "sltiu" << endl;
     
     PC_advance(default_advance);
@@ -473,7 +472,7 @@ void sb(uint32_t rt, uint32_t rs, uint32_t offset) {
 	PC_advance(default_advance);
 }
 
-void xori(uint8_t rt, uint8_t rs, uint16_t imm){
+void xori(uint8_t rt, uint8_t rs, uint32_t imm){
 	if (DEBUG) cout << "xori" << endl;
 
     Register[rt] = ((uint32_t)imm) ^ Register[rs];
@@ -486,14 +485,7 @@ void nop() {
 }
 
 
-uint32_t sign_extention(uint16_t imm){
-    if(imm & 0x8000){
-        return (0xFFFF0000 + imm);
-    }
-    else{
-        return (0x00000000 + imm);
-    }
-}
+
 
 
 void PC_advance(uint32_t advance) {
