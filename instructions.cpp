@@ -50,6 +50,7 @@ void srav(uint8_t rd, uint8_t rt, uint8_t rs){
 void jr(uint8_t rs){
 	if (DEBUG) cout << "jr" << endl;
 	Register[PC] = Register[rs];
+	if (Register[PC] == 0) exit(Register[V0]);
 }
 
 //jump and link (rtype)
@@ -58,6 +59,7 @@ void jalr(uint8_t rd, uint8_t rs){
     //save return address in $31
     Register[RA] = Register[PC] + default_advance;
 	Register[PC] = Register[rs];
+	if (Register[PC] == 0) exit(Register[V0]);;
 }
 
 //move from hi

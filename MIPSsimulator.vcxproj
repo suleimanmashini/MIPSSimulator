@@ -126,6 +126,9 @@
     <ClInclude Include="instructions.hpp" />
     <ClInclude Include="ram.hpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\..\Desktop\ADDU-wrap.mips.bin" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

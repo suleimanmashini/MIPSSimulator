@@ -19,17 +19,17 @@ void decodeInstructions(){
 		opcode = (instr >> 26);
 		if (instr == uint32_t(0)) nop();
 		else {
-		switch (opcode) {
-		case 0:
-			decodeRType(instr);
-			break;
-		case 0b000010:
-		case 0b000011:
-			decodeJType(instr);
-			break;
-		default:
-			decodeIType(instr);
-		}
+			switch (opcode) {
+			case 0:
+				decodeRType(instr);
+				break;
+			case 0b000010:
+			case 0b000011:
+				decodeJType(instr);
+				break;
+			default:
+				decodeIType(instr);
+			}
 		}
 	}
 	else 
