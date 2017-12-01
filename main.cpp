@@ -22,7 +22,6 @@ int main(int argc, char *argv[]) {
 		while (inFile.read(reinterpret_cast <char*> (&inValue), sizeof(uint32_t))) {
 			//writing four chars into a single uint32 value
 			tempInValue = (inValue[0] << 24) + (inValue[1] << 16) + (inValue[2] << 8) + (inValue[3]);
-			
 			mainMemory.loadInstructions(INSTRUCTION_START_ADR + tempAddressImport, tempInValue);
 			tempAddressImport = tempAddressImport + 4;
 		}

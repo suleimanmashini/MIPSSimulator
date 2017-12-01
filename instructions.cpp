@@ -268,8 +268,8 @@ void addi(uint8_t rt, uint8_t rs, uint32_t imm){
 
 void addiu(uint8_t rt, uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "addiu" << endl;
-
-	Register[rt] = Register[rs] + (uint32_t)imm;
+	imm = imm & 0xFFFF;
+	Register[rt] = Register[rs] + imm;
 	PC_advance(default_advance);
 }
 
@@ -361,9 +361,11 @@ void bne(uint8_t rs, uint8_t rt, uint32_t imm) {
 //lui
 void lui(uint32_t rt, uint32_t imm) {
 	if (DEBUG) cout << "lui" << endl;
+	imm = imm & 0xFFFF;
 	Register[rt] = (imm << 16);
 	PC_advance(default_advance);
 }
+
 
 //lw
 void lw(uint32_t rt, uint32_t rs, uint32_t offset) {
@@ -436,7 +438,7 @@ void slti(uint8_t rt, uint8_t rs, uint32_t imm){
 
 void sltiu(uint8_t rt, uint8_t rs, uint32_t imm){
 	if (DEBUG) cout << "sltiu" << endl;
-    
+    imm = imm & 0xFFFF;
     PC_advance(default_advance);
     if(Register[rs] < (uint32_t)imm){
         Register[rt] = 1;
