@@ -364,7 +364,8 @@ void bne(uint8_t rs, uint8_t rt, uint32_t imm) {
 void lui(uint32_t rt, uint32_t imm) {
 	if (DEBUG) cout << "lui" << endl;
 	imm = imm & 0xFFFF;
-	Register[rt] = (imm << 16);
+	imm = imm << 16;
+	Register[rt] = imm;
 	PC_advance(default_advance);
 }
 
@@ -452,7 +453,7 @@ void sltiu(uint8_t rt, uint8_t rs, uint32_t imm){
 
 void sw(uint32_t rt, uint32_t rs, uint32_t offset) {
 	if (DEBUG) cout << "sw" << endl;
-	mainMemory.writeRAM(rs + offset, rt);
+	mainMemory.writeRAM(Register[rs] + offset, rt);
 	PC_advance(default_advance);
 }
 
@@ -487,9 +488,6 @@ void nop() {
 	if (DEBUG) cout << "nop" << endl;
 	PC_advance(default_advance);
 }
-
-
-
 
 
 void PC_advance(uint32_t advance) {
