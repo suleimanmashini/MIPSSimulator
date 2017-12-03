@@ -32,8 +32,8 @@ uint32_t RAM::getRAM(const int &addressIn) const {
 			//if IO not working then exit
 			temp = getByteRAM(OUTPUT_IO_ADR);
 			returnVal = returnVal | (temp << (24 - (i * 8)));
-			return returnVal;
 		}
+		return returnVal;
 	}
 	else {
 		exit(-11);
@@ -96,7 +96,6 @@ void RAM::writeByteRAM(const int &addressIn, const uint8_t &dataIn) {
 	//WRITE WITHIN A WORD ITSELF
 	if (addressIn == OUTPUT_IO_ADR) {
 		char outchar = dataIn;
-		cout << "entered" << endl;
 		//if IO not working then exit
 		if (!cout) exit(-21);
 		cout << outchar;
@@ -106,8 +105,6 @@ void RAM::writeByteRAM(const int &addressIn, const uint8_t &dataIn) {
 	int shift = addressIn % 4;
 	uint32_t temp = this->getRAM(addressIn - shift);
 	uint32_t tempIn = dataIn;
-	cout << "why" << endl;
-	cout << hex << addressIn << endl;
 	if (addressIn >= 0 && addressIn <= 4) {
 		//EXIT WITH REGISTER $2
 		exit((uint8_t) (Register[V0] & 0xFF));
