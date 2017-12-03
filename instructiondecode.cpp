@@ -40,17 +40,14 @@ void decodeInstructions(){
 // Decodes the funct of the R-Type instruction
 void decodeRType(uint32_t instr) {
 	// Extracts the fields
-	uint8_t rs = (instr << 6);
-	rs >>= 27;
+	uint8_t rs = (instr >> 21) & 0x1F;
 
-	uint8_t rt = (instr << 11);
-	rt >>= 27;
+	uint8_t rt = (instr >> 16) & 0x1F;
 
-	uint8_t rd = (instr << 16);
-	rd >>= 27;
+	uint8_t rd = (instr >> 11) & 0x1F;
 
-	uint8_t shamt = instr << 21;
-	shamt >>= 27;
+	uint8_t shamt = (instr >> 6) & 0x1F;
+
 
 	uint8_t funct = instr & 0x3F;
 	// Decodes the funct field
