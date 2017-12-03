@@ -64,26 +64,27 @@ uint8_t RAM::getByteRAM(const int &addressIn) const {
 void RAM::writeRAM(const int &addressIn, const uint32_t &dataIn) {
 	//THERE IS NO ADDRESS ERROR CHECKING ERROR CHECKING
 	int tempAddress = addressIn / 4;
-
-	if (addressIn == 0) {
-		//EXIT WITH REGISTER $2
-		exit((uint8_t)(Register[V0] & 0xFF));
-	}
-	if (tempAddress >= 0x8000000 && tempAddress <= 0x9000000) {
-		READWRITE_ADR[tempAddress - 0x8000000] = dataIn;
-	}
-	else if (addressIn == OUTPUT_IO_ADR) {
+	cout << (addressIn == OUTPUT_IO_ADR) << endl;
+	if (addressIn == OUTPUT_IO_ADR) {
 		//OUTPUT MAP AND CHECK IO WORKS
 		uint32_t temp = dataIn;
 		char outchar[4];
-		outchar[0] = (temp >>= 24) & 0xFF;
-		outchar[1] = (temp >>= 16) & 0xFF;
-		outchar[2] = (temp >>= 8) & 0xFF;
+		outchar[0] = (temp >> 24) & 0xFF;
+		outchar[1] = (temp >> 16) & 0xFF;
+		outchar[2] = (temp >> 8) & 0xFF;
 		outchar[3] = temp & 0xFF;
 		for (int i = 0; i < 4; i++) {
+
 			//if IO not working then exit
-			writeByteRAM(OUTPUT_IO_ADR, (outchar[i] << 24 - (i * 8)) & 0xFF);
+			writeByteRAM(OUTPUT_IO_ADR, outchar[i]);
 		}
+	}
+	else if (addressIn == 0) {
+		//EXIT WITH REGISTER $2
+		exit((uint8_t)(Register[V0] & 0xFF));
+	}
+	else if (tempAddress >= 0x8000000 && tempAddress <= 0x9000000) {
+		READWRITE_ADR[tempAddress - 0x8000000] = dataIn;
 	}
 	else {
 		exit(-11);
@@ -93,21 +94,26 @@ void RAM::writeRAM(const int &addressIn, const uint32_t &dataIn) {
 
 void RAM::writeByteRAM(const int &addressIn, const uint8_t &dataIn) {
 	//WRITE WITHIN A WORD ITSELF
-	int shift = addressIn % 4;
-	uint32_t temp = this->getRAM(addressIn - shift);
-	uint32_t tempIn = dataIn;
-	if (addressIn >= 0 && addressIn <= 4) {
-		//EXIT WITH REGISTER $2
-		exit((uint8_t) (Register[V0] & 0xFF));
-	}
-	//CHECKS IF ADDRESS IS I/O ELSE WRITES TO DATA
 	if (addressIn == OUTPUT_IO_ADR) {
 		char outchar = dataIn;
+		cout << "entered" << endl;
 		//if IO not working then exit
 		if (!cout) exit(-21);
 		cout << outchar;
 		return;
 	}
+
+	int shift = addressIn % 4;
+	uint32_t temp = this->getRAM(addressIn - shift);
+	uint32_t tempIn = dataIn;
+	cout << "why" << endl;
+	cout << hex << addressIn << endl;
+	if (addressIn >= 0 && addressIn <= 4) {
+		//EXIT WITH REGISTER $2
+		exit((uint8_t) (Register[V0] & 0xFF));
+	}
+	//CHECKS IF ADDRESS IS I/O ELSE WRITES TO DATA
+
 	switch (shift) {
 	case (0):
 		//shift and return
