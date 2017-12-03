@@ -252,10 +252,8 @@ void decodeIType(uint32_t instr) {
 void decodeJType(uint32_t instr) {
 	// Extracts the fields
 	uint8_t opcode = instr >> 26;
-	uint32_t target = instr << 6;
-	target >>= 4; // right shift only by 4 (and not 6) because the 
-				  // j instruction multiplies the target by 4
-
+	uint32_t target = instr & 0x03FFFFFF;
+	target = target << 2;
 	// Decodes the op field
 	if (opcode == 0b000010) j(target);
 	else jal(target);
