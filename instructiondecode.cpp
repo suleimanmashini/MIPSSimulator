@@ -143,7 +143,7 @@ void decodeIType(uint32_t instr) {
 	// Extracts the fields
 	uint8_t opcode = instr >> 26;
 
-	uint8_t rs = ((instr >> 21) & 0x0000001F);
+	uint8_t rs = (instr >> 21) & 0x0000001F;
 
 	uint8_t rt = (instr >> 16) & 0x0000001F;
 
