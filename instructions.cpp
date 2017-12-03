@@ -49,6 +49,8 @@ void srav(uint8_t rd, uint8_t rt, uint8_t rs){
 //jump register
 void jr(uint8_t rs){
 	if (DEBUG) cout << "jr" << endl;
+	Register[PC] += 4;
+	decodeInstructions();
 	Register[PC] = Register[rs];
 	if (Register[PC] == 0) exit(Register[V0]);
 }

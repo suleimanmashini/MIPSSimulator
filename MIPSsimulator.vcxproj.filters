@@ -49,5 +49,11 @@
     <None Include="..\..\..\..\..\Desktop\ADDU-wrap.mips.bin">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="JR-return-immediate.mips.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="JR-return-immediate-nodelay.mips.bin">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
