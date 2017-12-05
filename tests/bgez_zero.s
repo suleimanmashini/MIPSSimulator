@@ -1,4 +1,4 @@
-bgez zero, 0x2
+bgez zero, 0x4
 nop
 jr zero
 nop

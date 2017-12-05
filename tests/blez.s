@@ -1,4 +1,5 @@
-beq zero, zero, 0x4
+addiu t0, t0, 0xFFFFFFFF
+blez t0, 0x4
 nop
 jr zero
 nop
