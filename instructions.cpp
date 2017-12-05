@@ -511,7 +511,7 @@ void sltiu(uint8_t rt, uint8_t rs, uint32_t imm){
 
 void sw(uint32_t rt, uint32_t rs, uint32_t offset) {
 	if (DEBUG) cout << "sw" << endl;
-	mainMemory.writeRAM(Register[rs] + offset, rt);
+	mainMemory.writeRAM(Register[rs] + offset, Register[rt]);
 	PC_advance(default_advance);
 }
 
@@ -530,7 +530,7 @@ void sh(uint32_t rt, uint32_t rs, uint32_t offset) {
 
 void sb(uint32_t rt, uint32_t rs, uint32_t offset) {
 	if (DEBUG) cout << "sb" << endl;
-	mainMemory.writeByteRAM(Register[rs] + offset, rt);
+	mainMemory.writeByteRAM(Register[rs] + offset, Register[rt]);
 	PC_advance(default_advance);
 }
 

@@ -46,7 +46,7 @@ uint8_t RAM::getByteRAM(const int &addressIn) const {
 	if (addressIn == INPUT_IO_ADR) {
 		if (cin) {
 			if (cin.eof()) {
-				return 0xFFFFFFFF;
+				return 0xFF;
 			}
 			else {
 				return (sign_extention((uint8_t)(getchar())));
@@ -59,11 +59,11 @@ uint8_t RAM::getByteRAM(const int &addressIn) const {
 	case (0):
 		return (temp >> 24);
 	case (1):
-		return ((temp >> 16) | 0x000000FF);
+		return ((temp >> 16) | 0xFF);
 	case (2):
-		return ((temp >> 8) | 0x000000FF);
+		return ((temp >> 8) | 0xFF);
 	default:
-		return (temp | 0x000000FF);
+		return (temp | 0xFF);
 
 	}
 }
@@ -71,7 +71,6 @@ uint8_t RAM::getByteRAM(const int &addressIn) const {
 void RAM::writeRAM(const int &addressIn, const uint32_t &dataIn) {
 	//THERE IS NO ADDRESS ERROR CHECKING ERROR CHECKING
 	int tempAddress = addressIn / 4;
-	cout << (addressIn == OUTPUT_IO_ADR) << endl;
 	if (addressIn == OUTPUT_IO_ADR) {
 		//OUTPUT MAP AND CHECK IO WORKS
 		char outchar = (char) (dataIn & 0xFF);
