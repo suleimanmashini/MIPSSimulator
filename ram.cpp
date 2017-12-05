@@ -17,8 +17,6 @@ RAM::RAM() {
 
 uint32_t RAM::getRAM(const int &addressIn) const {
 	int tempAddress = addressIn / 4;
-	cout << "GET RAM" << endl;
-	cout << hex << addressIn << endl;
 	if (tempAddress >= 0x4000000 && tempAddress <= 0x4400000) {
 		return INSTRUCTION_ADR[tempAddress - 0x4000000];
 		
@@ -27,7 +25,6 @@ uint32_t RAM::getRAM(const int &addressIn) const {
 		return READWRITE_ADR[tempAddress - 0x8000000];
 	}
 	else if (addressIn == INPUT_IO_ADR) {
-		cout << "ENTERED" << endl;
 		uint32_t returnVal = 0;
 		uint8_t temp;
 		if (cin) {
@@ -49,7 +46,7 @@ uint8_t RAM::getByteRAM(const int &addressIn) const {
 	if (addressIn == INPUT_IO_ADR) {
 		if (cin) {
 			if (cin.eof()) {
-				return 0xFFFFFFFF;
+				return 0xFF;
 			}
 			else {
 				return (sign_extention((uint8_t)(getchar())));
@@ -62,11 +59,11 @@ uint8_t RAM::getByteRAM(const int &addressIn) const {
 	case (0):
 		return (temp >> 24);
 	case (1):
-		return ((temp >> 16) | 0x000000FF);
+		return ((temp >> 16) | 0xFF);
 	case (2):
-		return ((temp >> 8) | 0x000000FF);
+		return ((temp >> 8) | 0xFF);
 	default:
-		return (temp | 0x000000FF);
+		return (temp | 0xFF);
 
 	}
 }
@@ -74,7 +71,6 @@ uint8_t RAM::getByteRAM(const int &addressIn) const {
 void RAM::writeRAM(const int &addressIn, const uint32_t &dataIn) {
 	//THERE IS NO ADDRESS ERROR CHECKING ERROR CHECKING
 	int tempAddress = addressIn / 4;
-	cout << (addressIn == OUTPUT_IO_ADR) << endl;
 	if (addressIn == OUTPUT_IO_ADR) {
 		//OUTPUT MAP AND CHECK IO WORKS
 		char outchar = (char) (dataIn & 0xFF);

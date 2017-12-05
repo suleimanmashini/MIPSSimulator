@@ -49,7 +49,7 @@ void srav(uint8_t rd, uint8_t rt, uint8_t rs){
 //jump register
 void jr(uint8_t rs){
 	if (DEBUG) cout << "jr" << endl;
-	Register[PC] += 4;
+	PC_advance(default_advance);
 	decodeInstructions();
 	Register[PC] = Register[rs];
 	if (Register[PC] == 0) exit(Register[V0]);
@@ -59,6 +59,8 @@ void jr(uint8_t rs){
 void jalr(uint8_t rd, uint8_t rs){
 	if (DEBUG) cout << "jalr" << endl;
     //save return address in $31
+	PC_advance(default_advance);
+	decodeInstructions();
     Register[RA] = Register[PC] + default_advance;
 	Register[PC] = Register[rs];
 	if (Register[PC] == 0) exit(Register[V0]);;
@@ -228,6 +230,9 @@ void sltu(uint8_t rd, uint8_t rs, uint8_t rt){
 // jump
 void j(uint32_t target) {
 	if (DEBUG) cout << "j" << endl;
+	PC_advance(default_advance);
+	fetchInstructions();
+	PC_advance(-4);
 	Register[PC] = (Register[PC] & 0xF0000000) + target;
 }
 
@@ -290,19 +295,20 @@ void andi(uint8_t rt, uint8_t rs, uint32_t imm) {
 // beq
 void beq(uint8_t rs, uint8_t rt, uint32_t imm) {
 	if (DEBUG) cout << "beq" << endl;
+	PC_advance(default_advance);
+	fetchInstructions();
 	if (Register[rs] == Register[rt])
-		PC_advance(imm << 2);
-	else
-		PC_advance(default_advance);
+		PC_advance((imm << 2) - 4);
+		
 }
 
 // bgez
 void bgez(uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "bgez" << endl;
+	PC_advance(default_advance);
+	fetchInstructions();
 	if (Register[rs] >= 0)
-		PC_advance(imm << 2);
-	else
-		PC_advance(default_advance);
+		PC_advance((imm << 2) - 4);
 }
 
 // bgezal
@@ -511,7 +517,7 @@ void sltiu(uint8_t rt, uint8_t rs, uint32_t imm){
 
 void sw(uint32_t rt, uint32_t rs, uint32_t offset) {
 	if (DEBUG) cout << "sw" << endl;
-	mainMemory.writeRAM(Register[rs] + offset, rt);
+	mainMemory.writeRAM(Register[rs] + offset, Register[rt]);
 	PC_advance(default_advance);
 }
 
@@ -530,7 +536,7 @@ void sh(uint32_t rt, uint32_t rs, uint32_t offset) {
 
 void sb(uint32_t rt, uint32_t rs, uint32_t offset) {
 	if (DEBUG) cout << "sb" << endl;
-	mainMemory.writeByteRAM(Register[rs] + offset, rt);
+	mainMemory.writeByteRAM(Register[rs] + offset, Register[rt]);
 	PC_advance(default_advance);
 }
 
