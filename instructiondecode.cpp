@@ -243,6 +243,12 @@ void decodeIType(uint32_t instr) {
 		// sw
 		sw(rt, rs, imm);
 		break;
+	case 0b100010:
+		//lwl
+		lwl(rt, rs, imm);
+	case 0b100110:
+		//lwr
+		lwr(rt, rs, imm);
 	default:
 		if (DEBUG) cout <<	"COULDNT DECODE I INSTRUCTION" << endl;
 		exit(-12);

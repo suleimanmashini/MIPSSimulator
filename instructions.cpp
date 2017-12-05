@@ -419,6 +419,7 @@ void lwl(uint32_t rt, uint32_t rs, uint32_t offset) {
 
 //lwr
 void lwr(uint32_t rt, uint32_t rs, uint32_t offset) {
+	offset = offset & 0xFFFF;
 	int alignment = (Register[rs] + offset) % 4;
 	uint32_t temp = mainMemory.getRAM((Register[rs] + offset) - alignment);
 	switch (alignment) {

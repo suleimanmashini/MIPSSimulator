@@ -72,5 +72,7 @@ void lw(uint32_t rt, uint32_t rs, uint32_t offset);
 void sb(uint32_t rt, uint32_t rs, uint32_t offset);
 void sh(uint32_t rt, uint32_t rs, uint32_t offset);
 void sw(uint32_t rt, uint32_t rs, uint32_t offset); 
+void lwl(uint32_t rt, uint32_t rs, uint32_t offset);
+void lwr(uint32_t rt, uint32_t rs, uint32_t offset);
 
 
