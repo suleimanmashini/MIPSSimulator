@@ -396,6 +396,48 @@ void lb(uint32_t rt, uint32_t rs, uint32_t offset) {
 	PC_advance(default_advance);
 }
 
+//lwl
+void lwl(uint32_t rt, uint32_t rs, uint32_t offset) {
+	int alignment = (Register[rs] + offset) % 4;
+	uint32_t temp = mainMemory.getRAM((Register[rs] + offset) - alignment);
+	//if offset == 0 then lowest byte if 3 then MSByte
+	switch (alignment) {
+	case 0:
+		Register[rs] = temp;
+		break;
+	case 1:
+		Register[rs] = (Register[rs] & 0xFF000000) + ((temp >> 8) & 0xFFFFFF);
+		break;
+	case 2:
+		Register[rs] = (Register[rs] & 0xFFFF0000) + ((temp >> 16) & 0xFFFF);
+		break;
+	case 3:
+		Register[rs] = (Register[rs] & 0XFFFFFF00) + ((temp >> 24) & 0xFF);
+		break;
+	}
+}
+
+//lwr
+void lwr(uint32_t rt, uint32_t rs, uint32_t offset) {
+	int alignment = (Register[rs] + offset) % 4;
+	uint32_t temp = mainMemory.getRAM((Register[rs] + offset) - alignment);
+	switch (alignment) {
+	case 0:
+		Register[rs] = (Register[rs] & 0xFFFFFF) + ((temp << 24) & 0xFF000000);
+		break;
+	case 1:
+		Register[rs] = (Register[rs] & 0xFFFF) + ((temp << 16) & 0xFFFF0000);
+		break;
+	case 2:
+		Register[rs] = (Register[rs] & 0xFF) + ((temp << 8) & 0xFFFFFF00);
+		break;
+	case 3:
+		Register[rs] = temp;
+		break;
+	}
+}
+
+//CAN BE CHANGED TO BE CLEANER
 void lhu(uint32_t rt, uint32_t rs, uint32_t offset) {
 	if (DEBUG) cout << "lhu" << endl;
 	if ((rs + offset) % 2 != 0) exit(-12);
