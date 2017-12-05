@@ -49,7 +49,7 @@ void srav(uint8_t rd, uint8_t rt, uint8_t rs){
 //jump register
 void jr(uint8_t rs){
 	if (DEBUG) cout << "jr" << endl;
-	Register[PC] += 4;
+	PC_advance(default_advance);
 	decodeInstructions();
 	Register[PC] = Register[rs];
 	if (Register[PC] == 0) exit(Register[V0]);
@@ -59,6 +59,8 @@ void jr(uint8_t rs){
 void jalr(uint8_t rd, uint8_t rs){
 	if (DEBUG) cout << "jalr" << endl;
     //save return address in $31
+	PC_advance(default_advance);
+	decodeInstructions();
     Register[RA] = Register[PC] + default_advance;
 	Register[PC] = Register[rs];
 	if (Register[PC] == 0) exit(Register[V0]);;
@@ -228,6 +230,9 @@ void sltu(uint8_t rd, uint8_t rs, uint8_t rt){
 // jump
 void j(uint32_t target) {
 	if (DEBUG) cout << "j" << endl;
+	PC_advance(default_advance);
+	fetchInstructions();
+	PC_advance(-4);
 	Register[PC] = (Register[PC] & 0xF0000000) + target;
 }
 
