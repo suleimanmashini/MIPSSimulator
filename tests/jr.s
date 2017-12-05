@@ -1,0 +1,2 @@
+jr zero
+nop
