@@ -398,9 +398,13 @@ void lb(uint32_t rt, uint32_t rs, uint32_t offset) {
 
 //lwl
 void lwl(uint32_t rt, uint32_t rs, uint32_t offset) {
+	offset = offset & 0xFFFF;
 	int alignment = (Register[rs] + offset) % 4;
+	//extra protections for I/O
+	if (((int)(Register[rs] + offset - alignment) == 0x30000000) && alignment != 0)
+		exit(-12);
 	uint32_t temp = mainMemory.getRAM((Register[rs] + offset) - alignment);
-	//if offset == 0 then lowest byte if 3 then MSByte
+	//if alignment == 0 then lowest byte if 3 then MSByte
 	switch (alignment) {
 	case 0:
 		Register[rs] = temp;
@@ -421,6 +425,8 @@ void lwl(uint32_t rt, uint32_t rs, uint32_t offset) {
 void lwr(uint32_t rt, uint32_t rs, uint32_t offset) {
 	offset = offset & 0xFFFF;
 	int alignment = (Register[rs] + offset) % 4;
+	if (((int)(Register[rs] + offset - alignment) == 0x30000000) && alignment != 0)
+		exit(-12);
 	uint32_t temp = mainMemory.getRAM((Register[rs] + offset) - alignment);
 	switch (alignment) {
 	case 0:
@@ -441,20 +447,25 @@ void lwr(uint32_t rt, uint32_t rs, uint32_t offset) {
 //CAN BE CHANGED TO BE CLEANER
 void lhu(uint32_t rt, uint32_t rs, uint32_t offset) {
 	if (DEBUG) cout << "lhu" << endl;
-	if ((rs + offset) % 2 != 0) exit(-12);
-	if (offset + rs == INPUT_IO_ADR | offset + rs == INPUT_IO_ADR + 2) {
-		Register[rt] = ((uint32_t)mainMemory.getByteRAM(INPUT_IO_ADR) << 16) + (uint32_t)mainMemory.getByteRAM(INPUT_IO_ADR);
+	if ((Register[rs] + offset) % 2 != 0) exit(-12);
+	if (((int)(Register[rs] + offset) == 0x30000002))
+		exit(-12);
+	if (offset + Register[rs] == INPUT_IO_ADR) {
+		Register[rt] = mainMemory.getRAM(INPUT_IO_ADR) & 0xFFFF;
 	}
-	else Register[rt] = (mainMemory.getByteRAM(rs + offset) << 16) + mainMemory.getByteRAM(rs + offset + 1);
+	else Register[rt] = ((mainMemory.getByteRAM(Register[rs] + offset) << 16) + mainMemory.getByteRAM(Register[rs] + offset + 1)) & 0xFFFF;
 	PC_advance(default_advance);
 }
 
 void lh(uint32_t rt, uint32_t rs, uint32_t offset) {
 	if (DEBUG) cout << "lh" << endl;
-	if ((rs + offset) % 2 != 0) exit(-12);
-	if (offset + rs == INPUT_IO_ADR | offset + rs == INPUT_IO_ADR + 2) {
-	Register[rt] = ((uint32_t) mainMemory.getByteRAM(INPUT_IO_ADR) << 16) + (uint32_t )mainMemory.getByteRAM(INPUT_IO_ADR);
-	} else Register[rt] = ((uint32_t) mainMemory.getByteRAM(rs + offset) << 16) + (uint32_t) mainMemory.getByteRAM(rs + offset + 1);
+	if ((Register[rs] + offset) % 2 != 0) exit(-12);
+	if (((int)(Register[rs] + offset) == 0x30000002))
+		exit(-12);
+	if (offset + Register[rs] == INPUT_IO_ADR) {
+		Register[rt] = mainMemory.getRAM(INPUT_IO_ADR) & 0xFFFF;
+	}
+	else Register[rt] = ((mainMemory.getByteRAM(Register[rs] + offset) << 16) + mainMemory.getByteRAM(Register[rs] + offset + 1)) & 0xFFFF;
 	if ((Register[rt] & 0x8000) != 0) Register[rt] = Register[rt] | 0xFFFF0000;
 	PC_advance(default_advance);
 }
@@ -506,10 +517,9 @@ void sw(uint32_t rt, uint32_t rs, uint32_t offset) {
 
 void sh(uint32_t rt, uint32_t rs, uint32_t offset) {
 	if (DEBUG) cout << "sh" << endl;
-	if ((offset + rs) % 2 != 0) exit(-12);
-	if (offset + rs == OUTPUT_IO_ADR) {
-		mainMemory.writeByteRAM(OUTPUT_IO_ADR, ((Register[rt] >> 8) & 0xFF));
-		mainMemory.writeByteRAM(OUTPUT_IO_ADR, (Register[rt] & 0xFF));
+	if ((offset + Register[rs]) % 2 != 0) exit(-12);
+	if (offset + Register[rs] == OUTPUT_IO_ADR) {
+		mainMemory.writeRAM(OUTPUT_IO_ADR, Register[rs] & 0xFF);
 	}
 	else {
 		mainMemory.writeByteRAM(Register[rs] + offset, ((Register[rt] >> 8) & 0xFF));

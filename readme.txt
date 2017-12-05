@@ -17,3 +17,11 @@ exit(-11): Memory conflict (out of range address, write to read only, read from 
 exit(-12): Invalid instruction.
 exit(-20): Internal Error (cause unknown).
 exit(-21): I/O Error.
+
+....................................
+...........SPECIAL NOTES............
+....................................
+To remain consisten with the industry standard:
+SIZE OF ANY I/O INTERACTION IS ALWAYS: 1 BYTE.
+ANY I/O INTERACTION MUST BE WORD ALIGNED.
+THE BYTE IS SIGN EXTENDED TO 32 BITS AND THE LEAST SIGNIFICANT BYTES ARE USED

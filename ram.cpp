@@ -47,20 +47,26 @@ uint32_t RAM::getRAM(const int &addressIn) const {
 uint8_t RAM::getByteRAM(const int &addressIn) const {
 	int shift = addressIn / 4;
 	if (addressIn == INPUT_IO_ADR) {
-		if (!cin) exit(-21);
-		char temp = getchar();
-		return temp;
+		if (cin) {
+			if (cin.eof()) {
+				return 0xFFFFFFFF;
+			}
+			else {
+				return (sign_extention((uint8_t)(getchar())));
+			}
+		}
+		else exit(-21);
 	}
 	uint32_t temp = this->getRAM(addressIn -shift);
 	switch (shift) {
 	case (0):
-		return uint32_t(temp >> 24);
+		return (temp >> 24);
 	case (1):
-		return uint32_t((temp >> 16) | 0x000000FF);
+		return ((temp >> 16) | 0x000000FF);
 	case (2):
-		return uint32_t((temp >> 8) | 0x000000FF);
+		return ((temp >> 8) | 0x000000FF);
 	default:
-		return uint32_t(temp | 0x000000FF);
+		return (temp | 0x000000FF);
 
 	}
 }
@@ -71,17 +77,10 @@ void RAM::writeRAM(const int &addressIn, const uint32_t &dataIn) {
 	cout << (addressIn == OUTPUT_IO_ADR) << endl;
 	if (addressIn == OUTPUT_IO_ADR) {
 		//OUTPUT MAP AND CHECK IO WORKS
-		uint32_t temp = dataIn;
-		char outchar[4];
-		outchar[0] = (temp >> 24) & 0xFF;
-		outchar[1] = (temp >> 16) & 0xFF;
-		outchar[2] = (temp >> 8) & 0xFF;
-		outchar[3] = temp & 0xFF;
-		for (int i = 0; i < 4; i++) {
-
-			//if IO not working then exit
-			writeByteRAM(OUTPUT_IO_ADR, outchar[i]);
-		}
+		char outchar = (char) (dataIn & 0xFF);
+		if (!cout) exit(-21);
+		cout << outchar;
+		return;
 	}
 	else if (addressIn == 0) {
 		//EXIT WITH REGISTER $2
@@ -105,7 +104,6 @@ void RAM::writeByteRAM(const int &addressIn, const uint8_t &dataIn) {
 		cout << outchar;
 		return;
 	}
-
 	int shift = addressIn % 4;
 	uint32_t temp = this->getRAM(addressIn - shift);
 	uint32_t tempIn = dataIn;
