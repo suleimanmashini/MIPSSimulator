@@ -1,4 +1,4 @@
-beq zero, zero, 0x4
+blez zero, 0x4
 nop
 jr zero
 nop
