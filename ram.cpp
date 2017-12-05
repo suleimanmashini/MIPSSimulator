@@ -17,6 +17,8 @@ RAM::RAM() {
 
 uint32_t RAM::getRAM(const int &addressIn) const {
 	int tempAddress = addressIn / 4;
+	cout << "GET RAM" << endl;
+	cout << hex << addressIn << endl;
 	if (tempAddress >= 0x4000000 && tempAddress <= 0x4400000) {
 		return INSTRUCTION_ADR[tempAddress - 0x4000000];
 		
@@ -24,16 +26,18 @@ uint32_t RAM::getRAM(const int &addressIn) const {
 	else if (tempAddress >= 0x8000000 && tempAddress <= 0x9000000) {
 		return READWRITE_ADR[tempAddress - 0x8000000];
 	}
-	else if (tempAddress == INPUT_IO_ADR / 4) {
-		//INPUT MAP
+	else if (addressIn == INPUT_IO_ADR) {
+		cout << "ENTERED" << endl;
 		uint32_t returnVal = 0;
 		uint8_t temp;
-		for (int i = 0; i < 4; i++) {
-			//if IO not working then exit
-			temp = getByteRAM(OUTPUT_IO_ADR);
-			returnVal = returnVal | (temp << (24 - (i * 8)));
-		}
-		return returnVal;
+		if (cin) {
+			if (cin.eof()) {
+				return 0xFFFFFFFF;
+			} 
+			else {
+				return (sign_extention((uint8_t)(getchar())));
+			}
+		} else exit(-21);
 	}
 	else {
 		exit(-11);
@@ -138,4 +142,14 @@ void RAM::loadInstructions(const int &addressIn, const uint32_t &dataIn) {
 		exit(-11);
 	}
 
+}
+
+
+uint32_t RAM::sign_extention(uint8_t imm) const {
+	if (imm & 0x80) {
+		return (0xFFFFFF00 + imm);
+	}
+	else {
+		return (0x00000000 + imm);
+	}
 }

@@ -55,5 +55,8 @@
     <None Include="JR-return-immediate-nodelay.mips.bin">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="tests\ADDJR.bin">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

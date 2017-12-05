@@ -130,6 +130,7 @@
     <None Include="..\..\..\..\..\Desktop\ADDU-wrap.mips.bin" />
     <None Include="JR-return-immediate-nodelay.mips.bin" />
     <None Include="JR-return-immediate.mips.bin" />
+    <None Include="tests\ADDJR.bin" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

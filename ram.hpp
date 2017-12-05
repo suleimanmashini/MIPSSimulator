@@ -16,6 +16,6 @@ public:
 	void writeRAM(const int &addressIn, const uint32_t &dataIn);
 	void writeByteRAM(const int &addressIn,const uint8_t &dataIn);
 	void loadInstructions(const int &addressIn, const uint32_t &dataIn);
+	uint32_t sign_extention(uint8_t imm) const;
 };
-
 

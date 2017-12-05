@@ -265,11 +265,11 @@ void decodeJType(uint32_t instr) {
 	else jal(target);
 }
 
-uint32_t sign_extention(uint16_t imm){
-    if(imm & 0x8000){
-        return (0xFFFF0000 + imm);
-    }
-    else{
-        return (0x00000000 + imm);
-    }
+uint32_t sign_extention(uint16_t imm) {
+	if (imm & 0x8000) {
+		return (0xFFFF0000 + imm);
+	}
+	else {
+		return (0x00000000 + imm);
+	}
 }
