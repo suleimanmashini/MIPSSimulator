@@ -295,19 +295,20 @@ void andi(uint8_t rt, uint8_t rs, uint32_t imm) {
 // beq
 void beq(uint8_t rs, uint8_t rt, uint32_t imm) {
 	if (DEBUG) cout << "beq" << endl;
+	PC_advance(default_advance);
+	fetchInstructions();
 	if (Register[rs] == Register[rt])
-		PC_advance(imm << 2);
-	else
-		PC_advance(default_advance);
+		PC_advance((imm << 2) - 4);
+		
 }
 
 // bgez
 void bgez(uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "bgez" << endl;
+	PC_advance(default_advance);
+	fetchInstructions();
 	if (Register[rs] >= 0)
-		PC_advance(imm << 2);
-	else
-		PC_advance(default_advance);
+		PC_advance((imm << 2) - 4);
 }
 
 // bgezal
