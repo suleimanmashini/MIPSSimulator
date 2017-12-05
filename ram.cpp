@@ -17,8 +17,6 @@ RAM::RAM() {
 
 uint32_t RAM::getRAM(const int &addressIn) const {
 	int tempAddress = addressIn / 4;
-	cout << "GET RAM" << endl;
-	cout << hex << addressIn << endl;
 	if (tempAddress >= 0x4000000 && tempAddress <= 0x4400000) {
 		return INSTRUCTION_ADR[tempAddress - 0x4000000];
 		
@@ -27,7 +25,6 @@ uint32_t RAM::getRAM(const int &addressIn) const {
 		return READWRITE_ADR[tempAddress - 0x8000000];
 	}
 	else if (addressIn == INPUT_IO_ADR) {
-		cout << "ENTERED" << endl;
 		uint32_t returnVal = 0;
 		uint8_t temp;
 		if (cin) {
