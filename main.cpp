@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
 		fetchInstructions();
 	}
 	else {
-		exit(12); //EXIT IF INVALID FILE
+		exit(-20); //EXIT IF INVALID FILE
 	}
 	
 	return 0;
