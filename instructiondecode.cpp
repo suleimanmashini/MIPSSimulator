@@ -47,7 +47,6 @@ void decodeRType(uint32_t instr) {
 
 	uint8_t shamt = (instr >> 6) & 0x1F;
 
-
 	uint8_t funct = instr & 0x3F;
 	// Decodes the funct field
 	switch (funct) {
