@@ -75,7 +75,7 @@ void jalr(uint8_t rd, uint8_t rs){
     //save return address in $31
 	PC_advance(default_advance);
 	decodeInstructions();
-    Register[RA] = Register[PC] + default_advance;
+    Register[rd] = Register[PC];
 	Register[PC] = Register[rs];
 	if (Register[PC] == 0) exit(Register[V0]);;
 }

@@ -1,5 +1,6 @@
-addiu t0, t0, 0x10000014
-jalr t0, ra
+lui t0, 0x1000
+addiu t0, t0, 0x18
+jalr ra, t0
 nop
 jr zero
 nop
