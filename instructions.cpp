@@ -239,7 +239,7 @@ void jal(uint32_t target) {
 	if (DEBUG) cout << "jal" << endl;
 	Register[PC] += 4;
 	decodeInstructions();
-	Register[RA] = Register[PC] + 4;
+	Register[RA] = Register[PC];
 	Register[PC] = (Register[PC] & 0xF0000000) + target;
 }
 
