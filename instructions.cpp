@@ -20,7 +20,14 @@ void srl(uint8_t rd, uint8_t rt, uint8_t shamt){
 //shift right arithmetic, default right shift c++
 void sra(uint8_t rd, uint8_t rt, uint8_t shamt){
 	if (DEBUG) cout << "sra" << endl;
-    Register[rd] = Register[rt] >> shamt;
+	if (Register[rt] & 0x80000000 != 0) {
+		Register[rd] = Register[rt] >> shamt;
+		Register[rd] = Register[rd] + (0xFFFFFFFF << (32 - shamt));
+	}
+	else {
+		Register[rd] = Register[rt] >> shamt;
+	}
+    
     PC_advance(default_advance);
 }
 
