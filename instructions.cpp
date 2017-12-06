@@ -548,7 +548,6 @@ void sb(uint32_t rt, uint32_t rs, uint32_t offset) {
 
 void xori(uint8_t rt, uint8_t rs, uint32_t imm){
 	if (DEBUG) cout << "xori" << endl;
-
     Register[rt] = ((uint32_t)imm) ^ Register[rs];
     PC_advance(default_advance);
 }

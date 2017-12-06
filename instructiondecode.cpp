@@ -178,6 +178,7 @@ void decodeIType(uint32_t instr) {
 	case 0b001110:
 		// xori
 		xori(rt, rs, imm);
+		break;
 	case 0b000100:
 		// beq
 		beq(rs, rt, imm);
