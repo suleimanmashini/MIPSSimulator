@@ -229,7 +229,7 @@ void sltu(uint8_t rd, uint8_t rs, uint8_t rt){
 void j(uint32_t target) {
 	if (DEBUG) cout << "j" << endl;
 	PC_advance(default_advance);
-	fetchInstructions();
+	decodeInstructions();
 	PC_advance(-4);
 	Register[PC] = (Register[PC] & 0xF0000000) + target;
 }
@@ -238,7 +238,7 @@ void j(uint32_t target) {
 void jal(uint32_t target) {
 	if (DEBUG) cout << "jal" << endl;
 	Register[PC] += 4;
-	fetchInstructions();
+	decodeInstructions();
 	Register[RA] = Register[PC] + 4;
 	Register[PC] = (Register[PC] & 0xF0000000) + target;
 }
@@ -294,7 +294,7 @@ void andi(uint8_t rt, uint8_t rs, uint32_t imm) {
 void beq(uint8_t rs, uint8_t rt, uint32_t imm) {
 	if (DEBUG) cout << "beq" << endl;
 	PC_advance(default_advance);
-	fetchInstructions();
+	decodeInstructions();
 	if (Register[rs] == Register[rt])
 		PC_advance((imm << 2) - 4);
 		
@@ -304,8 +304,9 @@ void beq(uint8_t rs, uint8_t rt, uint32_t imm) {
 void bgez(uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "bgez" << endl;
 	PC_advance(default_advance);
-	fetchInstructions();
-	if (Register[rs] >= 0)
+	decodeInstructions();
+	
+	if ((int32_t)Register[rs] >= 0)
 		PC_advance((imm << 2) - 4);
 }
 
@@ -313,7 +314,7 @@ void bgez(uint8_t rs, uint32_t imm) {
 void bgezal(uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "bgezal" << endl;
 	PC_advance(default_advance);
-	fetchInstructions();
+	decodeInstructions();
 	if ((int32_t)(Register[rs]) >= 0) {
 		Register[RA] = Register[PC] + 4;
 		PC_advance((imm << 2) - 4);
@@ -326,7 +327,7 @@ void bgezal(uint8_t rs, uint32_t imm) {
 void bgtz(uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "bgtz" << endl;
 	PC_advance(default_advance);
-	fetchInstructions();
+	decodeInstructions();
 	if ((int32_t)(Register[rs]) > 0)
 		PC_advance((imm << 2) - 4);
 
@@ -365,7 +366,7 @@ void bltzal(uint8_t rs, uint32_t imm) {
 void bne(uint8_t rs, uint8_t rt, uint32_t imm) {
 	if (DEBUG) cout << "bne" << endl;
 	PC_advance(default_advance);
-	fetchInstructions();
+	decodeInstructions();
 	if (Register[rs] != Register[rt]) {
 		PC_advance((imm << 2) - 4); 
 	}
