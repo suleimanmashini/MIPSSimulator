@@ -406,6 +406,7 @@ void lb(uint32_t rt, uint32_t rs, uint32_t offset) {
 
 //lwl
 void lwl(uint32_t rt, uint32_t rs, uint32_t offset) {
+	if (DEBUG) cout << "lwl" << endl;
 	offset = offset & 0xFFFF;
 	int alignment = (Register[rs] + offset) % 4;
 	//extra protections for I/O
@@ -431,6 +432,7 @@ void lwl(uint32_t rt, uint32_t rs, uint32_t offset) {
 
 //lwr
 void lwr(uint32_t rt, uint32_t rs, uint32_t offset) {
+	if (DEBUG) cout << "lwr" << endl;
 	offset = offset & 0xFFFF;
 	int alignment = (Register[rs] + offset) % 4;
 	if (((int)(Register[rs] + offset - alignment) == 0x30000000) && alignment != 0)
