@@ -1,0 +1,7 @@
+lui v1, 0xABCD
+addiu v1, v1, 0xEF34
+lui t0, 0x2000
+sw v0, 0x0(t0)
+lwl v0, 0x2(t0)
+jr zero
+nop
