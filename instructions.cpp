@@ -164,8 +164,6 @@ void add(uint8_t rd, uint8_t rs, uint8_t rt){
 //basic add, no concern for overflow
 void addu(uint8_t rd, uint8_t rs, uint8_t rt){
 	if (DEBUG) cout << "addu" << endl;
-	cout << Register[rs] << endl;
-	cout << Register[rt] << endl;
     Register[rd] = Register[rt] + Register[rs];
     PC_advance(default_advance);
 }
