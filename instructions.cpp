@@ -21,13 +21,9 @@ void srl(uint8_t rd, uint8_t rt, uint8_t shamt){
 void sra(uint8_t rd, uint8_t rt, uint8_t shamt){
 	if (DEBUG) cout << "sra" << endl;
 	if (((Register[rt] & 0x80000000) >> 31) != 0) {
-		cout << "condition met" << endl;
-		cout << hex << Register[rt] << endl;
 		Register[rd] = Register[rt] >> shamt;
 		cout << shamt << endl;
-		cout << hex << Register[rd] << endl;
 		Register[rd] = Register[rd] + (0xFFFFFFFF << (32 - shamt));
-		cout << hex << Register[rd] << endl;
 	}
 	else {
 		Register[rd] = Register[rt] >> shamt;
@@ -54,7 +50,14 @@ void srlv(uint8_t rd, uint8_t rt, uint8_t rs){
 //shift right arithmetic variable (default c++)
 void srav(uint8_t rd, uint8_t rt, uint8_t rs){
 	if (DEBUG) cout << "srav" << endl;
-    Register[rd] = Register[rt] >> Register[rs];
+	if (((Register[rt] & 0x80000000) >> 31) != 0) {
+		Register[rd] = Register[rt] >> Register[rs];
+		cout << Register[rs] << endl;
+		Register[rd] = Register[rd] + (0xFFFFFFFF << (32 - Register[rs]));
+	}
+	else {
+		Register[rd] = Register[rt] >> Register[rs];
+	}
     PC_advance(default_advance);
 }
 

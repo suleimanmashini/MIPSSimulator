@@ -46,8 +46,7 @@ void decodeRType(uint32_t instr) {
 	uint8_t rd = (instr >> 11) & 0x1F;
 
 	uint8_t shamt = (instr >> 6) & 0x1F;
-	cout << hex << instr << endl;
-	cout << hex << shamt << endl;
+
 	uint8_t funct = instr & 0x3F;
 	// Decodes the funct field
 	switch (funct) {
