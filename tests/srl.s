@@ -1,4 +1,4 @@
-addiu t0, t0, 0x80000001
-srl v0, t0, 0x1F
+addiu t0, t0, 0x80
+srl v0, t0, 0x7
 jr zero
 nop
