@@ -336,30 +336,30 @@ void bgtz(uint8_t rs, uint32_t imm) {
 // blez
 void blez(uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "blez" << endl;
-	if (Register[rs] <= 0)
-		PC_advance(imm << 2);
-	else
-		PC_advance(default_advance);
+	PC_advance(default_advance);
+	decodeInstructions();
+	if ((int32_t) Register[rs] <= 0)
+		PC_advance((imm << 2) - 8);
 }
 
 // bltz
 void bltz(uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "bltz" << endl;
-	if (Register[rs] < 0)
-		PC_advance(imm << 2);
-	else
-		PC_advance(default_advance);
+	PC_advance(default_advance);
+	decodeInstructions();
+	if ((int32_t) Register[rs] < 0)
+		PC_advance((imm << 2) - 8);
 }
 
 // bltzal
 void bltzal(uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "bltzal" << endl;
-	if (Register[rs] < 0) {
-		Register[RA] = Register[PC] + 8;
-		PC_advance(imm << 2);
+	PC_advance(default_advance);
+	decodeInstructions();
+	if ((int32_t) Register[rs] < 0) {
+		Register[RA] = Register[PC];
+		PC_advance((imm << 2) - 8);
 	}
-	else
-		PC_advance(default_advance);
 }
 
 // bne

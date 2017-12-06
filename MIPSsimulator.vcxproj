@@ -132,6 +132,7 @@
     <None Include="JR-return-immediate.mips.bin" />
     <None Include="tests\ADDJR.bin" />
     <None Include="tests\bgez.mips.bin" />
+    <None Include="tests\bltz.mips.bin" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

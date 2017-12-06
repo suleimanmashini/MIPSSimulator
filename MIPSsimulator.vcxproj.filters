@@ -61,5 +61,8 @@
     <None Include="tests\bgez.mips.bin">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="tests\bltz.mips.bin">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
