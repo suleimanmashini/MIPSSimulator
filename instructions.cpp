@@ -20,9 +20,14 @@ void srl(uint8_t rd, uint8_t rt, uint8_t shamt){
 //shift right arithmetic, default right shift c++
 void sra(uint8_t rd, uint8_t rt, uint8_t shamt){
 	if (DEBUG) cout << "sra" << endl;
-	if (Register[rt] & 0x80000000 != 0) {
+	if (((Register[rt] & 0x80000000) >> 31) != 0) {
+		cout << "condition met" << endl;
+		cout << hex << Register[rt] << endl;
 		Register[rd] = Register[rt] >> shamt;
+		cout << shamt << endl;
+		cout << hex << Register[rd] << endl;
 		Register[rd] = Register[rd] + (0xFFFFFFFF << (32 - shamt));
+		cout << hex << Register[rd] << endl;
 	}
 	else {
 		Register[rd] = Register[rt] >> shamt;
