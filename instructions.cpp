@@ -416,18 +416,19 @@ void lwl(uint32_t rt, uint32_t rs, uint32_t offset) {
 	//if alignment == 0 then lowest byte if 3 then MSByte
 	switch (alignment) {
 	case 0:
-		Register[rs] = temp;
+		Register[rt] = temp;
 		break;
 	case 1:
-		Register[rs] = (Register[rs] & 0xFF000000) + ((temp >> 8) & 0xFFFFFF);
+		Register[rt] = (Register[rt] & 0xFF000000) + ((temp >> 8) & 0xFFFFFF);
 		break;
 	case 2:
-		Register[rs] = (Register[rs] & 0xFFFF0000) + ((temp >> 16) & 0xFFFF);
+		Register[rt] = (Register[rt] & 0xFFFF0000) + ((temp >> 16) & 0xFFFF);
 		break;
 	case 3:
-		Register[rs] = (Register[rs] & 0XFFFFFF00) + ((temp >> 24) & 0xFF);
+		Register[rt] = (Register[rt] & 0XFFFFFF00) + ((temp >> 24) & 0xFF);
 		break;
 	}
+	PC_advance(default_advance);
 }
 
 //lwr
@@ -440,18 +441,20 @@ void lwr(uint32_t rt, uint32_t rs, uint32_t offset) {
 	uint32_t temp = mainMemory.getRAM((Register[rs] + offset) - alignment);
 	switch (alignment) {
 	case 0:
-		Register[rs] = (Register[rs] & 0xFFFFFF) + ((temp << 24) & 0xFF000000);
+		Register[rt] = (Register[rt] & 0xFFFFFF) + ((temp << 24) & 0xFF000000);
 		break;
 	case 1:
-		Register[rs] = (Register[rs] & 0xFFFF) + ((temp << 16) & 0xFFFF0000);
+		Register[rt] = (Register[rt] & 0xFFFF) + ((temp << 16) & 0xFFFF0000);
 		break;
 	case 2:
-		Register[rs] = (Register[rs] & 0xFF) + ((temp << 8) & 0xFFFFFF00);
+		Register[rt] = (Register[rt] & 0xFF) + ((temp << 8) & 0xFFFFFF00);
 		break;
 	case 3:
-		Register[rs] = temp;
+		Register[rt] = temp;
 		break;
 	}
+	cout << hex << Register[rt] << endl;
+	PC_advance(default_advance);
 }
 
 //CAN BE CHANGED TO BE CLEANER
