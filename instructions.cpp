@@ -52,7 +52,6 @@ void srav(uint8_t rd, uint8_t rt, uint8_t rs){
 	if (DEBUG) cout << "srav" << endl;
 	if (((Register[rt] & 0x80000000) >> 31) != 0) {
 		Register[rd] = Register[rt] >> Register[rs];
-		cout << Register[rs] << endl;
 		Register[rd] = Register[rd] + (0xFFFFFFFF << (32 - Register[rs]));
 	}
 	else {
