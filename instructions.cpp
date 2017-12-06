@@ -482,7 +482,6 @@ void lh(uint32_t rt, uint32_t rs, uint32_t offset) {
 void ori(uint8_t rt, uint8_t rs, uint32_t imm){
 	if (DEBUG) cout << "ori" << endl;
 	Register[rt] = Register[rs] | (imm & 0xFFFF);
-	cout << Register[rt] << endl;
     PC_advance(default_advance);
 }
 
