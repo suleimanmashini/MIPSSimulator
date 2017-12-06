@@ -413,7 +413,7 @@ void lbu(uint32_t rt, uint32_t rs, uint32_t offset) {
 //lb
 void lb(uint32_t rt, uint32_t rs, uint32_t offset) {
 	if (DEBUG) cout << "lb" << endl;
-	Register[rt] = mainMemory.getByteRAM(rs + offset);
+	Register[rt] = mainMemory.getByteRAM(Register[rs] + offset);
 	if ((Register[rt] & 0x80) != 0) Register[rt] = Register[rt] | 0xFFFFFF00;
 	PC_advance(default_advance);
 }
@@ -545,11 +545,11 @@ void sh(uint32_t rt, uint32_t rs, uint32_t offset) {
 	if (DEBUG) cout << "sh" << endl;
 	if ((offset + Register[rs]) % 2 != 0) exit(-12);
 	if (offset + Register[rs] == OUTPUT_IO_ADR) {
-		mainMemory.writeRAM(OUTPUT_IO_ADR, Register[rs] & 0xFF);
+		mainMemory.writeRAM(OUTPUT_IO_ADR, Register[rt] & 0xFFFF);
 	}
 	else {
-		mainMemory.writeByteRAM(Register[rs] + offset, ((Register[rt] >> 8) & 0xFF));
-		mainMemory.writeByteRAM(Register[rs] + offset + 1, (Register[rt] & 0xFF));
+		mainMemory.writeByteRAM(Register[rs] + offset, ((Register[rt] >> 8) & 0xFFFF));
+		mainMemory.writeByteRAM(Register[rs] + offset + 1, (Register[rt] & 0xFFFF));
 	}
 	PC_advance(default_advance);
 }

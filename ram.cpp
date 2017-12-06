@@ -104,6 +104,7 @@ void RAM::writeByteRAM(const int &addressIn, const uint8_t &dataIn) {
 		cout << outchar;
 		return;
 	}
+	if (!(addressIn / 4 >= 0x8000000 && addressIn / 4 <= 0x9000000)) exit(-11);
 	int shift = addressIn % 4;
 	uint32_t temp = this->getRAM(addressIn - shift);
 	uint32_t tempIn = dataIn;
