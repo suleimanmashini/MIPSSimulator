@@ -245,7 +245,7 @@ void jal(uint32_t target) {
 	Register[PC] = (Register[PC] & 0xF0000000) + target;
 }
 
-//addi /
+//addi 
 void addi(uint8_t rt, uint8_t rs, uint32_t imm){
 	if (DEBUG) cout << "addi" << endl;
     Register[rt] = Register[rs] + imm;
@@ -314,9 +314,11 @@ void bgez(uint8_t rs, uint32_t imm) {
 // bgezal
 void bgezal(uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "bgezal" << endl;
-	if (Register[rs] >= 0) {
-		Register[RA] = Register[PC] + 8;
-		PC_advance(imm << 2);
+	PC_advance(default_advance);
+	fetchInstructions();
+	if ((int32_t)(Register[rs]) >= 0) {
+		Register[RA] = Register[PC] + 4;
+		PC_advance((imm << 2) - 4);
 	}
 	else
 		PC_advance(default_advance);
@@ -325,10 +327,11 @@ void bgezal(uint8_t rs, uint32_t imm) {
 // bgtz
 void bgtz(uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "bgtz" << endl;
-	if (Register[rs] > 0)
-		PC_advance(imm << 2);
-	else
-		PC_advance(default_advance);
+	PC_advance(default_advance);
+	fetchInstructions();
+	if ((int32_t)(Register[rs]) > 0)
+		PC_advance((imm << 2) - 4);
+
 }
 
 // blez
@@ -363,11 +366,11 @@ void bltzal(uint8_t rs, uint32_t imm) {
 // bne
 void bne(uint8_t rs, uint8_t rt, uint32_t imm) {
 	if (DEBUG) cout << "bne" << endl;
+	PC_advance(default_advance);
+	fetchInstructions();
 	if (Register[rs] != Register[rt]) {
-		PC_advance(imm << 2); 
-		 }
-	else
-		PC_advance(default_advance);
+		PC_advance((imm << 2) - 4); 
+	}
 }
 
 //lui
