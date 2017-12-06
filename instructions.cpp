@@ -476,7 +476,7 @@ void lhu(uint32_t rt, uint32_t rs, uint32_t offset) {
 	if (DEBUG) cout << "lhu" << endl;
 	if ((Register[rs] + offset) % 2 != 0) exit(-12);
 	if (((int)(Register[rs] + offset) == 0x30000002))
-		exit(-12);
+		exit(-11);
 	if (offset + Register[rs] == INPUT_IO_ADR) {
 		Register[rt] = mainMemory.getRAM(INPUT_IO_ADR) & 0xFFFF;
 	}
@@ -488,7 +488,7 @@ void lh(uint32_t rt, uint32_t rs, uint32_t offset) {
 	if (DEBUG) cout << "lh" << endl;
 	if ((Register[rs] + offset) % 2 != 0) exit(-12);
 	if (((int)(Register[rs] + offset) == 0x30000002))
-		exit(-12);
+		exit(-11);
 	if (offset + Register[rs] == INPUT_IO_ADR) {
 		Register[rt] = mainMemory.getRAM(INPUT_IO_ADR) & 0xFFFF;
 	}
