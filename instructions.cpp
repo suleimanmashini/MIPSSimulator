@@ -296,7 +296,7 @@ void beq(uint8_t rs, uint8_t rt, uint32_t imm) {
 	PC_advance(default_advance);
 	decodeInstructions();
 	if (Register[rs] == Register[rt])
-		PC_advance((imm << 2) - 4);
+		PC_advance((imm << 2) - 8);
 		
 }
 
@@ -305,10 +305,9 @@ void bgez(uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "bgez" << endl;
 	PC_advance(default_advance);
 	decodeInstructions();
-	cout << (Register[rs] >= 0) << endl;
 	if ((int32_t)Register[rs] >= 0)
-		cout << "condition met" << endl;
-		PC_advance((imm << 2) - 4);
+		PC_advance((imm << 2) - 8);
+
 }
 
 // bgezal
@@ -318,7 +317,8 @@ void bgezal(uint8_t rs, uint32_t imm) {
 	decodeInstructions();
 	if ((int32_t)(Register[rs]) >= 0) {
 		Register[RA] = Register[PC] + 4;
-		PC_advance((imm << 2) - 4);
+		PC_advance((imm << 2) - 8);
+
 	}
 }
 
@@ -328,7 +328,7 @@ void bgtz(uint8_t rs, uint32_t imm) {
 	PC_advance(default_advance);
 	decodeInstructions();
 	if ((int32_t)(Register[rs]) > 0)
-		PC_advance((imm << 2) - 4);
+		PC_advance((imm << 2) - 8);
 
 }
 
@@ -367,7 +367,7 @@ void bne(uint8_t rs, uint8_t rt, uint32_t imm) {
 	PC_advance(default_advance);
 	decodeInstructions();
 	if (Register[rs] != Register[rt]) {
-		PC_advance((imm << 2) - 4); 
+		PC_advance((imm << 2) - 8); 
 	}
 }
 
@@ -553,7 +553,7 @@ void nop() {
 }
 
 
-void PC_advance(uint32_t advance) {
+void PC_advance(int advance) {
 	Register[PC] = Register[PC] + advance;
 }
 

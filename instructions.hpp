@@ -38,7 +38,7 @@ void sltu(uint8_t rd, uint8_t rs, uint8_t rt);
 
 
 //general purpose functions
-void PC_advance(uint32_t advance);
+void PC_advance(int advance);
 void nop();
 
 

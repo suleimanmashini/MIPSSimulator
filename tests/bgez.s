@@ -1,8 +1,8 @@
-addiu t0, t0, 0x1
-bgez t0, 0x4
-nop
-jr zero
-nop
-addiu v0, v0, 0x1
-jr zero
-nop
+0	addiu t0, t0, 0x1
+4	bgez t0, 0x4
+8	nop
+C	jr zero
+10	nop
+14	addiu v0, v0, 0x1
+18	jr zero
+1C	nop
