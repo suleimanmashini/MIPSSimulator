@@ -316,7 +316,8 @@ void bgezal(uint8_t rs, uint32_t imm) {
 	PC_advance(default_advance);
 	decodeInstructions();
 	if ((int32_t)(Register[rs]) >= 0) {
-		Register[RA] = Register[PC] + 4;
+		Register[RA] = Register[PC];
+		cout << hex << Register[RA] << endl;
 		PC_advance((imm << 2) - 8);
 
 	}
