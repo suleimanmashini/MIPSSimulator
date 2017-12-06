@@ -305,8 +305,9 @@ void bgez(uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "bgez" << endl;
 	PC_advance(default_advance);
 	decodeInstructions();
-	
+	cout << (Register[rs] >= 0) << endl;
 	if ((int32_t)Register[rs] >= 0)
+		cout << "condition met" << endl;
 		PC_advance((imm << 2) - 4);
 }
 
@@ -319,8 +320,6 @@ void bgezal(uint8_t rs, uint32_t imm) {
 		Register[RA] = Register[PC] + 4;
 		PC_advance((imm << 2) - 4);
 	}
-	else
-		PC_advance(default_advance);
 }
 
 // bgtz
