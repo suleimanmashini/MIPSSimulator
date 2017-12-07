@@ -22,7 +22,6 @@ void sra(uint8_t rd, uint8_t rt, uint8_t shamt){
 	if (DEBUG) cout << "sra" << endl;
 	if (((Register[rt] & 0x80000000) >> 31) != 0) {
 		Register[rd] = Register[rt] >> shamt;
-		cout << shamt << endl;
 		Register[rd] = Register[rd] + (0xFFFFFFFF << (32 - shamt));
 	}
 	else {
