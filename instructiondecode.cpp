@@ -1,12 +1,6 @@
 #include "instructiondecode.hpp"
 using namespace std;
 
-void fetchInstructions() {
-	while (1) {
-		if (DEBUG) char g = getchar();
-		decodeInstructions();
-	}
-}
 
 void decodeInstructions(){
 

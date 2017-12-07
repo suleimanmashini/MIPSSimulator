@@ -45,24 +45,4 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\..\..\Desktop\ADDU-wrap.mips.bin">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="JR-return-immediate.mips.bin">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="JR-return-immediate-nodelay.mips.bin">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="tests\ADDJR.bin">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="tests\bgez.mips.bin">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="tests\bltz.mips.bin">
-      <Filter>Resource Files</Filter>
-    </None>
-  </ItemGroup>
 </Project>
