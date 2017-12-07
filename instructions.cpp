@@ -22,7 +22,6 @@ void sra(uint8_t rd, uint8_t rt, uint8_t shamt){
 	if (DEBUG) cout << "sra" << endl;
 	if (((Register[rt] & 0x80000000) >> 31) != 0) {
 		Register[rd] = Register[rt] >> shamt;
-		cout << shamt << endl;
 		Register[rd] = Register[rd] + (0xFFFFFFFF << (32 - shamt));
 	}
 	else {
@@ -331,7 +330,6 @@ void bgezal(uint8_t rs, uint32_t imm) {
 	decodeInstructions();
 	if ((int32_t)(Register[rs]) >= 0) {
 		Register[RA] = Register[PC];
-		cout << hex << Register[RA] << endl;
 		PC_advance((imm << 2) - 8);
 
 	}
@@ -467,7 +465,6 @@ void lwr(uint32_t rt, uint32_t rs, uint32_t offset) {
 		Register[rt] = temp;
 		break;
 	}
-	cout << hex << Register[rt] << endl;
 	PC_advance(default_advance);
 }
 

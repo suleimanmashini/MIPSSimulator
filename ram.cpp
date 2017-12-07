@@ -32,7 +32,7 @@ uint32_t RAM::getRAM(const int &addressIn) const {
 				return 0xFFFFFFFF;
 			} 
 			else {
-				return (sign_extention((uint8_t)(getchar())));
+			 return(sign_extention(getchar()));
 			}
 		} else exit(-21);
 	}
