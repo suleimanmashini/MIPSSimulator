@@ -1,0 +1,6 @@
+addiu v1, v1, 0xFF
+lui v0, 0x1000
+sb v1, 0x0(v0)
+lbu v0, 0x0(v0)
+jr zero
+nop
