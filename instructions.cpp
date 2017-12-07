@@ -185,6 +185,7 @@ void sub(uint8_t rd, uint8_t rt, uint8_t rs){
 	if (DEBUG) cout << "sub" << endl;
 	Register[rt] = (Register[rt] ^ 0xFFFFFFFF) + 1;
     add(rd, rs, rt);
+	Register[rt] = (Register[rt] ^ 0xFFFFFFFF) + 1;
 }
 
 //basic subtraction, no concern for overflow
