@@ -55,7 +55,7 @@ uint8_t RAM::getByteRAM(const int &addressIn) const {
 		}
 		else exit(-21);
 	}
-	if (!(tempAddress >= 0x4000000 && tempAddress <= 0x4400000) | !(tempAddress >= 0x8000000 && tempAddress <= 0x9000000)) {
+	if (!((tempAddress >= 0x4000000 && tempAddress <= 0x4400000) || (tempAddress >= 0x8000000 && tempAddress <= 0x9000000))) {
 		exit(-11);
 	}
 	uint32_t temp = this->getRAM(addressIn - shift);

@@ -1,4 +1,0 @@
-addiu v1, v1, 0x53
-lui v0, 0x3000
-sh v1, 0x4(v0)
-jr zero
