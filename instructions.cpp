@@ -131,7 +131,7 @@ void div(uint8_t rs, uint8_t rt){
         exit(-10);
     }
     Register[LO] = (int32_t)Register[rs] / (int32_t)Register[rt];
-    Register[HI] = (int32_t)Register[rs] % (int32_t)Register[rt];
+    Register[HI] = Register[rs] % Register[rt];
     PC_advance(default_advance);
 }
 
