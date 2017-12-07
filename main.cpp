@@ -28,7 +28,10 @@ int main(int argc, char *argv[]) {
 		inFile.close();
 		if (DEBUG) cout << "FILE IN" << endl;
 		//THE SIMULATOR WILL NOW RUN
-		fetchInstructions();
+		while(true) {
+			if (DEBUG) char g = getchar();
+			decodeInstructions();
+		}
 	}
 	else {
 		exit(-20); //EXIT IF INVALID FILE
