@@ -145,7 +145,6 @@ void RAM::loadInstructions(const int &addressIn, const uint32_t &dataIn) {
 
 
 uint32_t RAM::sign_extention(uint8_t imm) const {
-	cout << hex << imm << endl;
 	if (imm & 0x80) {
 		return (0xFFFFFF00 + imm);
 	}
