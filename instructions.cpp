@@ -75,7 +75,7 @@ void jalr(uint8_t rd, uint8_t rs){
     //save return address in $31
 	PC_advance(default_advance);
 	decodeInstructions();
-    Register[RA] = Register[PC] + default_advance;
+    Register[rd] = Register[PC];
 	Register[PC] = Register[rs];
 	if (Register[PC] == 0) exit(Register[V0]);;
 }
@@ -413,7 +413,7 @@ void lbu(uint32_t rt, uint32_t rs, uint32_t offset) {
 //lb
 void lb(uint32_t rt, uint32_t rs, uint32_t offset) {
 	if (DEBUG) cout << "lb" << endl;
-	Register[rt] = mainMemory.getByteRAM(rs + offset);
+	Register[rt] = mainMemory.getByteRAM(Register[rs] + offset);
 	if ((Register[rt] & 0x80) != 0) Register[rt] = Register[rt] | 0xFFFFFF00;
 	PC_advance(default_advance);
 }
@@ -476,7 +476,7 @@ void lhu(uint32_t rt, uint32_t rs, uint32_t offset) {
 	if (DEBUG) cout << "lhu" << endl;
 	if ((Register[rs] + offset) % 2 != 0) exit(-12);
 	if (((int)(Register[rs] + offset) == 0x30000002))
-		exit(-12);
+		exit(-11);
 	if (offset + Register[rs] == INPUT_IO_ADR) {
 		Register[rt] = mainMemory.getRAM(INPUT_IO_ADR) & 0xFFFF;
 	}
@@ -488,7 +488,7 @@ void lh(uint32_t rt, uint32_t rs, uint32_t offset) {
 	if (DEBUG) cout << "lh" << endl;
 	if ((Register[rs] + offset) % 2 != 0) exit(-12);
 	if (((int)(Register[rs] + offset) == 0x30000002))
-		exit(-12);
+		exit(-11);
 	if (offset + Register[rs] == INPUT_IO_ADR) {
 		Register[rt] = mainMemory.getRAM(INPUT_IO_ADR) & 0xFFFF;
 	}
@@ -545,11 +545,11 @@ void sh(uint32_t rt, uint32_t rs, uint32_t offset) {
 	if (DEBUG) cout << "sh" << endl;
 	if ((offset + Register[rs]) % 2 != 0) exit(-12);
 	if (offset + Register[rs] == OUTPUT_IO_ADR) {
-		mainMemory.writeRAM(OUTPUT_IO_ADR, Register[rs] & 0xFF);
+		mainMemory.writeRAM(OUTPUT_IO_ADR, Register[rt] & 0xFFFF);
 	}
 	else {
-		mainMemory.writeByteRAM(Register[rs] + offset, ((Register[rt] >> 8) & 0xFF));
-		mainMemory.writeByteRAM(Register[rs] + offset + 1, (Register[rt] & 0xFF));
+		mainMemory.writeByteRAM(Register[rs] + offset, ((Register[rt] >> 8) & 0xFFFF));
+		mainMemory.writeByteRAM(Register[rs] + offset + 1, (Register[rt] & 0xFFFF));
 	}
 	PC_advance(default_advance);
 }

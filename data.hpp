@@ -4,7 +4,7 @@
 #pragma once
 #include "ram.hpp"
 #include <iostream>
-#define DEBUG 1
+#define DEBUG 0
 
 extern RAM mainMemory;
 extern uint32_t Register[35];

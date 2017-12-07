@@ -42,7 +42,8 @@ uint32_t RAM::getRAM(const int &addressIn) const {
 }
 
 uint8_t RAM::getByteRAM(const int &addressIn) const {
-	int shift = addressIn / 4;
+	int shift = addressIn % 4;
+	int tempAddress = addressIn / 4;
 	if (addressIn == INPUT_IO_ADR) {
 		if (cin) {
 			if (cin.eof()) {
@@ -54,7 +55,10 @@ uint8_t RAM::getByteRAM(const int &addressIn) const {
 		}
 		else exit(-21);
 	}
-	uint32_t temp = this->getRAM(addressIn -shift);
+	if (!(tempAddress >= 0x4000000 && tempAddress <= 0x4400000) | !(tempAddress >= 0x8000000 && tempAddress <= 0x9000000)) {
+		exit(-11);
+	}
+	uint32_t temp = this->getRAM(addressIn - shift);
 	switch (shift) {
 	case (0):
 		return (temp >> 24);
@@ -100,6 +104,7 @@ void RAM::writeByteRAM(const int &addressIn, const uint8_t &dataIn) {
 		cout << outchar;
 		return;
 	}
+	if (!(addressIn / 4 >= 0x8000000 && addressIn / 4 <= 0x9000000)) exit(-11);
 	int shift = addressIn % 4;
 	uint32_t temp = this->getRAM(addressIn - shift);
 	uint32_t tempIn = dataIn;
