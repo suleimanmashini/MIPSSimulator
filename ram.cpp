@@ -63,11 +63,11 @@ uint8_t RAM::getByteRAM(const int &addressIn) const {
 	case (0):
 		return (temp >> 24);
 	case (1):
-		return ((temp >> 16) | 0xFF);
+		return ((temp >> 16) & 0xFF);
 	case (2):
-		return ((temp >> 8) | 0xFF);
+		return ((temp >> 8) & 0xFF);
 	default:
-		return (temp | 0xFF);
+		return (temp & 0xFF);
 
 	}
 }

@@ -477,7 +477,7 @@ void lhu(uint32_t rt, uint32_t rs, uint32_t offset) {
 	if (offset + Register[rs] == INPUT_IO_ADR) {
 		Register[rt] = mainMemory.getRAM(INPUT_IO_ADR) & 0xFFFF;
 	}
-	else Register[rt] = ((mainMemory.getByteRAM(Register[rs] + offset) << 16) + mainMemory.getByteRAM(Register[rs] + offset + 1)) & 0xFFFF;
+	else Register[rt] = ((mainMemory.getByteRAM(Register[rs] + offset) << 8) + (mainMemory.getByteRAM(Register[rs] + offset + 1) & 0xFF)) & 0xFFFF;
 	PC_advance(default_advance);
 }
 
@@ -489,8 +489,10 @@ void lh(uint32_t rt, uint32_t rs, uint32_t offset) {
 	if (offset + Register[rs] == INPUT_IO_ADR) {
 		Register[rt] = mainMemory.getRAM(INPUT_IO_ADR) & 0xFFFF;
 	}
-	else Register[rt] = ((mainMemory.getByteRAM(Register[rs] + offset) << 16) + mainMemory.getByteRAM(Register[rs] + offset + 1)) & 0xFFFF;
-	if ((Register[rt] & 0x8000) != 0) Register[rt] = Register[rt] | 0xFFFF0000;
+	else Register[rt] = ((mainMemory.getByteRAM(Register[rs] + offset) << 8) + (mainMemory.getByteRAM(Register[rs] + offset + 1) & 0xFF)) & 0xFFFF;
+	if (((Register[rt] & 0x8000) >> 15) != 0) {
+			Register[rt] = Register[rt] | 0xFFFF0000;
+	}
 	PC_advance(default_advance);
 }
 
