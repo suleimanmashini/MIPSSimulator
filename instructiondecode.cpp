@@ -3,6 +3,8 @@ using namespace std;
 
 
 void decodeInstructions(){
+	//REGISTER ZERO MUST ALWAYS BE ZERO
+	Register[RZERO] = 0;
 
 	uint32_t instr;
 	uint8_t opcode;
