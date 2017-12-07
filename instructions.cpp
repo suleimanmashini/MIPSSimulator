@@ -228,7 +228,7 @@ void slt(uint8_t rd, uint8_t rs, uint8_t rt){
 	if (DEBUG) cout << "slt" << endl;
     int8_t temp1 = (int8_t)Register[rs];
     int8_t temp2 = (int8_t)Register[rt];
-    Register[rd] = (Register[rs]<Register[rt])? 1 : 0;
+    Register[rd] = ((int8_t) Register[rs]<(int8_t) Register[rt])? 1 : 0;
     PC_advance(default_advance);
 }
 
