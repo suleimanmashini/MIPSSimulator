@@ -83,7 +83,7 @@ void jalr(uint8_t rd, uint8_t rs){
 //move from hi
 void mfhi(uint8_t rd){
 	if (DEBUG) cout << "mfhi" << endl;
-    Register[rd] = HI;
+    Register[rd] = Register[HI];
     PC_advance(default_advance);
 }
 
