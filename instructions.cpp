@@ -182,6 +182,7 @@ void addu(uint8_t rd, uint8_t rs, uint8_t rt){
 }
 
 void sub(uint8_t rd, uint8_t rt, uint8_t rs){
+<<<<<<< HEAD
 	Register[rd] = Register[rt] + Register[rs];
 	PC_advance(default_advance);
 
@@ -203,6 +204,11 @@ void sub(uint8_t rd, uint8_t rt, uint8_t rs){
 			exit(-10);
 		}
 	}
+=======
+	if (DEBUG) cout << "sub" << endl;
+	Register[rt] = (Register[rt] ^ 0xFFFFFFFF) + 1;
+    add(rd, rs, rt);
+>>>>>>> 687858a3d217bcaee9ccbb307f1c680c8b66905d
 }
 
 //basic subtraction, no concern for overflow
