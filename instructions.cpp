@@ -182,30 +182,10 @@ void addu(uint8_t rd, uint8_t rs, uint8_t rt){
 }
 
 void sub(uint8_t rd, uint8_t rt, uint8_t rs){
-	Register[rd] = Register[rt] + Register[rs];
-	PC_advance(default_advance);
-
-
-	//different signs, no overflow possible
-
-	if ((Register[rt] & 0x80000000) ^ (Register[rs] & 0x80000000) != 0) {
-		return;
-	}
-
-	//same signs:
-	else {
-		//result has same sign as operands ==>  no overflow
-		if ((Register[rt] & 0x80000000) ^ (Register[rd] & 0x80000000) == 0) {
-			return;
-		}
-		//result has different sign from operands ==>  overflow
-		else {
-			exit(-10);
-		}
-	}
 	if (DEBUG) cout << "sub" << endl;
 	Register[rt] = (Register[rt] ^ 0xFFFFFFFF) + 1;
     add(rd, rs, rt);
+	Register[rt] = (Register[rt] ^ 0xFFFFFFFF) + 1;
 }
 
 //basic subtraction, no concern for overflow
