@@ -71,7 +71,7 @@ void jr(uint8_t rs){
 //jump and link (rtype)
 void jalr(uint8_t rd, uint8_t rs){
 	if (DEBUG) cout << "jalr" << endl;
-    //save return address in $31
+    //sve return address in $31
 	PC_advance(default_advance);
 	decodeInstructions();
     Register[rd] = Register[PC];
@@ -244,8 +244,8 @@ void j(uint32_t target) {
 	if (DEBUG) cout << "j" << endl;
 	PC_advance(default_advance);
 	decodeInstructions();
-	PC_advance(-4);
-	Register[PC] = (Register[PC] & 0xF0000000) + target;
+//	PC_advance(-4);
+	Register[PC] = (Register[PC] & 0xF0000000) + target * 4; //added times four
 }
 
 // jump and link
@@ -253,8 +253,8 @@ void jal(uint32_t target) {
 	if (DEBUG) cout << "jal" << endl;
 	Register[PC] += 4;
 	decodeInstructions();
-	Register[RA] = Register[PC];
-	Register[PC] = (Register[PC] & 0xF0000000) + target;
+	Register[RA] = Register[PC] + 4; //added a plus 4
+	Register[PC] = (Register[PC] & 0xF0000000) + target * 4; //added times four
 }
 
 //addi 
@@ -310,7 +310,7 @@ void beq(uint8_t rs, uint8_t rt, uint32_t imm) {
 	PC_advance(default_advance);
 	decodeInstructions();
 	if (Register[rs] == Register[rt])
-		PC_advance((imm << 2) - 8);
+		PC_advance((imm << 2) - 4);
 		
 }
 
@@ -320,7 +320,7 @@ void bgez(uint8_t rs, uint32_t imm) {
 	PC_advance(default_advance);
 	decodeInstructions();
 	if ((int32_t)Register[rs] >= 0)
-		PC_advance((imm << 2) - 8);
+		PC_advance((imm << 2) - 4);
 
 }
 
@@ -331,7 +331,7 @@ void bgezal(uint8_t rs, uint32_t imm) {
 	decodeInstructions();
 	if ((int32_t)(Register[rs]) >= 0) {
 		Register[RA] = Register[PC];
-		PC_advance((imm << 2) - 8);
+		PC_advance((imm << 2) - 4);
 
 	}
 }
@@ -342,7 +342,7 @@ void bgtz(uint8_t rs, uint32_t imm) {
 	PC_advance(default_advance);
 	decodeInstructions();
 	if ((int32_t)(Register[rs]) > 0)
-		PC_advance((imm << 2) - 8);
+		PC_advance((imm << 2) - 4);
 
 }
 
@@ -352,7 +352,7 @@ void blez(uint8_t rs, uint32_t imm) {
 	PC_advance(default_advance);
 	decodeInstructions();
 	if ((int32_t) Register[rs] <= 0)
-		PC_advance((imm << 2) - 8);
+		PC_advance((imm << 2) - 4);
 }
 
 // bltz
@@ -361,7 +361,7 @@ void bltz(uint8_t rs, uint32_t imm) {
 	PC_advance(default_advance);
 	decodeInstructions();
 	if ((int32_t) Register[rs] < 0)
-		PC_advance((imm << 2) - 8);
+		PC_advance((imm << 2) - 4);
 }
 
 // bltzal
@@ -371,7 +371,7 @@ void bltzal(uint8_t rs, uint32_t imm) {
 	decodeInstructions();
 	if ((int32_t) Register[rs] < 0) {
 		Register[RA] = Register[PC];
-		PC_advance((imm << 2) - 8);
+		PC_advance((imm << 2) - 4);
 	}
 }
 
@@ -381,7 +381,7 @@ void bne(uint8_t rs, uint8_t rt, uint32_t imm) {
 	PC_advance(default_advance);
 	decodeInstructions();
 	if (Register[rs] != Register[rt]) {
-		PC_advance((imm << 2) - 8); 
+		PC_advance((imm << 2) - 4); 
 	}
 }
 

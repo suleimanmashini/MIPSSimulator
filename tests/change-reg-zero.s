@@ -1,4 +1,4 @@
-addi v0, zero, 0x5
-add v0, v0, v0
+addi zero, zero, 0xFFFF
+add v0, zero, v0
 jr zero
 nop
