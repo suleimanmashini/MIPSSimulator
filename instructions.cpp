@@ -3,22 +3,22 @@
 
 using namespace std;
 //shift left logicals
-void sll(uint8_t rd, uint8_t rt, uint8_t shamt){
+void sll(uint8_t rd, uint8_t rt, uint8_t shamt) {
 	if (DEBUG) cout << "sll" << endl;
-    Register[rd] = Register[rt] << shamt;
-    PC_advance(default_advance);
+	Register[rd] = Register[rt] << shamt;
+	PC_advance(default_advance);
 }
 
 //shift right logical
-void srl(uint8_t rd, uint8_t rt, uint8_t shamt){
+void srl(uint8_t rd, uint8_t rt, uint8_t shamt) {
 	if (DEBUG) cout << "srl" << endl;
-    Register[rd] = Register[rt] >> shamt;
-    Register[rd] & (32 >> shamt);
-    PC_advance(default_advance);
+	Register[rd] = Register[rt] >> shamt;
+	Register[rd] & (32 >> shamt);
+	PC_advance(default_advance);
 }
 
 //shift right arithmetic, default right shift c++
-void sra(uint8_t rd, uint8_t rt, uint8_t shamt){
+void sra(uint8_t rd, uint8_t rt, uint8_t shamt) {
 	if (DEBUG) cout << "sra" << endl;
 	if (((Register[rt] & 0x80000000) >> 31) != 0) {
 		Register[rd] = Register[rt] >> shamt;
@@ -27,27 +27,27 @@ void sra(uint8_t rd, uint8_t rt, uint8_t shamt){
 	else {
 		Register[rd] = Register[rt] >> shamt;
 	}
-    
-    PC_advance(default_advance);
+
+	PC_advance(default_advance);
 }
 
 //shift left logical variable
-void sllv(uint8_t rd, uint8_t rs, uint8_t rt){
+void sllv(uint8_t rd, uint8_t rs, uint8_t rt) {
 	if (DEBUG) cout << "sllv" << endl;
-    Register[rd] = Register[rt] << Register[rs];
-    PC_advance(default_advance);
+	Register[rd] = Register[rt] << Register[rs];
+	PC_advance(default_advance);
 }
 
 //shift right logical variable
-void srlv(uint8_t rd, uint8_t rt, uint8_t rs){
+void srlv(uint8_t rd, uint8_t rt, uint8_t rs) {
 	if (DEBUG) cout << "srlv" << endl;
-    Register[rd] = Register[rt] >> Register[rs];
-    Register[rd] & (0xFFFFFFFF >> Register[rs]);
-    PC_advance(default_advance);
+	Register[rd] = Register[rt] >> Register[rs];
+	Register[rd] & (0xFFFFFFFF >> Register[rs]);
+	PC_advance(default_advance);
 }
 
 //shift right arithmetic variable (default c++)
-void srav(uint8_t rd, uint8_t rt, uint8_t rs){
+void srav(uint8_t rd, uint8_t rt, uint8_t rs) {
 	if (DEBUG) cout << "srav" << endl;
 	if (((Register[rt] & 0x80000000) >> 31) != 0) {
 		Register[rd] = Register[rt] >> Register[rs];
@@ -56,11 +56,11 @@ void srav(uint8_t rd, uint8_t rt, uint8_t rs){
 	else {
 		Register[rd] = Register[rt] >> Register[rs];
 	}
-    PC_advance(default_advance);
+	PC_advance(default_advance);
 }
 
 //jump register
-void jr(uint8_t rs){
+void jr(uint8_t rs) {
 	if (DEBUG) cout << "jr" << endl;
 	PC_advance(default_advance);
 	decodeInstructions();
@@ -69,174 +69,174 @@ void jr(uint8_t rs){
 }
 
 //jump and link (rtype)
-void jalr(uint8_t rd, uint8_t rs){
+void jalr(uint8_t rd, uint8_t rs) {
 	if (DEBUG) cout << "jalr" << endl;
-    //sve return address in $31
+	//sve return address in $31
 	PC_advance(default_advance);
 	decodeInstructions();
-    Register[rd] = Register[PC];
+	Register[rd] = Register[PC];
 	Register[PC] = Register[rs];
 	if (Register[PC] == 0) exit(Register[V0]);;
 }
 
 //move from hi
-void mfhi(uint8_t rd){
+void mfhi(uint8_t rd) {
 	if (DEBUG) cout << "mfhi" << endl;
-    Register[rd] = Register[HI];
-    PC_advance(default_advance);
+	Register[rd] = Register[HI];
+	PC_advance(default_advance);
 }
 
 //move to hi
-void mthi(uint8_t rs){
+void mthi(uint8_t rs) {
 	if (DEBUG) cout << "mthi" << endl;
-    Register[HI] = Register[rs];
-    PC_advance(default_advance);
+	Register[HI] = Register[rs];
+	PC_advance(default_advance);
 }
 
 //move from low
-void mflo(uint8_t rd){
+void mflo(uint8_t rd) {
 	if (DEBUG) cout << "mflo" << endl;
-    Register[rd] = Register[LO];
-    PC_advance(default_advance);
+	Register[rd] = Register[LO];
+	PC_advance(default_advance);
 }
 
 //move to low
-void mtlo(uint8_t rs){
+void mtlo(uint8_t rs) {
 	if (DEBUG) cout << "mtlo" << endl;
-    Register[LO] = Register[rs];
-    PC_advance(default_advance);
+	Register[LO] = Register[rs];
+	PC_advance(default_advance);
 }
 
 //overflow condition ?
-void mult(uint8_t rs, uint8_t rt){
+void mult(uint8_t rs, uint8_t rt) {
 	if (DEBUG) cout << "mult" << endl;
 	Register[LO] = (uint32_t)(((((int64_t)((int32_t)Register[rs]))*(int64_t)(((int32_t)Register[rt])))) & 0xFFFFFFFF);
 	Register[HI] = (uint32_t)(((((int64_t)((int32_t)Register[rs]))*((int64_t)((int32_t)Register[rt]))) >> 32) & 0xFFFFFFFF);
-    PC_advance(default_advance);
+	PC_advance(default_advance);
 }
 
 //unsigned mult
-void multu(uint8_t rs, uint8_t rt){
+void multu(uint8_t rs, uint8_t rt) {
 	if (DEBUG) cout << "multu" << endl;
-    Register[LO] = (uint32_t)(((((uint64_t)Register[rs])*((uint64_t)Register[rt]))) & 0xFFFFFFFF);
-    Register[HI] = (uint32_t)(((((uint64_t)Register[rs])*((uint64_t)Register[rt])) >> 32) & 0xFFFFFFFF);
-    PC_advance(default_advance);
+	Register[LO] = (uint32_t)(((((uint64_t)Register[rs])*((uint64_t)Register[rt]))) & 0xFFFFFFFF);
+	Register[HI] = (uint32_t)(((((uint64_t)Register[rs])*((uint64_t)Register[rt])) >> 32) & 0xFFFFFFFF);
+	PC_advance(default_advance);
 }
 
 //signed division
-void div(uint8_t rs, uint8_t rt){
+void div(uint8_t rs, uint8_t rt) {
 	if (DEBUG) cout << "div" << endl;
-    if (Register[rt] == 0){
-        exit(-10);
-    }
-    Register[LO] = (int32_t)Register[rs] / (int32_t)Register[rt];
-    Register[HI] = Register[rs] % Register[rt];
-    PC_advance(default_advance);
+	if (Register[rt] == 0) {
+		exit(-10);
+	}
+	Register[LO] = (int32_t)Register[rs] / (int32_t)Register[rt];
+	Register[HI] = Register[rs] % Register[rt];
+	PC_advance(default_advance);
 }
 
 //unsigned division
-void divu(uint8_t rs, uint8_t rt){
+void divu(uint8_t rs, uint8_t rt) {
 	if (DEBUG) cout << "divu" << endl;
-    if (Register[rt] == 0){
-        exit(-10);
-    }
-    Register[LO] = Register[rs] / Register[rt];
-    Register[HI] = Register[rs] % Register[rt];
-    PC_advance(default_advance);
+	if (Register[rt] == 0) {
+		exit(-10);
+	}
+	Register[LO] = Register[rs] / Register[rt];
+	Register[HI] = Register[rs] % Register[rt];
+	PC_advance(default_advance);
 }
 
 //signed addition, exit if overflow
-void add(uint8_t rd, uint8_t rs, uint8_t rt){
+void add(uint8_t rd, uint8_t rs, uint8_t rt) {
 	if (DEBUG) cout << "add" << endl;
-    Register[rd] = Register[rt] + Register[rs];
-    PC_advance(default_advance);
-    
-    
-    //different signs, no overflow possible
-     
-    if((Register[rt] & 0x80000000) ^ (Register[rs] & 0x80000000) != 0){
-        return;
-    }
-    
-    //same signs:
-    else{
-        //result has same sign as operands ==>  no overflow
-        if((Register[rt] & 0x80000000) ^ (Register[rd] & 0x80000000) == 0){
-            return;
-        }
-        //result has different sign from operands ==>  overflow
-        else{
-            exit(-10);
-        }
-     }
-    
-    
+	Register[rd] = Register[rt] + Register[rs];
+	PC_advance(default_advance);
+
+
+	//different signs, no overflow possible
+
+	if ((Register[rt] & 0x80000000) ^ (Register[rs] & 0x80000000) != 0) {
+		return;
+	}
+
+	//same signs:
+	else {
+		//result has same sign as operands ==>  no overflow
+		if ((Register[rt] & 0x80000000) ^ (Register[rd] & 0x80000000) == 0) {
+			return;
+		}
+		//result has different sign from operands ==>  overflow
+		else {
+			exit(-10);
+		}
+	}
+
+
 }
 
 
 //basic add, no concern for overflow
-void addu(uint8_t rd, uint8_t rs, uint8_t rt){
+void addu(uint8_t rd, uint8_t rs, uint8_t rt) {
 	if (DEBUG) cout << "addu" << endl;
-    Register[rd] = Register[rt] + Register[rs];
-    PC_advance(default_advance);
+	Register[rd] = Register[rt] + Register[rs];
+	PC_advance(default_advance);
 }
 
-void sub(uint8_t rd, uint8_t rt, uint8_t rs){
+void sub(uint8_t rd, uint8_t rt, uint8_t rs) {
 	if (DEBUG) cout << "sub" << endl;
 	Register[rt] = (Register[rt] ^ 0xFFFFFFFF) + 1;
-    add(rd, rs, rt);
+	add(rd, rs, rt);
 	Register[rt] = (Register[rt] ^ 0xFFFFFFFF) + 1;
 }
 
 //basic subtraction, no concern for overflow
-void subu(uint8_t rd, uint8_t rt, uint8_t rs){
+void subu(uint8_t rd, uint8_t rt, uint8_t rs) {
 	if (DEBUG) cout << "subu" << endl;
-    Register[rd] = Register[rs] - Register[rt];
-    PC_advance(default_advance);
+	Register[rd] = Register[rs] - Register[rt];
+	PC_advance(default_advance);
 }
 
 //bitwise and
-void M_and(uint8_t rd, uint8_t rs, uint8_t rt){
+void M_and(uint8_t rd, uint8_t rs, uint8_t rt) {
 	if (DEBUG) cout << "and" << endl;
-    Register[rd] = Register[rt] & Register[rs];
-    PC_advance(default_advance);
+	Register[rd] = Register[rt] & Register[rs];
+	PC_advance(default_advance);
 }
 
 //bitwise or
-void M_or(uint8_t rd, uint8_t rs, uint8_t rt){
+void M_or(uint8_t rd, uint8_t rs, uint8_t rt) {
 	if (DEBUG) cout << "or" << endl;
-    Register[rd] = Register[rt] | Register[rs];
-    PC_advance(default_advance);
+	Register[rd] = Register[rt] | Register[rs];
+	PC_advance(default_advance);
 }
 
 //bitwise xor
-void M_xor(uint8_t rd, uint8_t rs, uint8_t rt){
+void M_xor(uint8_t rd, uint8_t rs, uint8_t rt) {
 	if (DEBUG) cout << "xor" << endl;
 	Register[rd] = ((Register[rt] | Register[rs])&(~Register[rt] | ~Register[rs]));
-    PC_advance(default_advance);
+	PC_advance(default_advance);
 }
 
 //bitwise nor
-void M_nor(uint8_t rd, uint8_t rs, uint8_t rt){
+void M_nor(uint8_t rd, uint8_t rs, uint8_t rt) {
 	if (DEBUG) cout << "nor" << endl;
-    Register[rd] = ~(Register[rt] | Register[rs]);
-    PC_advance(default_advance);
+	Register[rd] = ~(Register[rt] | Register[rs]);
+	PC_advance(default_advance);
 }
-    
+
 //set if less than equal
-void slt(uint8_t rd, uint8_t rs, uint8_t rt){
+void slt(uint8_t rd, uint8_t rs, uint8_t rt) {
 	if (DEBUG) cout << "slt" << endl;
-    int8_t temp1 = (int8_t)Register[rs];
-    int8_t temp2 = (int8_t)Register[rt];
-    Register[rd] = ((int8_t) Register[rs]<(int8_t) Register[rt])? 1 : 0;
-    PC_advance(default_advance);
+	int8_t temp1 = (int8_t)Register[rs];
+	int8_t temp2 = (int8_t)Register[rt];
+	Register[rd] = ((int8_t)Register[rs]<(int8_t)Register[rt]) ? 1 : 0;
+	PC_advance(default_advance);
 }
 
 //set if less than equal unsigned version
-void sltu(uint8_t rd, uint8_t rs, uint8_t rt){
+void sltu(uint8_t rd, uint8_t rs, uint8_t rt) {
 	if (DEBUG) cout << "sltu" << endl;
-    Register[rd] = (Register[rs] < Register[rt]) ? 1 : 0;
-    PC_advance(default_advance);
+	Register[rd] = (Register[rs] < Register[rt]) ? 1 : 0;
+	PC_advance(default_advance);
 }
 
 // jump
@@ -244,7 +244,7 @@ void j(uint32_t target) {
 	if (DEBUG) cout << "j" << endl;
 	PC_advance(default_advance);
 	decodeInstructions();
-//	PC_advance(-4);
+	//	PC_advance(-4);
 	Register[PC] = (Register[PC] & 0xF0000000) + target * 4; //added times four
 }
 
@@ -258,35 +258,35 @@ void jal(uint32_t target) {
 }
 
 //addi 
-void addi(uint8_t rt, uint8_t rs, uint32_t imm){
+void addi(uint8_t rt, uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "addi" << endl;
-    Register[rt] = Register[rs] + imm;
-    PC_advance(default_advance);
-    
-    
-    //different signs, no overflow possible
-    
-    if((Register[rs] & 0x80000000) ^ (imm & 0x80000000) != 0){
+	Register[rt] = Register[rs] + imm;
+	PC_advance(default_advance);
 
-        return;
-    }
-    
-    //same signs:
-    else{
-        //result has same sign as operands ==>  no overflow
-        if((Register[rs] & 0x80000000) ^ (Register[rt] & 0x80000000) == 0){
-            return;
-        }
-        //result has different sign from operands ==>  overflow
-        else{
-            exit(-10);
-        }
-    }
-    
-    
-    //different signs, no overflow possible
-    
-    
+
+	//different signs, no overflow possible
+
+	if ((Register[rs] & 0x80000000) ^ (imm & 0x80000000) != 0) {
+
+		return;
+	}
+
+	//same signs:
+	else {
+		//result has same sign as operands ==>  no overflow
+		if ((Register[rs] & 0x80000000) ^ (Register[rt] & 0x80000000) == 0) {
+			return;
+		}
+		//result has different sign from operands ==>  overflow
+		else {
+			exit(-10);
+		}
+	}
+
+
+	//different signs, no overflow possible
+
+
 }
 
 void addiu(uint8_t rt, uint8_t rs, uint32_t imm) {
@@ -297,9 +297,9 @@ void addiu(uint8_t rt, uint8_t rs, uint32_t imm) {
 }
 
 void andi(uint8_t rt, uint8_t rs, uint32_t imm) {
-    
-    Register[rt] = Register[rs] & (uint32_t)imm;
-    PC_advance(default_advance);
+
+	Register[rt] = Register[rs] & (uint32_t)imm;
+	PC_advance(default_advance);
 }
 
 
@@ -311,7 +311,7 @@ void beq(uint8_t rs, uint8_t rt, uint32_t imm) {
 	decodeInstructions();
 	if (Register[rs] == Register[rt])
 		PC_advance((imm << 2) - 4);
-		
+
 }
 
 // bgez
@@ -351,7 +351,7 @@ void blez(uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "blez" << endl;
 	PC_advance(default_advance);
 	decodeInstructions();
-	if ((int32_t) Register[rs] <= 0)
+	if ((int32_t)Register[rs] <= 0)
 		PC_advance((imm << 2) - 4);
 }
 
@@ -360,7 +360,7 @@ void bltz(uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "bltz" << endl;
 	PC_advance(default_advance);
 	decodeInstructions();
-	if ((int32_t) Register[rs] < 0)
+	if ((int32_t)Register[rs] < 0)
 		PC_advance((imm << 2) - 4);
 }
 
@@ -369,7 +369,7 @@ void bltzal(uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "bltzal" << endl;
 	PC_advance(default_advance);
 	decodeInstructions();
-	if ((int32_t) Register[rs] < 0) {
+	if ((int32_t)Register[rs] < 0) {
 		Register[RA] = Register[PC];
 		PC_advance((imm << 2) - 4);
 	}
@@ -381,7 +381,7 @@ void bne(uint8_t rs, uint8_t rt, uint32_t imm) {
 	PC_advance(default_advance);
 	decodeInstructions();
 	if (Register[rs] != Register[rt]) {
-		PC_advance((imm << 2) - 4); 
+		PC_advance((imm << 2) - 4);
 	}
 }
 
@@ -492,47 +492,47 @@ void lh(uint32_t rt, uint32_t rs, uint32_t offset) {
 	}
 	else Register[rt] = ((mainMemory.getByteRAM(Register[rs] + offset) << 8) + (mainMemory.getByteRAM(Register[rs] + offset + 1) & 0xFF)) & 0xFFFF;
 	if (((Register[rt] & 0x8000) >> 15) != 0) {
-			Register[rt] = Register[rt] | 0xFFFF0000;
+		Register[rt] = Register[rt] | 0xFFFF0000;
 	}
 	PC_advance(default_advance);
 }
 
-void ori(uint8_t rt, uint8_t rs, uint32_t imm){
+void ori(uint8_t rt, uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "ori" << endl;
 	Register[rt] = Register[rs] | (imm & 0xFFFF);
-    PC_advance(default_advance);
+	PC_advance(default_advance);
 }
 
-void slti(uint8_t rt, uint8_t rs, uint32_t imm){
+void slti(uint8_t rt, uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "slti" << endl;
-    int32_t temp1 = imm;
-    int32_t temp2;
-    if((Register[rs] & 0x80) == 0){
-        temp2 = Register[rs];
-    }
-    else{
-        temp2 = Register[rs] | 0xFFFFFF00;
-    }
-    
-    PC_advance(default_advance);
-    if(temp2 < temp1){
-        Register[rt] = 1;
-    }
-    else{
-        Register[rt] = 0;
-    }
+	int32_t temp1 = imm;
+	int32_t temp2;
+	if ((Register[rs] & 0x80) == 0) {
+		temp2 = Register[rs];
+	}
+	else {
+		temp2 = Register[rs] | 0xFFFFFF00;
+	}
+
+	PC_advance(default_advance);
+	if (temp2 < temp1) {
+		Register[rt] = 1;
+	}
+	else {
+		Register[rt] = 0;
+	}
 }
 
-void sltiu(uint8_t rt, uint8_t rs, uint32_t imm){
+void sltiu(uint8_t rt, uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "sltiu" << endl;
-    imm = imm & 0xFFFF;
-    PC_advance(default_advance);
-    if(Register[rs] < (uint32_t)imm){
-        Register[rt] = 1;
-    }
-    else{
-        Register[rt] = 0;
-    }
+	imm = imm & 0xFFFF;
+	PC_advance(default_advance);
+	if (Register[rs] < (uint32_t)imm) {
+		Register[rt] = 1;
+	}
+	else {
+		Register[rt] = 0;
+	}
 }
 
 void sw(uint32_t rt, uint32_t rs, uint32_t offset) {
@@ -560,10 +560,10 @@ void sb(uint32_t rt, uint32_t rs, uint32_t offset) {
 	PC_advance(default_advance);
 }
 
-void xori(uint8_t rt, uint8_t rs, uint32_t imm){
+void xori(uint8_t rt, uint8_t rs, uint32_t imm) {
 	if (DEBUG) cout << "xori" << endl;
-    Register[rt] = ((uint32_t)imm) ^ Register[rs];
-    PC_advance(default_advance);
+	Register[rt] = ((uint32_t)imm) ^ Register[rs];
+	PC_advance(default_advance);
 }
 
 void nop() {
