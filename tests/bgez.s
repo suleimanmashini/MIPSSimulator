@@ -1,5 +1,5 @@
 0	addiu t0, t0, 0x1
-4	bgez t0, 0x4
+4	bgez t0, 0x3
 8	nop
 C	jr zero
 10	nop
