@@ -10,7 +10,6 @@ MIPS SIMULATOR
 SULEIMAN MASHINI - IONUT MOTOI - VICTOR SANCHEZ
 
 EXIT CODE VALUES:
-exit(-5): Input File could not be opened.
 exit(-6): Debug
 exit(-10): Arithmetic exception.
 exit(-11): Memory conflict (out of range address, write to read only, read from non readable memory, exectuing non-executable address).
@@ -25,3 +24,10 @@ To remain consisten with the industry standard:
 SIZE OF ANY I/O INTERACTION IS ALWAYS: 1 BYTE.
 ANY I/O INTERACTION MUST BE WORD ALIGNED.
 THE BYTE IS SIGN EXTENDED TO 32 BITS AND THE LEAST SIGNIFICANT BYTES ARE USED
+
+************************************
+*******MORE SPECIAL NOTES***********
+************************************
+To run the testbench. Run in the root director
+./mips_testbench
+and let the magic happen!

@@ -1,0 +1,79 @@
+#c! /bin/mips_testbench
+#display greatness
+echo "...................................."
+echo "......__...__..__..______...____...."
+echo "...../  |./  |.| |.| __  \./ ___|..."
+echo "..../   |/   |.| |.| |_| |.\ \__...."
+echo ".../         |.| |.|  ___/..\__ \..."
+echo "../  /|   /| |.| |.| |......__| |..."
+echo "./__/ |__/ |_|.|_|.|_|.....|____/..."
+echo "...................................."
+
+echo "SULEIMAN MASHINI - IONUT MOTOI - VICTOR SANCHEZ"
+cd ./tests
+rm /test/output/results.csv
+#read path
+echo "enter simulator directory"
+read path
+
+#create output csv file
+touch results.csv
+echo -e "TestID  ',' Instruction',' Status ',' Author ',' [Message]" >> results.csv
+
+#open test directories
+for directory in *
+do
+    if [ -d "$directory" ]
+    then
+#initialize ref variables
+        binary="./$directory/$directory.mips.bin"
+        stdin="./$directory/$directory.stdin"
+        ref_stdout=`cat ./$directory/$directory.ref.stdout`
+        text_file=`./$directory/$directory.txt`
+        ref_exit_code=`cat ./$directory/$directory.ref.retcode`
+
+#get instruction name and author
+        old_IFS=$IFS
+        IFS=$'\n'
+        lines=($(cat ./$directory/$directory.txt))
+        IFS=$old_IFS
+        instruction=${lines[0]}
+        author=${lines[1]}
+
+#run simulator with binary, store stdout and exit code
+        got_stdout=$(cat $stdin | $path/mips_simulator $binary )
+
+        got_exit_code=$?
+
+#test current instruction
+#test exit code and print to message
+        if  [ $ref_exit_code -eq $got_exit_code ]
+        then
+            pass_exit_code=true
+            message="exit code $got_exit_code matches reference //"
+        else
+            pass_exit_code=false1
+            message="exit code is $got_exit_code but should be $ref_exit_code //"
+        fi
+#test stdout and print to message
+        if  [ "$got_stdout" == "$ref_stdout" ]
+        then
+            pass_stdout=true
+            message="$message stdout $got_stdout matches reference"
+        else
+            pass_stdout=false2
+            message="$message stdout is $got_stdout but should be ref_std_out"
+        fi
+#see whether instruction passed the test
+        if [ "$pass_exit_code" == "$pass_stdout" ]
+        then
+            status=Pass
+        else
+            status=Fail
+        fi
+
+#print results to cvs file
+        echo -e "$directory  ',' $instruction ',' $status ',' $author ',' [$message]" >> results.csv
+        fi
+done
+mv results.csv ../test/output
