@@ -244,8 +244,8 @@ void j(uint32_t target) {
 	if (DEBUG) cout << "j" << endl;
 	PC_advance(default_advance);
 	decodeInstructions();
-	//	PC_advance(-4);
-	Register[PC] = (Register[PC] & 0xF0000000) + target * 4; //added times four
+	PC_advance(-4);
+	Register[PC] = (Register[PC] & 0xF0000000) + target;
 }
 
 // jump and link
@@ -254,7 +254,7 @@ void jal(uint32_t target) {
 	Register[PC] += 4;
 	decodeInstructions();
 	Register[RA] = Register[PC] + 4; //added a plus 4
-	Register[PC] = (Register[PC] & 0xF0000000) + target * 4; //added times four
+	Register[PC] = (Register[PC] & 0xF0000000) + target;
 }
 
 //addi 
