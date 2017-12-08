@@ -41,7 +41,7 @@ do
         author=${lines[1]}
 
 #run simulator with binary, store stdout and exit code
-        got_stdout=$(cat $stdin | $path/mips_simulator $binary )
+        got_stdout=$(cat $stdin | timeout 7 $path/mips_simulator $binary )
 
         got_exit_code=$?
 
