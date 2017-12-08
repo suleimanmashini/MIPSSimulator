@@ -1,5 +1,5 @@
 addiu t0, t0, 0x1
-bne zero, t0, 0x4
+bne zero, t0, 0x3
 nop
 jr zero
 nop

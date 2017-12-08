@@ -1,5 +1,5 @@
 addi t0, t0, 0xFFFFFFFF
-bltzal t0, 0x4
+bltzal t0, 0x3
 nop
 jr zero
 nop
