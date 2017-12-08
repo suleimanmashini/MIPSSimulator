@@ -310,7 +310,7 @@ void beq(uint8_t rs, uint8_t rt, uint32_t imm) {
 	PC_advance(default_advance);
 	decodeInstructions();
 	if (Register[rs] == Register[rt])
-		PC_advance(imm << 2);
+		PC_advance((int32_t)(imm << 2));
 		
 }
 
