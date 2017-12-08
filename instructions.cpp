@@ -310,8 +310,7 @@ void beq(uint8_t rs, uint8_t rt, uint32_t imm) {
 	PC_advance(default_advance);
 	decodeInstructions();
 	if (Register[rs] == Register[rt])
-		PC_advance((imm << 2) - 4);
-
+		PC_advance(((int32_t(imm)) * 4) - 4);
 }
 
 // bgez
@@ -320,8 +319,7 @@ void bgez(uint8_t rs, uint32_t imm) {
 	PC_advance(default_advance);
 	decodeInstructions();
 	if ((int32_t)Register[rs] >= 0)
-		PC_advance((imm << 2) - 4);
-
+		PC_advance(((int32_t(imm)) * 4) - 4);
 }
 
 // bgezal
@@ -331,8 +329,7 @@ void bgezal(uint8_t rs, uint32_t imm) {
 	decodeInstructions();
 	if ((int32_t)(Register[rs]) >= 0) {
 		Register[RA] = Register[PC];
-		PC_advance((imm << 2) - 4);
-
+		PC_advance(((int32_t(imm)) * 4) - 4);
 	}
 }
 
@@ -342,8 +339,7 @@ void bgtz(uint8_t rs, uint32_t imm) {
 	PC_advance(default_advance);
 	decodeInstructions();
 	if ((int32_t)(Register[rs]) > 0)
-		PC_advance((imm << 2) - 4);
-
+		PC_advance(((int32_t(imm)) * 4) - 4);
 }
 
 // blez
@@ -352,7 +348,7 @@ void blez(uint8_t rs, uint32_t imm) {
 	PC_advance(default_advance);
 	decodeInstructions();
 	if ((int32_t)Register[rs] <= 0)
-		PC_advance((imm << 2) - 4);
+		PC_advance(((int32_t(imm)) * 4) - 4);
 }
 
 // bltz
@@ -361,7 +357,7 @@ void bltz(uint8_t rs, uint32_t imm) {
 	PC_advance(default_advance);
 	decodeInstructions();
 	if ((int32_t)Register[rs] < 0)
-		PC_advance((imm << 2) - 4);
+		PC_advance(((int32_t(imm)) * 4) - 4);
 }
 
 // bltzal
@@ -371,7 +367,7 @@ void bltzal(uint8_t rs, uint32_t imm) {
 	decodeInstructions();
 	if ((int32_t)Register[rs] < 0) {
 		Register[RA] = Register[PC];
-		PC_advance((imm << 2) - 4);
+		PC_advance(((int32_t(imm)) * 4) - 4);
 	}
 }
 
@@ -381,7 +377,7 @@ void bne(uint8_t rs, uint8_t rt, uint32_t imm) {
 	PC_advance(default_advance);
 	decodeInstructions();
 	if (Register[rs] != Register[rt]) {
-		PC_advance((imm << 2) - 4);
+		PC_advance(((int32_t(imm)) * 4) - 4);
 	}
 }
 
